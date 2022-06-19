@@ -35,4 +35,8 @@ class MainCell: UITableViewCell {
         }
         
     }
+    
+    func updateUI(Date: String) {
+        label.text = Date
+    }
 }
