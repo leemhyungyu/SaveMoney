@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  CalendarViewController.swift
 //  SaveMoney
 //
 //  Created by 임현규 on 2022/06/19.
@@ -7,13 +7,10 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class CalendarViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
     }
-
-
 }
-

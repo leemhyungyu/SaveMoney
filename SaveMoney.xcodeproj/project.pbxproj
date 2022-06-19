@@ -9,14 +9,12 @@
 /* Begin PBXBuildFile section */
 		2CD7F8A6285F390300E5C446 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD7F8A5285F390300E5C446 /* AppDelegate.swift */; };
 		2CD7F8A8285F390300E5C446 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD7F8A7285F390300E5C446 /* SceneDelegate.swift */; };
-		2CD7F8AA285F390300E5C446 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD7F8A9285F390300E5C446 /* ViewController.swift */; };
-		2CD7F8AD285F390300E5C446 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2CD7F8AB285F390300E5C446 /* Main.storyboard */; };
+		2CD7F8AA285F390300E5C446 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD7F8A9285F390300E5C446 /* HomeViewController.swift */; };
 		2CD7F8B0285F390300E5C446 /* SaveMoney.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2CD7F8AE285F390300E5C446 /* SaveMoney.xcdatamodeld */; };
 		2CD7F8B2285F390500E5C446 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2CD7F8B1285F390500E5C446 /* Assets.xcassets */; };
-		2CD7F8B5285F390500E5C446 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2CD7F8B3285F390500E5C446 /* LaunchScreen.storyboard */; };
-		2CD7F8C0285F390500E5C446 /* SaveMoneyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD7F8BF285F390500E5C446 /* SaveMoneyTests.swift */; };
-		2CD7F8CA285F390500E5C446 /* SaveMoneyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD7F8C9285F390500E5C446 /* SaveMoneyUITests.swift */; };
-		2CD7F8CC285F390500E5C446 /* SaveMoneyUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD7F8CB285F390500E5C446 /* SaveMoneyUITestsLaunchTests.swift */; };
+		2CD7F8D9285F395100E5C446 /* AppTabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD7F8D8285F395100E5C446 /* AppTabbarController.swift */; };
+		2CD7F8DC285F3D5100E5C446 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD7F8DB285F3D5100E5C446 /* CalendarViewController.swift */; };
+		2CD7F8DE285F3DFD00E5C446 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD7F8DD285F3DFD00E5C446 /* UserViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,17 +38,15 @@
 		2CD7F8A2285F390300E5C446 /* SaveMoney.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SaveMoney.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CD7F8A5285F390300E5C446 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2CD7F8A7285F390300E5C446 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		2CD7F8A9285F390300E5C446 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		2CD7F8AC285F390300E5C446 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		2CD7F8A9285F390300E5C446 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		2CD7F8AF285F390300E5C446 /* SaveMoney.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SaveMoney.xcdatamodel; sourceTree = "<group>"; };
 		2CD7F8B1285F390500E5C446 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		2CD7F8B4285F390500E5C446 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2CD7F8B6285F390500E5C446 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2CD7F8BB285F390500E5C446 /* SaveMoneyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SaveMoneyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		2CD7F8BF285F390500E5C446 /* SaveMoneyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveMoneyTests.swift; sourceTree = "<group>"; };
 		2CD7F8C5285F390500E5C446 /* SaveMoneyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SaveMoneyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		2CD7F8C9285F390500E5C446 /* SaveMoneyUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveMoneyUITests.swift; sourceTree = "<group>"; };
-		2CD7F8CB285F390500E5C446 /* SaveMoneyUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveMoneyUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		2CD7F8D8285F395100E5C446 /* AppTabbarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTabbarController.swift; sourceTree = "<group>"; };
+		2CD7F8DB285F3D5100E5C446 /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
+		2CD7F8DD285F3DFD00E5C446 /* UserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,8 +78,6 @@
 			isa = PBXGroup;
 			children = (
 				2CD7F8A4285F390300E5C446 /* SaveMoney */,
-				2CD7F8BE285F390500E5C446 /* SaveMoneyTests */,
-				2CD7F8C8285F390500E5C446 /* SaveMoneyUITests */,
 				2CD7F8A3285F390300E5C446 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -101,33 +95,25 @@
 		2CD7F8A4285F390300E5C446 /* SaveMoney */ = {
 			isa = PBXGroup;
 			children = (
+				2CD7F8DA285F395600E5C446 /* ViewController */,
 				2CD7F8A5285F390300E5C446 /* AppDelegate.swift */,
 				2CD7F8A7285F390300E5C446 /* SceneDelegate.swift */,
-				2CD7F8A9285F390300E5C446 /* ViewController.swift */,
-				2CD7F8AB285F390300E5C446 /* Main.storyboard */,
 				2CD7F8B1285F390500E5C446 /* Assets.xcassets */,
-				2CD7F8B3285F390500E5C446 /* LaunchScreen.storyboard */,
 				2CD7F8B6285F390500E5C446 /* Info.plist */,
 				2CD7F8AE285F390300E5C446 /* SaveMoney.xcdatamodeld */,
 			);
 			path = SaveMoney;
 			sourceTree = "<group>";
 		};
-		2CD7F8BE285F390500E5C446 /* SaveMoneyTests */ = {
+		2CD7F8DA285F395600E5C446 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				2CD7F8BF285F390500E5C446 /* SaveMoneyTests.swift */,
+				2CD7F8A9285F390300E5C446 /* HomeViewController.swift */,
+				2CD7F8D8285F395100E5C446 /* AppTabbarController.swift */,
+				2CD7F8DB285F3D5100E5C446 /* CalendarViewController.swift */,
+				2CD7F8DD285F3DFD00E5C446 /* UserViewController.swift */,
 			);
-			path = SaveMoneyTests;
-			sourceTree = "<group>";
-		};
-		2CD7F8C8285F390500E5C446 /* SaveMoneyUITests */ = {
-			isa = PBXGroup;
-			children = (
-				2CD7F8C9285F390500E5C446 /* SaveMoneyUITests.swift */,
-				2CD7F8CB285F390500E5C446 /* SaveMoneyUITestsLaunchTests.swift */,
-			);
-			path = SaveMoneyUITests;
+			path = ViewController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -234,9 +220,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2CD7F8B5285F390500E5C446 /* LaunchScreen.storyboard in Resources */,
 				2CD7F8B2285F390500E5C446 /* Assets.xcassets in Resources */,
-				2CD7F8AD285F390300E5C446 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -261,8 +245,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2CD7F8AA285F390300E5C446 /* ViewController.swift in Sources */,
+				2CD7F8DE285F3DFD00E5C446 /* UserViewController.swift in Sources */,
+				2CD7F8DC285F3D5100E5C446 /* CalendarViewController.swift in Sources */,
+				2CD7F8AA285F390300E5C446 /* HomeViewController.swift in Sources */,
 				2CD7F8B0285F390300E5C446 /* SaveMoney.xcdatamodeld in Sources */,
+				2CD7F8D9285F395100E5C446 /* AppTabbarController.swift in Sources */,
 				2CD7F8A6285F390300E5C446 /* AppDelegate.swift in Sources */,
 				2CD7F8A8285F390300E5C446 /* SceneDelegate.swift in Sources */,
 			);
@@ -272,7 +259,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2CD7F8C0285F390500E5C446 /* SaveMoneyTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -280,8 +266,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2CD7F8CC285F390500E5C446 /* SaveMoneyUITestsLaunchTests.swift in Sources */,
-				2CD7F8CA285F390500E5C446 /* SaveMoneyUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -299,25 +283,6 @@
 			targetProxy = 2CD7F8C6285F390500E5C446 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		2CD7F8AB285F390300E5C446 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				2CD7F8AC285F390300E5C446 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		2CD7F8B3285F390500E5C446 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				2CD7F8B4285F390500E5C446 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		2CD7F8CD285F390500E5C446 /* Debug */ = {
@@ -446,7 +411,6 @@
 				INFOPLIST_FILE = SaveMoney/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -474,7 +438,6 @@
 				INFOPLIST_FILE = SaveMoney/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
