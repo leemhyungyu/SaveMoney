@@ -1,16 +1,17 @@
 //
-//  UserViewController.swift
+//  AddViewController.swift
 //  SaveMoney
 //
-//  Created by 임현규 on 2022/06/19.
+//  Created by 임현규 on 2022/06/20.
 //
 
 import UIKit
 
-class UserViewController: UIViewController {
+class AddViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
     }
 }
+

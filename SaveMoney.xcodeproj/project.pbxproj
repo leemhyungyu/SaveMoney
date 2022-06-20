@@ -17,6 +17,7 @@
 		2CD7F8DC285F3D5100E5C446 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD7F8DB285F3D5100E5C446 /* CalendarViewController.swift */; };
 		2CD7F8DE285F3DFD00E5C446 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD7F8DD285F3DFD00E5C446 /* UserViewController.swift */; };
 		2CD7F8E1285F574800E5C446 /* MainCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD7F8E0285F574800E5C446 /* MainCell.swift */; };
+		2CD7F8E42860755800E5C446 /* AddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD7F8E32860755800E5C446 /* AddViewController.swift */; };
 		A96DF00AE88B3A40D7608808 /* Pods_SaveMoney.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF6C2E5AE8B3A5229826B305 /* Pods_SaveMoney.framework */; };
 		F390271C837C201A4EB2B0C8 /* Pods_SaveMoney_SaveMoneyUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D9CD49891492A60C269A65C /* Pods_SaveMoney_SaveMoneyUITests.framework */; };
 /* End PBXBuildFile section */
@@ -55,6 +56,7 @@
 		2CD7F8DB285F3D5100E5C446 /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
 		2CD7F8DD285F3DFD00E5C446 /* UserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
 		2CD7F8E0285F574800E5C446 /* MainCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCell.swift; sourceTree = "<group>"; };
+		2CD7F8E32860755800E5C446 /* AddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddViewController.swift; sourceTree = "<group>"; };
 		3347665C7F7CBE3B377280A4 /* Pods-SaveMoney-SaveMoneyUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SaveMoney-SaveMoneyUITests.release.xcconfig"; path = "Target Support Files/Pods-SaveMoney-SaveMoneyUITests/Pods-SaveMoney-SaveMoneyUITests.release.xcconfig"; sourceTree = "<group>"; };
 		350F3F2E11BC18B0BA512F3E /* Pods_SaveMoneyTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SaveMoneyTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		44B5769053197B5999C16641 /* Pods-SaveMoneyTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SaveMoneyTests.release.xcconfig"; path = "Target Support Files/Pods-SaveMoneyTests/Pods-SaveMoneyTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -132,6 +134,7 @@
 				2CD7F8D8285F395100E5C446 /* AppTabbarController.swift */,
 				2CD7F8DB285F3D5100E5C446 /* CalendarViewController.swift */,
 				2CD7F8DD285F3DFD00E5C446 /* UserViewController.swift */,
+				2CD7F8E32860755800E5C446 /* AddViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -406,6 +409,7 @@
 			files = (
 				2CD7F8DE285F3DFD00E5C446 /* UserViewController.swift in Sources */,
 				2CD7F8DC285F3D5100E5C446 /* CalendarViewController.swift in Sources */,
+				2CD7F8E42860755800E5C446 /* AddViewController.swift in Sources */,
 				2CD7F8AA285F390300E5C446 /* HomeViewController.swift in Sources */,
 				2CD7F8B0285F390300E5C446 /* SaveMoney.xcdatamodeld in Sources */,
 				2CD7F8D9285F395100E5C446 /* AppTabbarController.swift in Sources */,
