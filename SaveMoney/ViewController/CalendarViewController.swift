@@ -39,8 +39,8 @@ class CalendarViewController: UIViewController {
     }()
     
     let addBtn: UIButton = {
-        var config = UIButton.Configuration.tinted()
-        config.baseBackgroundColor = .blue
+        var config = UIButton.Configuration.filled()
+        config.baseBackgroundColor = .systemBlue
         
         var titleAttr = AttributedString.init("절약하기")
         titleAttr.font = .systemFont(ofSize: 16)
@@ -48,22 +48,24 @@ class CalendarViewController: UIViewController {
         
         let btn = UIButton(configuration: config)
         
-        btn.addTarget(self, action: #selector(addBtnClicked), for: .touchUpInside)
+        btn.addTarget(self, action: #selector(addBtnClicked(_:)), for: .touchUpInside)
         
         return btn
     }()
     
     var day: String = "6월 19일"
-    
+    var events: [Date] = []
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setting()
+        setEvents()
     }
 }
 extension CalendarViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -72,7 +74,9 @@ extension CalendarViewController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
 }
+
 extension CalendarViewController: FSCalendarDelegate, FSCalendarDataSource {
+    
     
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         print("\(date) 날짜가 선택되었습니다.")
@@ -81,7 +85,26 @@ extension CalendarViewController: FSCalendarDelegate, FSCalendarDataSource {
         label.text = day
     }
     
-
+    func setEvents() {
+        let dfMatter = DateFormatter()
+        dfMatter.locale = Locale(identifier: "ko_KR")
+        dfMatter.dateFormat = "yyyy-MM-dd"
+        
+        // events
+        let myFirstEvent = dfMatter.date(from: "2022-06-20")
+        let mySecondEvent = dfMatter.date(from: "2022-06-21")
+        
+        events = [myFirstEvent!, mySecondEvent!]
+    }
+    
+    func calendar(_ calendar: FSCalendar, numberOfEventsFor date: Date) -> Int {
+        
+        if self.events.contains(date) {
+            return 1
+        } else {
+            return 0
+        }
+    }
 }
 
 extension CalendarViewController {
@@ -158,8 +181,8 @@ extension CalendarViewController {
         
         print("ADD Btn Clicked")
         
-        let addVC = AddViewController()
-        addVC.modalPresentationStyle = .formSheet
-        present(addVC, animated: true, completion: nil)
+        let SaveVC = SaveViewController()
+        SaveVC.modalPresentationStyle = .fullScreen
+        present(SaveVC, animated: true, completion: nil)
     }
 }
