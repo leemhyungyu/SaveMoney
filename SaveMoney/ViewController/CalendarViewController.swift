@@ -55,6 +55,7 @@ class CalendarViewController: UIViewController {
     
     var day: String = "6월 19일"
     var events: [Date] = []
+    var date: Date!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -80,7 +81,6 @@ extension CalendarViewController: FSCalendarDelegate, FSCalendarDataSource {
     
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         print("\(date) 날짜가 선택되었습니다.")
-
         day = getDateToString(date: date)
         label.text = day
     }
@@ -182,7 +182,11 @@ extension CalendarViewController {
         print("ADD Btn Clicked")
         
         let SaveVC = SaveViewController()
+        
+        SaveVC.weekCalendar.select(calendar.selectedDate)
+
         SaveVC.modalPresentationStyle = .fullScreen
         present(SaveVC, animated: true, completion: nil)
+        
     }
 }

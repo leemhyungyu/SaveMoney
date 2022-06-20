@@ -91,7 +91,7 @@ class SaveViewController: UIViewController {
         }
         
         label.snp.makeConstraints {
-            $0.top.equalTo(backBtn.snp.bottom).offset(50)
+            $0.top.equalTo(backBtn.snp.bottom).offset(70)
             $0.centerX.equalToSuperview()
         }
     
@@ -112,6 +112,7 @@ class SaveViewController: UIViewController {
         
         print("Back Btn Clicked")
         dismiss(animated: true)
+
     }
 }
 
