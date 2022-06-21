@@ -53,7 +53,7 @@ class CalendarViewController: UIViewController {
         return btn
     }()
     
-    var day: String = "6월 19일"
+    var day: String!
     var events: [Date] = []
     var date: Date!
 
@@ -61,8 +61,10 @@ class CalendarViewController: UIViewController {
         super.viewDidLoad()
         setting()
         setEvents()
+        getToday()
     }
 }
+
 extension CalendarViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -107,7 +109,7 @@ extension CalendarViewController: FSCalendarDelegate, FSCalendarDataSource {
     }
 }
 
-extension CalendarViewController {
+extension CalendarViewController{
     func setting() {
  
         calendar.delegate = self
@@ -177,16 +179,27 @@ extension CalendarViewController {
         return dateFormatter.string(from: date)
     }
     
+    func getToday() {
+        day = getDateToString(date: Date())
+        
+        label.text = day
+    }
     @objc func addBtnClicked(_ sender: UITapGestureRecognizer) {
         
         print("ADD Btn Clicked")
         
         let SaveVC = SaveViewController()
-        
         SaveVC.weekCalendar.select(calendar.selectedDate)
-
+        SaveVC.delegate = self
         SaveVC.modalPresentationStyle = .fullScreen
         present(SaveVC, animated: true, completion: nil)
-        
+    }
+}
+
+extension CalendarViewController: SendDataDelegate {
+    func sendData(data: Date) {
+        calendar.select(data)
+        day = getDateToString(date: data)
+        label.text = day
     }
 }

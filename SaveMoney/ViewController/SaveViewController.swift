@@ -20,7 +20,16 @@ class SaveViewController: UIViewController {
         let calendar = FSCalendar()
         calendar.scope = .week
         calendar.appearance.headerMinimumDissolvedAlpha = 0.0
+        calendar.headerHeight = 50
+        calendar.appearance.headerDateFormat = "YYYY년 M월"
 
+        calendar.appearance.headerTitleFont = UIFont(name: "NotoSansKR-Medium", size: 16)
+        calendar.appearance.titleFont = UIFont(name: "NotoSansKR-Regular", size: 14)
+        calendar.appearance.weekdayFont = UIFont(name: "NotoSansKR-Regular", size: 14)
+        
+        calendar.appearance.borderSelectionColor = .gray
+        calendar.appearance.headerTitleColor = .black
+        calendar.appearance.titleWeekendColor = .red
         return calendar
     }()
     
@@ -57,6 +66,8 @@ class SaveViewController: UIViewController {
         return label
     }()
     
+    var delegate: SendDataDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -83,15 +94,16 @@ class SaveViewController: UIViewController {
         weekCalendar.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.trailing.leading.equalToSuperview()
-            $0.height.equalTo(200)
+            $0.height.equalTo(250)
         }
         
         backBtn.snp.makeConstraints {
-            $0.top.equalTo(weekCalendar)
+            $0.top.equalTo(weekCalendar).offset(10)
+            $0.leading.equalTo(weekCalendar).offset(5)
         }
         
         label.snp.makeConstraints {
-            $0.top.equalTo(backBtn.snp.bottom).offset(70)
+            $0.top.equalTo(backBtn.snp.bottom).offset(80)
             $0.centerX.equalToSuperview()
         }
     
@@ -109,10 +121,12 @@ class SaveViewController: UIViewController {
     }
     
     @objc func backBtnClicked(_ sender: UITapGestureRecognizer) {
-        
         print("Back Btn Clicked")
-        dismiss(animated: true)
-
+        
+        if let data = weekCalendar.selectedDate {
+            delegate?.sendData(data: data)
+            dismiss(animated: true)
+        }
     }
 }
 
@@ -129,4 +143,8 @@ extension SaveViewController: UITableViewDelegate, UITableViewDataSource {
 
         return cell
     }
+}
+
+protocol SendDataDelegate {
+    func sendData(data: Date)
 }
