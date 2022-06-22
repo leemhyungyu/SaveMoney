@@ -127,8 +127,9 @@ class SaveViewController: UIViewController {
         
         if let data = weekCalendar.selectedDate {
             delegate?.sendData(data: data)
-            dismiss(animated: true)
         }
+        
+        dismiss(animated: true)
     }
     
     @objc func inputBtnClicked(_ sender: UITapGestureRecognizer) {
@@ -136,7 +137,7 @@ class SaveViewController: UIViewController {
         
         InputVC.modalPresentationStyle = .pageSheet
         present(InputVC, animated: true, completion: nil)
-
+        
     }
 }
 

@@ -77,11 +77,34 @@ class InputViewController: UIViewController {
         return label
     }()
     
+    let pickerView: UIPickerView = {
+        let pickerView = UIPickerView()
+        return pickerView
+    }()
+    
+    let toolbar: UIToolbar = {
+        let toolbar = UIToolbar()
+        
+        toolbar.barStyle = .default
+        toolbar.isTranslucent = true
+        toolbar.sizeToFit()
+        
+        let doneBtn = UIBarButtonItem(title: "확인", style: .done, target: self, action: #selector(doneBtnOfToolbarClicked))
+        let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
+        let cancleBtn = UIBarButtonItem(title: "취소", style: .done, target: self, action: #selector(cancleBtnOfToolbarClicked))
+        
+        toolbar.setItems([cancleBtn, space, doneBtn], animated: true)
+        toolbar.isUserInteractionEnabled = true
+        
+        return toolbar
+    }()
+    
     let categoriinput: UITextField = {
         let textField = UITextField()
         
         textField.borderStyle = .roundedRect
         textField.backgroundColor = .systemGray5
+        
         return textField
     }()
     
@@ -89,6 +112,8 @@ class InputViewController: UIViewController {
         let textField = UITextField()
         textField.borderStyle = .roundedRect
         textField.backgroundColor = .systemGray5
+        textField.placeholder = "순대국밥"
+
         return textField
     }()
     
@@ -96,10 +121,13 @@ class InputViewController: UIViewController {
         let textField = UITextField()
         textField.borderStyle = .roundedRect
         textField.backgroundColor = .systemGray5
+        textField.keyboardType = .numberPad
+        textField.placeholder = "7000"
         return textField
     }()
     
-
+    let categoriDate = ["식비", "교통", "취미", "생활", "커피", "기타"]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -121,6 +149,10 @@ class InputViewController: UIViewController {
         infoView.addSubview(moneyinput)
         infoView.addSubview(moneyLabel)
         
+        pickerView.delegate = self
+        categoriinput.inputView = pickerView
+        categoriinput.inputAccessoryView = toolbar
+
         subView.snp.makeConstraints {
             $0.top.trailing.leading.equalToSuperview()
             $0.height.equalTo(150)
@@ -167,7 +199,6 @@ class InputViewController: UIViewController {
         
         moneyLabel.snp.makeConstraints {
             $0.top.equalTo(categoriinput.snp.bottom).offset(20)
-//            $0.trailing.equalToSuperview().offset(-20)
             $0.leading.equalTo(moneyinput.snp.leading)
         }
         
@@ -177,5 +208,35 @@ class InputViewController: UIViewController {
             $0.width.equalTo(150)
             $0.height.equalTo(30)
         }
+    }
+}
+
+extension InputViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return categoriDate.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return categoriDate[row]
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        categoriinput.text =  categoriDate[row]
+    }
+}
+
+extension InputViewController {
+    
+    @objc func doneBtnOfToolbarClicked() {
+        categoriinput.resignFirstResponder()
+    }
+    
+    @objc func cancleBtnOfToolbarClicked() {
+        categoriinput.text = ""
+        categoriinput.resignFirstResponder()
     }
 }
