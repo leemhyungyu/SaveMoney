@@ -55,6 +55,8 @@ class SaveViewController: UIViewController {
         
         let btn = UIButton(configuration: config)
         
+        btn.addTarget(self, action: #selector(inputBtnClicked(_:)), for: .touchUpInside)
+        
         return btn
     }()
     
@@ -127,6 +129,14 @@ class SaveViewController: UIViewController {
             delegate?.sendData(data: data)
             dismiss(animated: true)
         }
+    }
+    
+    @objc func inputBtnClicked(_ sender: UITapGestureRecognizer) {
+        let InputVC = InputViewController()
+        
+        InputVC.modalPresentationStyle = .pageSheet
+        present(InputVC, animated: true, completion: nil)
+
     }
 }
 
