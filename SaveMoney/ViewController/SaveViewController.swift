@@ -135,8 +135,10 @@ class SaveViewController: UIViewController {
     @objc func inputBtnClicked(_ sender: UITapGestureRecognizer) {
         let InputVC = InputViewController()
         
+//        InputVC.modalPresentationStyle = .overFullScreen
+//        InputVC.modalTransitionStyle = .crossDissolve
         InputVC.modalPresentationStyle = .pageSheet
-        present(InputVC, animated: true, completion: nil)
+        present(InputVC, animated: true)
         
     }
 }
