@@ -24,6 +24,17 @@ class InputViewController: UIViewController {
         return view
     }()
     
+    let backBtn: UIButton = {
+        var config = UIButton.Configuration.plain()
+        config.image = UIImage(systemName: "arrow.left")
+        config.imagePadding = 10
+        
+        let btn = UIButton(configuration: config)
+        btn.addTarget(self, action: #selector(backBtnClicked(_:)), for: .touchUpInside)
+        
+        return btn
+    }()
+    
     let finalView: UIView = {
         let view = UIView()
         
@@ -89,46 +100,43 @@ class InputViewController: UIViewController {
     let planMoneyLabel: UILabel = {
         
         let label = UILabel()
-        
         label.text = "가격(원)"
-        
         label.font = .systemFont(ofSize: 16)
-        
+
         return label
     }()
     
     let planCategoriInput: UITextField = {
-        let textField = UITextField()
         
+        let textField = UITextField()
         textField.borderStyle = .roundedRect
-        textField.backgroundColor = .systemGray5
         
         return textField
     }()
     
     let planNameInput: UITextField = {
+        
         let textField = UITextField()
         textField.borderStyle = .roundedRect
-        textField.backgroundColor = .systemGray5
         textField.placeholder = "순대국밥"
 
         return textField
     }()
     
     let planMoneyInput: UITextField = {
+        
         let textField = UITextField()
         textField.borderStyle = .roundedRect
-        textField.backgroundColor = .systemGray5
         textField.keyboardType = .numberPad
         textField.placeholder = "7000"
+        
         return textField
     }()
     
     let finalViewLabel: UILabel = {
+        
         let label = UILabel()
-        
         label.text = "구매한 내역"
-        
         label.font = .systemFont(ofSize: 20, weight: .bold)
         
         return label
@@ -136,20 +144,18 @@ class InputViewController: UIViewController {
     
 
     let finalCategoriLabel: UILabel = {
+        
         let label = UILabel()
-        
         label.text = "카테고리"
-        
         label.font = .systemFont(ofSize: 16)
         
         return label
     }()
     
     let finalNameLabel: UILabel = {
+        
         let label = UILabel()
-        
         label.text = "물품명"
-        
         label.font = .systemFont(ofSize: 16)
         
         return label
@@ -158,43 +164,50 @@ class InputViewController: UIViewController {
     let finalMoneyLabel: UILabel = {
         
         let label = UILabel()
-        
         label.text = "가격(원)"
-        
         label.font = .systemFont(ofSize: 16)
         
         return label
     }()
     
     let finalCategoriInput: UITextField = {
-        let textField = UITextField()
         
+        let textField = UITextField()
         textField.borderStyle = .roundedRect
-        textField.backgroundColor = .systemGray5
         
         return textField
     }()
     
     let finalNameInput: UITextField = {
+        
         let textField = UITextField()
         textField.borderStyle = .roundedRect
-        textField.backgroundColor = .systemGray5
         textField.placeholder = "컵밥"
 
         return textField
     }()
     
     let finalMoneyInput: UITextField = {
+        
         let textField = UITextField()
         textField.borderStyle = .roundedRect
-        textField.backgroundColor = .systemGray5
         textField.keyboardType = .numberPad
         textField.placeholder = "3500"
+        
         return textField
     }()
     
-    let pickerView: UIPickerView = {
+    let planPickerView: UIPickerView = {
+        
         let pickerView = UIPickerView()
+        
+        return pickerView
+    }()
+    
+    let finalPickerView: UIPickerView = {
+        
+        let pickerView = UIPickerView()
+        
         return pickerView
     }()
     
@@ -215,8 +228,6 @@ class InputViewController: UIViewController {
         return toolbar
     }()
     
-
-    
     let categoriDate = ["식비", "교통", "취미", "생활", "커피", "기타"]
     
     override func viewDidLoad() {
@@ -233,10 +244,12 @@ class InputViewController: UIViewController {
         view.addSubview(finalView)
         view.addSubview(finalViewLabel)
         
+        
         subView.addSubview(label)
         subView.addSubview(infoLabel)
+        subView.addSubview(backBtn)
+
         
-//        planView.addSubview(planViewLabel)
         planView.addSubview(planCategoriLabel)
         planView.addSubview(planCategoriInput)
         planView.addSubview(planNameInput)
@@ -251,16 +264,21 @@ class InputViewController: UIViewController {
         finalView.addSubview(finalMoneyInput)
         finalView.addSubview(finalMoneyLabel)
         
-        planView.backgroundColor = .systemGray6
-        finalView.backgroundColor = .systemGray6
+        planView.backgroundColor = .systemGray5
+        finalView.backgroundColor = .systemGray5
 
-        pickerView.delegate = self
-        planCategoriInput.inputView = pickerView
+        planPickerView.delegate = self
+        planCategoriInput.inputView = planPickerView
         planCategoriInput.inputAccessoryView = toolbar
         
-        finalCategoriInput.inputView = pickerView
+        finalPickerView.delegate = self
+        finalCategoriInput.inputView = finalPickerView
         finalCategoriInput.inputAccessoryView = toolbar
         
+        backBtn.snp.makeConstraints {
+            $0.top.equalTo(subView).offset(10)
+            $0.leading.equalTo(subView).offset(5)
+        }
         subView.snp.makeConstraints {
             $0.top.trailing.leading.equalToSuperview()
             $0.height.equalTo(150)
@@ -379,6 +397,7 @@ extension InputViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        
         return categoriDate.count
     }
     
@@ -387,7 +406,13 @@ extension InputViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        planCategoriInput.text =  categoriDate[row]
+        
+        if pickerView == planPickerView {
+            planCategoriInput.text =  categoriDate[row]
+        } else {
+            finalCategoriInput.text = categoriDate[row]
+        }
+        
     }
 }
 
@@ -398,7 +423,12 @@ extension InputViewController {
     }
     
     @objc func cancleBtnOfToolbarClicked() {
+        
         planCategoriInput.text = ""
         planCategoriInput.resignFirstResponder()
+    }
+    
+    @objc func backBtnClicked(_ sender: UITapGestureRecognizer) {
+        dismiss(animated: true)
     }
 }

@@ -9,7 +9,7 @@ import SnapKit
 
 class MainCell: UITableViewCell {
  
-    static let identifier = "mainCell"
+    static let identifier = "MainCell"
     
     var label: UILabel = {
         let label = UILabel()
