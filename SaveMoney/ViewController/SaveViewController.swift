@@ -74,6 +74,7 @@ class SaveViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         setting()
+        dateSetting()
     }
     
     func setting() {
@@ -138,6 +139,14 @@ class SaveViewController: UIViewController {
 //        InputVC.modalPresentationStyle = .overFullScreen
 //        InputVC.modalTransitionStyle = .crossDissolve
         InputVC.modalPresentationStyle = .pageSheet
+        
+        if let date = getDateToString(date: weekCalendar.selectedDate!) {
+            InputVC.label.text = date
+            print(weekCalendar.selectedDate)
+        } else {
+            print("error")
+        }
+        
         present(InputVC, animated: true)
         
     }
@@ -160,4 +169,20 @@ extension SaveViewController: UITableViewDelegate, UITableViewDataSource {
 
 protocol SendDataDelegate {
     func sendData(data: Date)
+}
+
+extension SaveViewController {
+    func getDateToString(date: Date) -> String? {
+        let dateFormatter = DateFormatter()
+        
+        dateFormatter.dateFormat = "M월 dd일"
+        
+        return dateFormatter.string(from: date)
+    }
+    
+    func dateSetting() {
+        if weekCalendar.selectedDate == nil {
+            weekCalendar.select(Date())
+        }
+    }
 }

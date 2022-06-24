@@ -292,7 +292,7 @@ class InputViewController: UIViewController {
         planView.snp.makeConstraints {
             $0.top.equalTo(planViewLabel.snp.bottom).inset(-10)
             $0.trailing.leading.equalToSuperview().inset(20)
-            $0.height.equalTo(200)
+            $0.height.equalTo(160)
         }
         
         finalViewLabel.snp.makeConstraints {
@@ -303,7 +303,7 @@ class InputViewController: UIViewController {
         finalView.snp.makeConstraints {
             $0.top.equalTo(finalViewLabel.snp.bottom).inset(-10)
             $0.trailing.leading.equalToSuperview().inset(20)
-            $0.height.equalTo(200)
+            $0.height.equalTo(160)
         }
         
         
