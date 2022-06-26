@@ -91,7 +91,6 @@ class SaveViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(MainCell.self, forCellReuseIdentifier: MainCell.identifier)
-        tableView.backgroundColor = .white
         
         
         weekCalendar.snp.makeConstraints {
@@ -157,7 +156,7 @@ extension SaveViewController: FSCalendarDelegate, FSCalendarDataSource {
 }
 extension SaveViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

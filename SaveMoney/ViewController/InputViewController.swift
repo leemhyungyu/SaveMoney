@@ -228,6 +228,23 @@ class InputViewController: UIViewController {
         return toolbar
     }()
     
+    let doneBtn: UIButton = {
+       
+        var config = UIButton.Configuration.filled()
+        config.baseBackgroundColor = .systemBlue
+        config.imagePadding = 10
+        
+        var titleAttr = AttributedString.init("완료")
+        titleAttr.font = .systemFont(ofSize: 16)
+        config.attributedTitle = titleAttr
+        
+        let btn = UIButton(configuration: config)
+        
+        btn.addTarget(self, action: #selector(doneBtnClicked(_:)), for: .touchUpInside)
+        
+        return btn
+    }()
+    
     let categoriDate = ["식비", "교통", "취미", "생활", "커피", "기타"]
     
     override func viewDidLoad() {
@@ -243,7 +260,7 @@ class InputViewController: UIViewController {
         view.addSubview(planViewLabel)
         view.addSubview(finalView)
         view.addSubview(finalViewLabel)
-        
+        view.addSubview(doneBtn)
         
         subView.addSubview(label)
         subView.addSubview(infoLabel)
@@ -388,6 +405,13 @@ class InputViewController: UIViewController {
             $0.width.equalTo(150)
             $0.height.equalTo(30)
         }
+        
+        doneBtn.snp.makeConstraints {
+            $0.top.equalTo(finalView.snp.bottom).offset(30)
+            $0.centerX.equalToSuperview()
+            $0.width.equalTo(200)
+            $0.height.equalTo(40)
+        }
     }
 }
 
@@ -429,6 +453,10 @@ extension InputViewController {
     }
     
     @objc func backBtnClicked(_ sender: UITapGestureRecognizer) {
+        dismiss(animated: true)
+    }
+    
+    @objc func doneBtnClicked(_ sender: UITapGestureRecognizer) {
         dismiss(animated: true)
     }
 }

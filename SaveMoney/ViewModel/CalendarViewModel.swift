@@ -7,40 +7,59 @@
 
 import UIKit
 
-struct Save {
+struct Save: Codable {
+    var id: Int
     var day: String
-    var category: String
-    var name: String
-    var money: Int
-    var saveMoney: Int
-    
-    mutating func update(day: String, category: String, name: String, money: Int, saveMoney: Int) {
-        self.day = day
-        self.category = category
-        self.name = name
-        self.money = money
-    }
+    var planName: String
+    var planMoney: Int
+    var finalName: String
+    var finalMoney: Int
 }
 
 class CalendarViewModel {
     
+    // Save객체를 저장할 리스트
     var saves: [Save] = []
     
+    static var lastId: Int = 0
+    
+    // 행의 개수를 반환하는 메소드
+    var numOfRow: Int {
+        return saves.count
+    }
+    
+    // Save 객체를 만드는 메소드
+    func createSave(day: String, planName: String, finalName: String, planMoney: Int, finalMoney: Int) -> Save {
+        
+        let nextId = CalendarViewModel.lastId + 1
+        CalendarViewModel.lastId = nextId
+        
+        return Save(id: nextId, day: day, planName: planName, planMoney: planMoney, finalName: finalName, finalMoney: finalMoney)
+    }
+    
+    // 절약한 돈을 계산해주는 메소드
+    func saveMoney(save: Save) -> Int {
+        return save.planMoney - save.finalMoney
+    }
+    
+    // 절약내역을 추가하는 메소드
+    func addSave(save: Save) {
+        saves.append(save)
+        saveStruct()
+    }
+    
+    // 절약내역을 저장하는 메소드 (일단 userDefaults 사용)
+    func saveStruct() {
+        UserDefaults.standard.set(try? PropertyListEncoder().encode(saves), forKey: "Saves")
+    }
+    
+    // 선택한 절약내역을 지우는 메소드
+    func deleteSave(save: Save) {
+        // 선택한 절약내역의 id와 다른 id를 가진 save객체만 선별
+        saves = saves.filter { $0.id != save.id }
+        // 저장
+        saveStruct()
+    }
 }
 
-    
-/*
- - 절약한 내용을 담을 객체
- [x] 해당 날짜
- [x] 물품의 카테고리
- [] 원래 결제하려했던 물품의 이름
- [x] 결국에 결제한 물품의 이름
- [] 원래 결제하려했던 가격
- [x] 결국에 결제한 가격
- [x] 세이브한 가격
- [] 이벤트가 있는 날인지 아닌지 구분하는 프로퍼티
- 
- - 함수
- [] 이벤트가 있는 달력과 이벤트가 없는 달력을 구분지어서 화면 표시
- []
- */
+
