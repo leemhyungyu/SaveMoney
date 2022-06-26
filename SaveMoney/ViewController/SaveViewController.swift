@@ -70,11 +70,18 @@ class SaveViewController: UIViewController {
     
     var delegate: SendDataDelegate?
     
+    let viewModel = CalendarViewModel.shared
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         setting()
         dateSetting()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        viewModel.retrieveSave()
+        tableView.reloadData()
     }
     
     func setting() {
@@ -90,8 +97,7 @@ class SaveViewController: UIViewController {
         weekCalendar.addSubview(backBtn)
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.register(MainCell.self, forCellReuseIdentifier: MainCell.identifier)
-        
+        tableView.register(SaveCell.self, forCellReuseIdentifier: SaveCell.identifier)
         
         weekCalendar.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
@@ -134,10 +140,8 @@ class SaveViewController: UIViewController {
     
     @objc func inputBtnClicked(_ sender: UITapGestureRecognizer) {
         let InputVC = InputViewController()
-        
-//        InputVC.modalPresentationStyle = .overFullScreen
-//        InputVC.modalTransitionStyle = .crossDissolve
-        InputVC.modalPresentationStyle = .pageSheet
+
+        InputVC.modalPresentationStyle = .fullScreen
         
         if let date = getDateToString(date: weekCalendar.selectedDate!) {
             InputVC.label.text = date
@@ -145,9 +149,11 @@ class SaveViewController: UIViewController {
         } else {
             print("error")
         }
-        
+//        print("saveVC - \(viewModel.saves)")
         present(InputVC, animated: true)
         
+        print(viewModel.numOfRow)
+        print(viewModel.saves)
     }
 }
 
@@ -155,13 +161,23 @@ extension SaveViewController: FSCalendarDelegate, FSCalendarDataSource {
     
 }
 extension SaveViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+            return 60
+        }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return viewModel.numOfRow
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: MainCell.identifier, for: indexPath) as? MainCell else { return UITableViewCell() }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: SaveCell.identifier, for: indexPath) as? SaveCell else { return UITableViewCell() }
+        
+        var save: Save
 
+        save = viewModel.saves[indexPath.row]
+
+        cell.updateCell(save: save)
+        
         return cell
     }
 }

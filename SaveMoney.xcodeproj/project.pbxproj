@@ -20,6 +20,7 @@
 		2CD7F8E42860755800E5C446 /* SaveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD7F8E32860755800E5C446 /* SaveViewController.swift */; };
 		2CD7F8E728607A8400E5C446 /* CalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD7F8E628607A8400E5C446 /* CalendarViewModel.swift */; };
 		2CD7F8EB2861F48300E5C446 /* InputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD7F8EA2861F48300E5C446 /* InputViewController.swift */; };
+		2CD7F8F52868685C00E5C446 /* SaveCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD7F8F42868685C00E5C446 /* SaveCell.swift */; };
 		A96DF00AE88B3A40D7608808 /* Pods_SaveMoney.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF6C2E5AE8B3A5229826B305 /* Pods_SaveMoney.framework */; };
 		F390271C837C201A4EB2B0C8 /* Pods_SaveMoney_SaveMoneyUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D9CD49891492A60C269A65C /* Pods_SaveMoney_SaveMoneyUITests.framework */; };
 /* End PBXBuildFile section */
@@ -61,6 +62,7 @@
 		2CD7F8E32860755800E5C446 /* SaveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveViewController.swift; sourceTree = "<group>"; };
 		2CD7F8E628607A8400E5C446 /* CalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewModel.swift; sourceTree = "<group>"; };
 		2CD7F8EA2861F48300E5C446 /* InputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputViewController.swift; sourceTree = "<group>"; };
+		2CD7F8F42868685C00E5C446 /* SaveCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveCell.swift; sourceTree = "<group>"; };
 		3347665C7F7CBE3B377280A4 /* Pods-SaveMoney-SaveMoneyUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SaveMoney-SaveMoneyUITests.release.xcconfig"; path = "Target Support Files/Pods-SaveMoney-SaveMoneyUITests/Pods-SaveMoney-SaveMoneyUITests.release.xcconfig"; sourceTree = "<group>"; };
 		350F3F2E11BC18B0BA512F3E /* Pods_SaveMoneyTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SaveMoneyTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		44B5769053197B5999C16641 /* Pods-SaveMoneyTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SaveMoneyTests.release.xcconfig"; path = "Target Support Files/Pods-SaveMoneyTests/Pods-SaveMoneyTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -149,6 +151,7 @@
 			isa = PBXGroup;
 			children = (
 				2CD7F8E0285F574800E5C446 /* MainCell.swift */,
+				2CD7F8F42868685C00E5C446 /* SaveCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -421,6 +424,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2CD7F8F52868685C00E5C446 /* SaveCell.swift in Sources */,
 				2CD7F8EB2861F48300E5C446 /* InputViewController.swift in Sources */,
 				2CD7F8DE285F3DFD00E5C446 /* UserViewController.swift in Sources */,
 				2CD7F8DC285F3D5100E5C446 /* CalendarViewController.swift in Sources */,
