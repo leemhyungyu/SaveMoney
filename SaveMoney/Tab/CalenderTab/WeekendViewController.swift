@@ -140,8 +140,6 @@ class WeekendViewController: UIViewController {
     
     @objc func inputBtnClicked(_ sender: UITapGestureRecognizer) {
         let InputVC = InputViewController()
-
-        InputVC.modalPresentationStyle = .fullScreen
         
         if let date = getDateToString(date: weekCalendar.selectedDate!) {
             InputVC.label.text = date
@@ -149,14 +147,18 @@ class WeekendViewController: UIViewController {
         } else {
             print("error")
         }
-//        print("saveVC - \(viewModel.saves)")
         present(InputVC, animated: true)
         
     }
 }
 
 extension WeekendViewController: FSCalendarDelegate, FSCalendarDataSource {
-    
+    func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
+        let day = getDateToString(date: date)
+        viewModel.saveOfSelectedDay(date: day!)
+        print(viewModel.saveOfDay)
+        tableView.reloadData()
+    }
 }
 extension WeekendViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -172,7 +174,7 @@ extension WeekendViewController: UITableViewDelegate, UITableViewDataSource {
         
         var save: Save
 
-        save = viewModel.saves[indexPath.row]
+        save = viewModel.saveOfDay[indexPath.row]
 
         cell.updateCell(save: save)
         

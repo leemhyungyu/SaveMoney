@@ -37,6 +37,10 @@ class SaveManager {
         saveStruct()
     }
     
+    func saveOfSelectedDay(date: String) -> [Save] {
+        return saves.filter { $0.day == date }
+    }
+    
     func saveStruct() {
         UserDefaults.standard.set(try? PropertyListEncoder().encode(saves), forKey: "Saves")
     }

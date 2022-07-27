@@ -252,6 +252,7 @@ class InputViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         setting()
+        print(viewModel.saves)
     }
     
     func setting() {

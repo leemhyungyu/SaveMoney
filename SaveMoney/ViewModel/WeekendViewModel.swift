@@ -9,15 +9,22 @@ import Foundation
 class WeekendViewModel {
     let saveManager = SaveManager.shared
     
+    var saveOfDay: [Save] = []
+    
     var saves: [Save] {
         return saveManager.saves
     }
     
     var numOfRow: Int {
-        return saves.count
+        return saveOfDay.count
     }
     
     func retrieve() {
         saveManager.retrieveSave()
+    }
+    
+    func saveOfSelectedDay(date: String) {
+        self.saveOfDay = saveManager.saveOfSelectedDay(date: date)
+        
     }
 }
