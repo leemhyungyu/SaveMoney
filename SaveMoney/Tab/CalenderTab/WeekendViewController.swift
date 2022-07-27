@@ -9,7 +9,9 @@ import UIKit
 import FSCalendar
 import SnapKit
 
-class SaveViewController: UIViewController {
+class WeekendViewController: UIViewController {
+    
+    let viewModel = WeekendViewModel()
 
     lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
@@ -69,9 +71,7 @@ class SaveViewController: UIViewController {
     }()
     
     var delegate: SendDataDelegate?
-    
-    let viewModel = CalendarViewModel.shared
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -80,7 +80,7 @@ class SaveViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        viewModel.retrieveSave()
+        viewModel.retrieve()
         tableView.reloadData()
     }
     
@@ -152,15 +152,13 @@ class SaveViewController: UIViewController {
 //        print("saveVC - \(viewModel.saves)")
         present(InputVC, animated: true)
         
-        print(viewModel.numOfRow)
-        print(viewModel.saves)
     }
 }
 
-extension SaveViewController: FSCalendarDelegate, FSCalendarDataSource {
+extension WeekendViewController: FSCalendarDelegate, FSCalendarDataSource {
     
 }
-extension SaveViewController: UITableViewDelegate, UITableViewDataSource {
+extension WeekendViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
             return 60
         }
@@ -186,7 +184,7 @@ protocol SendDataDelegate {
     func sendData(data: Date)
 }
 
-extension SaveViewController {
+extension WeekendViewController {
     func getDateToString(date: Date) -> String? {
         let dateFormatter = DateFormatter()
         

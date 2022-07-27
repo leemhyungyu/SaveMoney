@@ -9,7 +9,8 @@ import UIKit
 
 class InputViewController: UIViewController {
     
-    
+    let viewModel = InputViewModel()
+
     let subView: UIView = {
         let subView = UIView()
 
@@ -246,9 +247,7 @@ class InputViewController: UIViewController {
     }()
     
     let categoriDate = ["식비", "교통", "취미", "생활", "커피", "기타"]
-    
-    let viewModel = CalendarViewModel.shared
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -463,12 +462,8 @@ extension InputViewController {
         
         guard let day = label.text, let planName = planNameInput.text, let planMoney = planMoneyInput.text, let finalName = finalNameInput.text, let finalMoney = finalMoneyInput.text else { return }
         
-        let save = viewModel.createSave(day: day, planName: planName, finalName: finalName, planMoney: planMoney, finalMoney: finalMoney)
+        let save = viewModel.saveManager.createSave(day: day, planName: planName, finalName: finalName, planMoney: planMoney, finalMoney: finalMoney)
         
         viewModel.addSave(save: save)
-        
-        print(viewModel.saves)
-        print(viewModel.numOfRow)
-
     }
 }

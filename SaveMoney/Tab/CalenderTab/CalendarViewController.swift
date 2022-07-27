@@ -4,14 +4,14 @@
 //
 //  Created by 임현규 on 2022/06/19.
 //
-
 import UIKit
 import FSCalendar
 import SnapKit
 
-
 class CalendarViewController: UIViewController {
-
+    
+    let viewModel = CalendarViewModel()
+    
     lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
         return tableView
@@ -32,7 +32,6 @@ class CalendarViewController: UIViewController {
     let label: UILabel = {
         let label = UILabel()
         
-        label.text = "6월 19일"
         label.font = .systemFont(ofSize: 20)
         
         return label
@@ -52,15 +51,11 @@ class CalendarViewController: UIViewController {
         
         return btn
     }()
-    
-    var day: String!
-    var events: [Date] = []
-    var date: Date!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setting()
-        setEvents()
+//        setEvents()
         getToday()
     }
 }
@@ -82,31 +77,30 @@ extension CalendarViewController: FSCalendarDelegate, FSCalendarDataSource {
     
     
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
-        print("\(date) 날짜가 선택되었습니다.")
-        day = getDateToString(date: date)
-        label.text = day
+        print("\(viewModel.day) 날짜가 선택되었습니다.")
+        label.text = viewModel.selectedDay(date)
     }
     
-    func setEvents() {
-        let dfMatter = DateFormatter()
-        dfMatter.locale = Locale(identifier: "ko_KR")
-        dfMatter.dateFormat = "yyyy-MM-dd"
-        
-        // events
-        let myFirstEvent = dfMatter.date(from: "2022-06-20")
-        let mySecondEvent = dfMatter.date(from: "2022-06-21")
-        
-        events = [myFirstEvent!, mySecondEvent!]
-    }
-    
-    func calendar(_ calendar: FSCalendar, numberOfEventsFor date: Date) -> Int {
-        
-        if self.events.contains(date) {
-            return 1
-        } else {
-            return 0
-        }
-    }
+//    func setEvents() {
+//        let dfMatter = DateFormatter()
+//        dfMatter.locale = Locale(identifier: "ko_KR")
+//        dfMatter.dateFormat = "yyyy-MM-dd"
+//
+//        // events
+//        let myFirstEvent = dfMatter.date(from: "2022-06-20")
+//        let mySecondEvent = dfMatter.date(from: "2022-06-21")
+//
+//        events = [myFirstEvent!, mySecondEvent!]
+//    }
+//
+//    func calendar(_ calendar: FSCalendar, numberOfEventsFor date: Date) -> Int {
+//
+//        if self.events.contains(date) {
+//            return 1
+//        } else {
+//            return 0
+//        }
+//    }
 }
 
 extension CalendarViewController{
@@ -153,53 +147,41 @@ extension CalendarViewController{
         }
         
         label.snp.makeConstraints {
-            $0.top.equalTo(subView)
+            $0.top.equalTo(addBtn.snp.bottom).offset(20)
             $0.leading.equalTo(subView).inset(20)
         }
         
         addBtn.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalTo(label.snp.bottom).inset(-20)
-            $0.leading.equalTo(subView).inset(20)
-            $0.width.equalTo(150)
-            $0.height.equalTo(40)
+            $0.top.equalTo(calendar.snp.bottom).offset(10)
+            $0.leading.trailing.equalToSuperview().inset(10)
+            
         }
-        
         tableView.snp.makeConstraints {
             $0.top.equalTo(subView.snp.bottom).inset(-10)
             $0.trailing.leading.bottom.equalToSuperview()
         }
     }
     
-    func getDateToString(date: Date) -> String {
-        let dateFormatter = DateFormatter()
-        
-        dateFormatter.dateFormat = "M월 dd일"
-        
-        return dateFormatter.string(from: date)
+    func getToday() {        
+        label.text = viewModel.selectedToday()
     }
     
-    func getToday() {
-        day = getDateToString(date: Date())
-        
-        label.text = day
-    }
     @objc func addBtnClicked(_ sender: UITapGestureRecognizer) {
         
         print("ADD Btn Clicked")
         
-        let SaveVC = SaveViewController()
-        SaveVC.weekCalendar.select(calendar.selectedDate)
-        SaveVC.delegate = self
-        SaveVC.modalPresentationStyle = .fullScreen
-        present(SaveVC, animated: true, completion: nil)
+        let WeekendVC = WeekendViewController()
+        WeekendVC.weekCalendar.select(calendar.selectedDate)
+        WeekendVC.delegate = self
+        WeekendVC.modalPresentationStyle = .fullScreen
+        present(WeekendVC, animated: true, completion: nil)
     }
 }
 
 extension CalendarViewController: SendDataDelegate {
     func sendData(data: Date) {
         calendar.select(data)
-        day = getDateToString(date: data)
-        label.text = day
+        label.text = viewModel.selectedDay(data)
     }
 }

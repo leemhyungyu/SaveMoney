@@ -16,8 +16,7 @@ class MainCell: UITableViewCell {
         
         label.text = "테스트입니다."
         label.font = .systemFont(ofSize: 50)
-//        label.textColor = .blue
-        
+ 
         return label
     }()
     
