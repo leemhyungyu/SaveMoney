@@ -17,14 +17,14 @@ class SaveManager {
     
     var saves: [Save] = []
     
-    func createSave(day: String, planName: String, finalName: String, planMoney: String, finalMoney: String) -> Save {
+    func createSave(day: String, planName: String, finalName: String, planMoney: String, finalMoney: String, category: String) -> Save {
         
         let nextId = SaveManager.lastId + 1
         SaveManager.lastId = nextId
         
         let saveMoney = Int(planMoney)! - Int(finalMoney)!
         
-        return Save(id: nextId, day: day, planName: planName, planMoney: planMoney, finalName: finalName, finalMoney: finalMoney, saveMoney: String(saveMoney))
+        return Save(id: nextId, day: day, planName: planName, planMoney: planMoney, finalName: finalName, finalMoney: finalMoney, saveMoney: String(saveMoney), category: category)
     }
     
     func addSave(save: Save) {

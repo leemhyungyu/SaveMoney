@@ -14,12 +14,16 @@ class CalendarViewModel {
     var events: [Date]?
     var date: Date?
     
+    var saveOfDay: [Save] = []
+    
+    var todaySaveMoney: Int?
+    
     var save: [Save] {
         return saveManager.saves
     }
     
     var numOfCell: Int {
-        return save.count
+        return saveOfDay.count
     }
     
     func selectedDay(_ date: Date) -> String {
@@ -30,7 +34,25 @@ class CalendarViewModel {
     
     func selectedToday() -> String {
         self.day = getDateToString(date: Date())
-        
+
         return self.day!
+    }
+    
+    func retrieve() {
+        saveManager.retrieveSave()
+    }
+    
+    func saveOfSelectedDay(date: String) {
+        self.saveOfDay = saveManager.saveOfSelectedDay(date: date)
+    }
+    
+    func calTodaySaveMoney() -> String {
+        
+        var money: Int = 0
+        
+        for i in saveOfDay {
+            money += Int(i.saveMoney)!
+        }
+        return String(money)
     }
 }

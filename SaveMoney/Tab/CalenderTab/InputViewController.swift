@@ -434,9 +434,10 @@ extension InputViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         
         if pickerView == planPickerView {
-            planCategoriInput.text =  categoriDate[row]
+            planCategoriInput.text =  viewModel.categories[row].title
+
         } else {
-            finalCategoriInput.text = categoriDate[row]
+            finalCategoriInput.text = viewModel.categories[row].title
         }
         
     }
@@ -461,9 +462,9 @@ extension InputViewController {
     @objc func doneBtnClicked(_ sender: UITapGestureRecognizer) {
         dismiss(animated: true)
         
-        guard let day = label.text, let planName = planNameInput.text, let planMoney = planMoneyInput.text, let finalName = finalNameInput.text, let finalMoney = finalMoneyInput.text else { return }
+        guard let day = label.text, let planName = planNameInput.text, let planMoney = planMoneyInput.text, let finalName = finalNameInput.text, let finalMoney = finalMoneyInput.text, let category = finalCategoriInput.text else { return }
         
-        let save = viewModel.saveManager.createSave(day: day, planName: planName, finalName: finalName, planMoney: planMoney, finalMoney: finalMoney)
+        let save = viewModel.saveManager.createSave(day: day, planName: planName, finalName: finalName, planMoney: planMoney, finalMoney: finalMoney, category: category)
         
         viewModel.addSave(save: save)
     }

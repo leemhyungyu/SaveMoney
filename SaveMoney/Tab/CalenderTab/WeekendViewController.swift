@@ -75,7 +75,7 @@ class WeekendViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        setting()
+        configureUI()
         dateSetting()
     }
     
@@ -84,7 +84,7 @@ class WeekendViewController: UIViewController {
         tableView.reloadData()
     }
     
-    func setting() {
+    func configureUI() {
         
         view.addSubview(label)
         view.addSubview(tableView)
@@ -163,7 +163,7 @@ extension WeekendViewController: FSCalendarDelegate, FSCalendarDataSource {
 extension WeekendViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
             return 60
-        }
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.numOfRow

@@ -6,11 +6,14 @@
 //
 
 import Foundation
+import UIKit
 
 class InputViewModel {
     
     let saveManager = SaveManager.shared
     
+    let categories: [Category] = [.food, .transportation, .hobby, .life, .coffee, .etc]
+
     var saves: [Save] {
         return saveManager.saves
     }
