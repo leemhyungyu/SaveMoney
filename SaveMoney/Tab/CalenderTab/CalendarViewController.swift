@@ -25,8 +25,15 @@ class CalendarViewController: UIViewController {
         
         collectionView.register(MainCell.self, forCellWithReuseIdentifier: MainCell.identifier)
         
+        collectionView.isScrollEnabled = false
         collectionView.backgroundColor = #colorLiteral(red: 0.9933428168, green: 0.9469488263, blue: 0.9725527167, alpha: 1)
         return collectionView
+    }()
+    
+    let scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        
+        return scrollView
     }()
     
     let calendar: FSCalendar = {
@@ -93,6 +100,8 @@ class CalendarViewController: UIViewController {
         viewModel.retrieve()
         print(viewModel.save)
         getToday()
+        collectionView.invalidateIntrinsicContentSize()
+
         view.backgroundColor = #colorLiteral(red: 0.9933428168, green: 0.9469488263, blue: 0.9725527167, alpha: 1)
     }
 }
@@ -105,10 +114,12 @@ extension CalendarViewController: UICollectionViewDelegate, UICollectionViewData
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainCell.identifier, for: indexPath) as? MainCell else { return UICollectionViewCell() }
         
-        var save = viewModel.saveOfDay[indexPath.row]
+
+        let save = viewModel.saveOfDay[indexPath.row]
         
         cell.updateUI(save: save)
         
+
         return cell
     }
 }
@@ -133,10 +144,22 @@ extension CalendarViewController: FSCalendarDelegate, FSCalendarDataSource {
         label.text = viewModel.selectedDay(date)
         let day = getDateToString(date: date)
         viewModel.saveOfSelectedDay(date: day)
-        print(viewModel.saveOfDay)
-        collectionView.reloadData()
+//        print(viewModel.saveOfDay)
         
+        if viewModel.saveOfDay.count == 0 {
+            collectionView.frame.size.height = 500
+            self.collectionView.collectionViewLayout.invalidateLayout()
+        } else {
+            collectionView.frame.size.height = CGFloat(viewModel.saveOfDay.count * 120)
+            self.collectionView.collectionViewLayout.invalidateLayout()
+        }
+        
+        
+        print(collectionView.frame.size.height)
+//        invalidateIntrinsicContentSize
         totalSaveMoney.text = "절약한 돈: " + viewModel.calTodaySaveMoney()
+        collectionView.reloadData()
+
     }
     
 //    func setEvents() {
@@ -169,10 +192,13 @@ extension CalendarViewController{
         
         collectionView.delegate = self
         collectionView.dataSource = self
-
-        view.addSubview(calendar)
-        view.addSubview(collectionView)
-        view.addSubview(subView)
+        
+        view.addSubview(scrollView)
+        
+        scrollView.addSubview(calendar)
+        scrollView.addSubview(collectionView)
+        scrollView.addSubview(subView)
+        
         subView.addSubview(label)
         subView.addSubview(totalSaveMoney)
         subView.addSubview(addBtn)
@@ -192,17 +218,20 @@ extension CalendarViewController{
         calendar.appearance.titleWeekendColor = .red
         calendar.appearance.selectionColor = .systemPink
 
-        calendar.snp.makeConstraints {
+        scrollView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
-            $0.leading.equalToSuperview()
-            $0.trailing.equalToSuperview()
+            $0.leading.height.trailing.equalTo(view)
+        }
+        
+        calendar.snp.makeConstraints {
+            $0.top.equalTo(scrollView)
+            $0.width.equalTo(scrollView)
             $0.height.equalTo(300)
         }
         
         subView.snp.makeConstraints {
             $0.top.equalTo(calendar.snp.bottom).inset(-10)
-            $0.leading.equalToSuperview()
-            $0.trailing.equalToSuperview()
+            $0.width.equalTo(scrollView)
             $0.height.equalTo(100)
         }
         
@@ -220,11 +249,13 @@ extension CalendarViewController{
             $0.centerX.equalToSuperview()
             $0.top.equalTo(calendar.snp.bottom).offset(20)
             $0.leading.trailing.equalToSuperview().inset(10)
-            
         }
+        
         collectionView.snp.makeConstraints {
             $0.top.equalTo(subView.snp.bottom).inset(-10)
-            $0.trailing.leading.bottom.equalToSuperview()
+            $0.leading.trailing.bottom.equalTo(scrollView)
+            $0.width.equalTo(scrollView)
+            $0.height.equalTo(800)
         }
     }
     

@@ -13,7 +13,7 @@ class HomeViewController: UIViewController {
         
         var imageView = UIImageView()
         
-        imageView.image = UIImage(named: "pig")
+        imageView.image = UIImage(named: "calendar")
         
         return imageView
     }()

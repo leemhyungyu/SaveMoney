@@ -15,21 +15,30 @@ class AppTabbarController: UITabBarController {
     
     let homeTab: UITabBarItem = {
         
-        let tabBarItem = UITabBarItem(title: "홈", image: UIImage(systemName: "house"), selectedImage: UIImage(systemName: "house.fill"))
+        let tabBarItem = UITabBarItem(
+            title: "홈",
+            image: UIImage(systemName: "house"),
+            selectedImage: UIImage(systemName: "house.fill"))
         
         return tabBarItem
     }()
     
     let calendarTab: UITabBarItem = {
         
-        let tabBarItem = UITabBarItem(title: "캘린더", image: UIImage(systemName: "calendar"), selectedImage: UIImage(systemName: "calendar.fill"))
+        let tabBarItem = UITabBarItem(
+            title: "캘린더",
+            image: UIImage(systemName: "calendar"),
+            selectedImage: UIImage(systemName: "calendar.fill"))
         
         return tabBarItem
     }()
 
     let UserTab: UITabBarItem = {
         
-        let tabBarItem = UITabBarItem(title: "마이페이지", image: UIImage(systemName: "person"), selectedImage: UIImage(systemName: "person.fill"))
+        let tabBarItem = UITabBarItem(
+            title: "마이페이지",
+            image: UIImage(systemName: "person"),
+            selectedImage: UIImage(systemName: "person.fill"))
         
         return tabBarItem
     }()
@@ -41,7 +50,7 @@ class AppTabbarController: UITabBarController {
     
     func setting() {
         
-        tabBar.tintColor = .gray
+        tabBar.tintColor = .systemPink
         tabBar.backgroundColor = .white
         
         viewControllers = [homeVC, calendarVC, UserVC]
