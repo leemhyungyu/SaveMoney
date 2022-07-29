@@ -33,6 +33,7 @@ class CalendarViewController: UIViewController {
     let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         
+        scrollView.showsVerticalScrollIndicator = false
         return scrollView
     }()
     
@@ -78,6 +79,21 @@ class CalendarViewController: UIViewController {
         return label
     }()
     
+    lazy var todayBtn: UIButton = {
+        var config = UIButton.Configuration.plain()
+        config.baseForegroundColor = .systemPink
+        
+        var titleArr = AttributedString.init("Today")
+        titleArr.font = .systemFont(ofSize: 16)
+        
+        config.attributedTitle = titleArr
+        
+        var btn = UIButton(configuration: config)
+        
+        btn.addTarget(self, action: #selector(todayBtnClicked), for: .touchUpInside)
+        return btn
+    }()
+    
     lazy var addBtn: UIButton = {
         var config = UIButton.Configuration.filled()
         config.baseBackgroundColor = .systemPink
@@ -112,6 +128,11 @@ class CalendarViewController: UIViewController {
             collectionViewHeightConstraint.constant = layout.collectionViewContentSize.height + 10
         }
      }
+    
+    @objc func todayBtnClicked() {
+        calendar.select(Date())
+        label.text = viewModel.selectedDay(Date())
+    }
     
     func setCollectionView() {
         collectionView.invalidateIntrinsicContentSize()
@@ -197,6 +218,7 @@ extension CalendarViewController{
         scrollView.addSubview(calendar)
         scrollView.addSubview(collectionView)
         scrollView.addSubview(subView)
+        scrollView.addSubview(todayBtn)
         
         subView.addSubview(label)
         subView.addSubview(totalSaveMoney)
@@ -227,6 +249,11 @@ extension CalendarViewController{
             $0.top.equalTo(scrollView)
             $0.width.equalTo(scrollView)
             $0.height.equalTo(300)
+        }
+        
+        todayBtn.snp.makeConstraints {
+            $0.centerY.equalTo(calendar.calendarHeaderView.snp.centerY)
+            $0.trailing.equalTo(scrollView).offset(-20)
         }
         
         subView.snp.makeConstraints {
