@@ -15,7 +15,8 @@ class SaveManager {
 
     private init () { }
     
-    var saves: [Save] = []
+    var saves = [Save]()
+    var eventDay = [Date]()
     
     func createSave(day: String, planName: String, finalName: String, planMoney: String, finalMoney: String, category: String) -> Save {
         
@@ -38,6 +39,8 @@ class SaveManager {
     }
     
     func saveOfSelectedDay(date: String) -> [Save] {
+        print(saves)
+        print(saves.filter { $0.day == date })
         return saves.filter { $0.day == date }
     }
     
@@ -48,5 +51,29 @@ class SaveManager {
     func retrieveSave() {
         guard let data = UserDefaults.standard.data(forKey: "Saves") else { return }
         saves = (try? PropertyListDecoder().decode([Save].self, from: data))!
+    }
+    
+    func setEventDay() -> [Date]{
+        var result = [String]()
+        
+        self.saves.map {
+            if result.contains($0.day) == false {
+                result.append($0.day)
+            }
+        }
+        
+        for i in result {
+            self.eventDay.append(getStringToDate(text: i)!)
+        }
+        
+        return self.eventDay
+    }
+    
+    func addEventDay(date: String) {
+        let date = getStringToDate(text: date)
+        
+        if eventDay.contains(date!) == false {
+            eventDay.append(date!)
+        }
     }
 }

@@ -13,6 +13,7 @@ class CalendarViewController: UIViewController {
     let viewModel = CalendarViewModel()
     private var collectionViewHeightConstraint: NSLayoutConstraint!
     var layout = UICollectionViewFlowLayout()
+    var events: [Date] = []
 
     lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
@@ -116,7 +117,15 @@ class CalendarViewController: UIViewController {
         viewModel.retrieve()
         getToday()
         setCollectionView()
+        viewModel.eventInCalendar()
         view.backgroundColor = #colorLiteral(red: 0.9933428168, green: 0.9469488263, blue: 0.9725527167, alpha: 1)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        print("will 실행")
+        calendar.reloadData()
+        collectionView.reloadData()
     }
     
     override func viewWillLayoutSubviews() {
@@ -132,6 +141,12 @@ class CalendarViewController: UIViewController {
     @objc func todayBtnClicked() {
         calendar.select(Date())
         label.text = viewModel.selectedDay(Date())
+        collectionView.reloadData()
+        
+        let day = getDateToString(date: Date())
+        viewModel.saveOfSelectedDay(date: day)
+        
+        totalSaveMoney.text = "절약한 돈: " + viewModel.calTodaySaveMoney()
     }
     
     func setCollectionView() {
@@ -171,37 +186,25 @@ extension CalendarViewController: UICollectionViewDelegateFlowLayout {
 
 extension CalendarViewController: FSCalendarDelegate, FSCalendarDataSource {
     
-    
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
-        print("\(viewModel.day) 날짜가 선택되었습니다.")
+        print("\(viewModel.selectedDay(date)) 날짜가 선택되었습니다.")
         label.text = viewModel.selectedDay(date)
         let day = getDateToString(date: date)
+        print(day)
         viewModel.saveOfSelectedDay(date: day)
-        
+        print(viewModel.saveOfDay)
         totalSaveMoney.text = "절약한 돈: " + viewModel.calTodaySaveMoney()
         collectionView.reloadData()
     }
     
-//    func setEvents() {
-//        let dfMatter = DateFormatter()
-//        dfMatter.locale = Locale(identifier: "ko_KR")
-//        dfMatter.dateFormat = "yyyy-MM-dd"
-//
-//        // events
-//        let myFirstEvent = dfMatter.date(from: "2022-06-20")
-//        let mySecondEvent = dfMatter.date(from: "2022-06-21")
-//
-//        events = [myFirstEvent!, mySecondEvent!]
-//    }
-//
-//    func calendar(_ calendar: FSCalendar, numberOfEventsFor date: Date) -> Int {
-//
-//        if self.events.contains(date) {
-//            return 1
-//        } else {
-//            return 0
-//        }
-//    }
+    func calendar(_ calendar: FSCalendar, numberOfEventsFor date: Date) -> Int {
+
+        if viewModel.eventDay.contains(date) {
+            return 1
+        } else {
+            return 0
+        }
+    }
 }
 
 extension CalendarViewController{

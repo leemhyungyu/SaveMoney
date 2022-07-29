@@ -467,5 +467,6 @@ extension InputViewController {
         let save = viewModel.saveManager.createSave(day: day, planName: planName, finalName: finalName, planMoney: planMoney, finalMoney: finalMoney, category: category)
         
         viewModel.addSave(save: save)
+        viewModel.addEventDay(save: save)
     }
 }

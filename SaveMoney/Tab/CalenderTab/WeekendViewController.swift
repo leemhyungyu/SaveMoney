@@ -190,7 +190,7 @@ extension WeekendViewController {
     func getDateToString(date: Date) -> String? {
         let dateFormatter = DateFormatter()
         
-        dateFormatter.dateFormat = "M월 dd일"
+        dateFormatter.dateFormat = "Y년 M월 dd일"
         
         return dateFormatter.string(from: date)
     }

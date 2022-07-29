@@ -18,8 +18,16 @@ class InputViewModel {
         return saveManager.saves
     }
     
+    var eventDay: [Date] {
+        return saveManager.eventDay
+    }
+    
     func addSave(save: Save) {
         saveManager.addSave(save: save)
         saveManager.saveStruct()
+    }
+    
+    func addEventDay(save: Save) {
+        saveManager.addEventDay(date: save.day)
     }
 }

@@ -11,15 +11,17 @@ class CalendarViewModel {
     let saveManager = SaveManager.shared
     
     var day: String?
-    var events: [Date]?
     var date: Date?
-    
     var saveOfDay: [Save] = []
     
     var todaySaveMoney: Int?
     
     var save: [Save] {
         return saveManager.saves
+    }
+
+    var eventDay: [Date] {
+        return saveManager.eventDay
     }
     
     var numOfCell: Int {
@@ -57,5 +59,9 @@ class CalendarViewModel {
         let result = setStringForWon(String(money))
         
         return result
+    }
+    
+    func eventInCalendar() {
+        saveManager.setEventDay()
     }
 }
