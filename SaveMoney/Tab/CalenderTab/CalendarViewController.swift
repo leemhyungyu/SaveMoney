@@ -11,18 +11,18 @@ import SnapKit
 class CalendarViewController: UIViewController {
     
     let viewModel = CalendarViewModel()
-    
+    private var collectionViewHeightConstraint: NSLayoutConstraint!
+    var layout = UICollectionViewFlowLayout()
+
     lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
         return tableView
     }()
-    
+
     lazy var collectionView: UICollectionView = {
         
-        var layout = UICollectionViewFlowLayout()
-        
         var collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        
+    
         collectionView.register(MainCell.self, forCellWithReuseIdentifier: MainCell.identifier)
         
         collectionView.isScrollEnabled = false
@@ -98,11 +98,25 @@ class CalendarViewController: UIViewController {
         super.viewDidLoad()
         setting()
         viewModel.retrieve()
-        print(viewModel.save)
         getToday()
-        collectionView.invalidateIntrinsicContentSize()
-
+        setCollectionView()
         view.backgroundColor = #colorLiteral(red: 0.9933428168, green: 0.9469488263, blue: 0.9725527167, alpha: 1)
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        
+        if layout.collectionViewContentSize.height == 0 {
+            collectionViewHeightConstraint.constant = 300
+        } else {
+            collectionViewHeightConstraint.constant = layout.collectionViewContentSize.height + 10
+        }
+     }
+    
+    func setCollectionView() {
+        collectionView.invalidateIntrinsicContentSize()
+        collectionViewHeightConstraint = collectionView.heightAnchor.constraint(equalToConstant: 50)
+        collectionViewHeightConstraint.isActive = true
     }
 }
 
@@ -114,11 +128,9 @@ extension CalendarViewController: UICollectionViewDelegate, UICollectionViewData
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainCell.identifier, for: indexPath) as? MainCell else { return UICollectionViewCell() }
         
-
         let save = viewModel.saveOfDay[indexPath.row]
         
         cell.updateUI(save: save)
-        
 
         return cell
     }
@@ -144,22 +156,9 @@ extension CalendarViewController: FSCalendarDelegate, FSCalendarDataSource {
         label.text = viewModel.selectedDay(date)
         let day = getDateToString(date: date)
         viewModel.saveOfSelectedDay(date: day)
-//        print(viewModel.saveOfDay)
         
-        if viewModel.saveOfDay.count == 0 {
-            collectionView.frame.size.height = 500
-            self.collectionView.collectionViewLayout.invalidateLayout()
-        } else {
-            collectionView.frame.size.height = CGFloat(viewModel.saveOfDay.count * 120)
-            self.collectionView.collectionViewLayout.invalidateLayout()
-        }
-        
-        
-        print(collectionView.frame.size.height)
-//        invalidateIntrinsicContentSize
         totalSaveMoney.text = "절약한 돈: " + viewModel.calTodaySaveMoney()
         collectionView.reloadData()
-
     }
     
 //    func setEvents() {
@@ -220,7 +219,8 @@ extension CalendarViewController{
 
         scrollView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
-            $0.leading.height.trailing.equalTo(view)
+            $0.leading.trailing.equalTo(view)
+            $0.height.equalTo(700)
         }
         
         calendar.snp.makeConstraints {
@@ -253,9 +253,9 @@ extension CalendarViewController{
         
         collectionView.snp.makeConstraints {
             $0.top.equalTo(subView.snp.bottom).inset(-10)
-            $0.leading.trailing.bottom.equalTo(scrollView)
+            $0.leading.trailing.equalToSuperview()
+            $0.bottom.equalToSuperview().offset(-30)
             $0.width.equalTo(scrollView)
-            $0.height.equalTo(800)
         }
     }
     
