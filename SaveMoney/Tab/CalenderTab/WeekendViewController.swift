@@ -35,7 +35,7 @@ class WeekendViewController: UIViewController {
         return calendar
     }()
     
-    let backBtn: UIButton = {
+    lazy var backBtn: UIButton = {
         var config = UIButton.Configuration.plain()
         config.image = UIImage(systemName: "arrow.left")
         config.baseBackgroundColor = .black
@@ -45,7 +45,7 @@ class WeekendViewController: UIViewController {
         return btn
     }()
     
-    var saveBtn: UIButton = {
+    lazy var saveBtn: UIButton = {
         var config = UIButton.Configuration.filled()
         config.baseBackgroundColor = .systemBlue
         config.image = UIImage(systemName: "plus.circle.fill")
@@ -175,7 +175,7 @@ extension WeekendViewController: UITableViewDelegate, UITableViewDataSource {
         var save: Save
 
         save = viewModel.saveOfDay[indexPath.row]
-
+        
         cell.updateCell(save: save)
         
         return cell

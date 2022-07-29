@@ -116,13 +116,13 @@ class MainCell: UICollectionViewCell {
         categoryimage.image = setCategoryImage(title: save.category)
         planNameLabel.text = save.planName
         finalNameLabel.text = save.finalName
-        saveMoneyLabel.text = save.saveMoney
+        saveMoneyLabel.text = setStringForWon(save.saveMoney)
     }
     
     func setCategoryImage(title: String) -> UIImage {
         if title == "교통" {
             return UIImage(systemName: "car.fill")!
-        } else if title == "식비" {
+        } else if title == "음식" {
             return UIImage(systemName: "fork.knife")!
         } else if title == "취미" {
             return UIImage(systemName: "gamecontroller.fill")!

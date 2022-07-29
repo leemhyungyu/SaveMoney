@@ -53,6 +53,9 @@ class CalendarViewModel {
         for i in saveOfDay {
             money += Int(i.saveMoney)!
         }
-        return String(money)
+        
+        let result = setStringForWon(String(money))
+        
+        return result
     }
 }

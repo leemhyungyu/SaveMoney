@@ -73,13 +73,14 @@ class CalendarViewController: UIViewController {
     
     lazy var addBtn: UIButton = {
         var config = UIButton.Configuration.filled()
-        config.baseBackgroundColor = .systemBlue
+        config.baseBackgroundColor = .systemPink
         
         var titleAttr = AttributedString.init("절약하기")
         titleAttr.font = .systemFont(ofSize: 16)
         config.attributedTitle = titleAttr
         
         let btn = UIButton(configuration: config)
+        
         
         btn.addTarget(self, action: #selector(addBtnClicked(_:)), for: .touchUpInside)
         
@@ -120,7 +121,7 @@ extension CalendarViewController: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-      return 0
+      return 10
     }
 }
 
@@ -193,15 +194,15 @@ extension CalendarViewController{
 
         calendar.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
-            $0.leading.equalToSuperview().offset(10)
-            $0.trailing.equalToSuperview().offset(-10)
+            $0.leading.equalToSuperview()
+            $0.trailing.equalToSuperview()
             $0.height.equalTo(300)
         }
         
         subView.snp.makeConstraints {
             $0.top.equalTo(calendar.snp.bottom).inset(-10)
-            $0.leading.equalToSuperview().offset(10)
-            $0.trailing.equalToSuperview().offset(-10)
+            $0.leading.equalToSuperview()
+            $0.trailing.equalToSuperview()
             $0.height.equalTo(100)
         }
         
