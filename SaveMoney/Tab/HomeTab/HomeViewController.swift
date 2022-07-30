@@ -74,7 +74,7 @@ class HomeViewController: UIViewController {
         
         // UI테스트를 위한 임시 데이터
         let dummyDateData = ["월", "화", "수", "목", "금", "토", "일"]
-        let dummyMoneyData = [2000.0, 5000.0, 14000.0, 52300.0, 23100.0, 10000.0, 4000.0]
+        let dummyMoneyData: [Double] = [2000, 5000, 14000, 4100, 23100, 10000, 4000]
         
         setChart(dataPoints: dummyDateData, values: dummyMoneyData)
         
@@ -114,6 +114,15 @@ class HomeViewController: UIViewController {
         let chartData = BarChartData(dataSet: chartDataSet)
         chartData.barWidth = 0.3
         barChartView.data = chartData
+        barChartView.data?.setValueFormatter(YAxisValueFormatter())
     }
 }
 
+class YAxisValueFormatter: ValueFormatter {
+    func stringForValue(_ value: Double, entry: ChartDataEntry, dataSetIndex: Int, viewPortHandler: ViewPortHandler?) -> String {
+        
+        let result = setIntForWon(Int(value))
+        
+        return String(result)
+    }
+}
