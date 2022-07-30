@@ -237,7 +237,9 @@ extension CalendarViewController{
         calendar.appearance.titleWeekendColor = .red
         calendar.appearance.selectionColor = .systemPink
         calendar.appearance.eventDefaultColor = .systemPink
-
+        calendar.appearance.weekdayTextColor = .lightGray
+        calendar.appearance.todayColor = .systemGray4
+        calendar.placeholderType = .none
         scrollView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.leading.trailing.equalTo(view)
