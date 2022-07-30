@@ -19,21 +19,57 @@ class HomeViewController: UIViewController {
     let subView: UIView = {
         let view = UIView()
         
-        view.layer.shadowColor = UIColor.systemGray.cgColor
-        view.layer.masksToBounds = false
-        view.layer.shadowRadius = 7
-        view.layer.shadowOpacity = 0.4
-        view.layer.cornerRadius = 8
-        view.backgroundColor = .white
+        view.setShadow()
+        
         return view
     }()
     
-    let weekendLabel: UILabel = {
-        let label = UILabel()
+    let grpahHeaderView: UIView = {
+        let view = HomeHeaderView(title: "이번 주 그래프")
         
-        label.font = .systemFont(ofSize: 16, weight: .semibold)
-        label.text = "이번 주 절약 내역"
-        return label
+        return view
+    }()
+
+    let totalHeaderView: UIView = {
+        let view = HomeHeaderView(title: "총 저축 금액")
+        
+        return view
+    }()
+    
+    let monthHeaderView: UIView = {
+        let view = HomeHeaderView(title: "이번 달 저축 금액")
+        
+        return view
+    }()
+    
+    let monthView: UIView = {
+        let view = UIView()
+        
+        view.setShadow()
+        
+        return view
+    }()
+    
+    let weekendHeaderView: UIView = {
+        let view = HomeHeaderView(title: "이번 주 저축 금액")
+        
+        return view
+    }()
+    
+    
+    let weekendView: UIView = {
+        let view = UIView()
+        
+        view.setShadow()
+        return view
+    }()
+    
+    let totalView: UIView = {
+        let view = UIView()
+        
+        view.setShadow()
+        
+        return view
     }()
     
     override func viewDidLoad() {
@@ -49,9 +85,13 @@ class HomeViewController: UIViewController {
     
     func configureUI() {
 
-        view.addSubview(subView)
+        [subView, totalView, monthView, weekendView] .forEach { view.addSubview($0) }
         
-        [barChartView, weekendLabel] .forEach { subView.addSubview($0) }
+        [barChartView, grpahHeaderView] .forEach { subView.addSubview($0) }
+        
+        totalView.addSubview(totalHeaderView)
+        monthView.addSubview(monthHeaderView)
+        weekendView.addSubview(weekendHeaderView)
         
         subView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
@@ -60,14 +100,49 @@ class HomeViewController: UIViewController {
         }
         
         barChartView.snp.makeConstraints {
-            $0.top.equalTo(weekendLabel.snp.bottom).offset(10)
+            $0.top.equalTo(grpahHeaderView.snp.bottom).offset(10)
             $0.leading.trailing.bottom.equalToSuperview().inset(10)
         }
         
-        weekendLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(10)
-            $0.centerX.equalToSuperview()
+        grpahHeaderView.snp.makeConstraints {
+            $0.top.leading.trailing.equalToSuperview()
+            $0.bottom.equalTo(subView.snp.top).offset(30)
         }
+
+        totalView.snp.makeConstraints {
+            $0.top.equalTo(subView.snp.bottom).offset(10)
+            $0.leading.trailing.equalToSuperview().inset(10)
+            $0.height.equalTo(100)
+        }
+        
+        totalHeaderView.snp.makeConstraints {
+            $0.top.leading.trailing.equalToSuperview()
+            $0.bottom.equalTo(totalView.snp.top).offset(30)
+        }
+        
+        monthView.snp.makeConstraints {
+            $0.top.equalTo(totalView.snp.bottom).offset(10)
+            $0.leading.trailing.equalToSuperview().inset(10)
+            $0.height.equalTo(100)
+        }
+        
+        monthHeaderView.snp.makeConstraints {
+            $0.top.leading.trailing.equalToSuperview()
+            $0.bottom.equalTo(monthView.snp.top).offset(30)
+        }
+        
+        weekendView.snp.makeConstraints {
+            $0.top.equalTo(monthView.snp.bottom).offset(10)
+            $0.leading.trailing.equalToSuperview().inset(10)
+            $0.height.equalTo(100)
+        }
+        
+        weekendHeaderView.snp.makeConstraints {
+            $0.top.leading.trailing.equalToSuperview()
+            $0.bottom.equalTo(weekendView.snp.top).offset(30)
+        }
+        
+        
     }
     
     func configureChartView() {

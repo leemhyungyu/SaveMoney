@@ -17,7 +17,6 @@ func setStringForWon(_ text: String) -> String {
 }
 
 // 정수를 입력받아 천단위로 ','넣고 '원' 붙혀주는 함수
-
 func setIntForWon(_ text: Int) -> String {
     
     let value = String(text)
