@@ -13,7 +13,7 @@ target 'SaveMoney' do
   end
   pod 'FSCalendar'
   pod 'SnapKit'
-
+  pod 'Charts'
   target 'SaveMoneyUITests' do
     # Pods for testing
   end

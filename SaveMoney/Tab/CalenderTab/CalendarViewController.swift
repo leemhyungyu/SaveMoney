@@ -123,9 +123,7 @@ class CalendarViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        print("will 실행")
         calendar.reloadData()
-        collectionView.reloadData()
     }
     
     override func viewWillLayoutSubviews() {
@@ -187,12 +185,9 @@ extension CalendarViewController: UICollectionViewDelegateFlowLayout {
 extension CalendarViewController: FSCalendarDelegate, FSCalendarDataSource {
     
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
-        print("\(viewModel.selectedDay(date)) 날짜가 선택되었습니다.")
         label.text = viewModel.selectedDay(date)
         let day = getDateToString(date: date)
-        print(day)
         viewModel.saveOfSelectedDay(date: day)
-        print(viewModel.saveOfDay)
         totalSaveMoney.text = "절약한 돈: " + viewModel.calTodaySaveMoney()
         collectionView.reloadData()
     }
@@ -241,6 +236,7 @@ extension CalendarViewController{
         calendar.appearance.headerTitleColor = .black
         calendar.appearance.titleWeekendColor = .red
         calendar.appearance.selectionColor = .systemPink
+        calendar.appearance.eventDefaultColor = .systemPink
 
         scrollView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
@@ -294,9 +290,7 @@ extension CalendarViewController{
     }
     
     @objc func addBtnClicked(_ sender: UITapGestureRecognizer) {
-        
-        print("ADD Btn Clicked")
-        
+
         let WeekendVC = WeekendViewController()
         WeekendVC.weekCalendar.select(calendar.selectedDate)
         WeekendVC.delegate = self

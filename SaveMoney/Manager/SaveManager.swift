@@ -39,8 +39,6 @@ class SaveManager {
     }
     
     func saveOfSelectedDay(date: String) -> [Save] {
-        print(saves)
-        print(saves.filter { $0.day == date })
         return saves.filter { $0.day == date }
     }
     
