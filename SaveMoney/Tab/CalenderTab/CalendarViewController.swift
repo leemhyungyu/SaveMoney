@@ -240,6 +240,7 @@ extension CalendarViewController{
         calendar.appearance.weekdayTextColor = .lightGray
         calendar.appearance.todayColor = .systemGray4
         calendar.placeholderType = .none
+        
         scrollView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.leading.trailing.equalTo(view)
@@ -248,7 +249,8 @@ extension CalendarViewController{
         
         calendar.snp.makeConstraints {
             $0.top.equalTo(scrollView)
-            $0.width.equalTo(scrollView)
+            $0.leading.trailing.equalToSuperview().inset(10)
+//            $0.width.equalTo(scrollView)
             $0.height.equalTo(300)
         }
         
@@ -259,7 +261,8 @@ extension CalendarViewController{
         
         subView.snp.makeConstraints {
             $0.top.equalTo(calendar.snp.bottom).inset(-10)
-            $0.width.equalTo(scrollView)
+            $0.leading.trailing.equalToSuperview().inset(10)
+//            $0.width.equalTo(scrollView)
             $0.height.equalTo(100)
         }
         

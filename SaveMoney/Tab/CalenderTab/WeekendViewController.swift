@@ -15,6 +15,8 @@ class WeekendViewController: UIViewController {
 
     lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
+        
+        tableView.backgroundColor = #colorLiteral(red: 0.9933428168, green: 0.9469488263, blue: 0.9725527167, alpha: 1)
         return tableView
     }()
     
@@ -29,6 +31,7 @@ class WeekendViewController: UIViewController {
         calendar.appearance.titleFont = UIFont(name: "NotoSansKR-Regular", size: 14)
         calendar.appearance.weekdayFont = UIFont(name: "NotoSansKR-Regular", size: 14)
         
+        calendar.backgroundColor = .white
         calendar.appearance.borderSelectionColor = .gray
         calendar.appearance.headerTitleColor = .black
         calendar.appearance.titleWeekendColor = .red
@@ -47,12 +50,12 @@ class WeekendViewController: UIViewController {
     
     lazy var saveBtn: UIButton = {
         var config = UIButton.Configuration.filled()
-        config.baseBackgroundColor = .systemBlue
+        config.baseBackgroundColor = .systemPink
         config.image = UIImage(systemName: "plus.circle.fill")
         config.imagePadding = 10
         
         var titleAttr = AttributedString.init("입력하기")
-        titleAttr.font = .systemFont(ofSize: 16)
+        titleAttr.font = .systemFont(ofSize: 16, weight: .semibold)
         config.attributedTitle = titleAttr
         
         let btn = UIButton(configuration: config)
@@ -62,19 +65,11 @@ class WeekendViewController: UIViewController {
         return btn
     }()
     
-    let label: UILabel = {
-        var label = UILabel()
-        label.text = "어떤 것을 절약하셨나요?"
-        label.font = .systemFont(ofSize: 20)
-        
-        return label
-    }()
-    
     var delegate: SendDataDelegate?
         
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = #colorLiteral(red: 0.9933428168, green: 0.9469488263, blue: 0.9725527167, alpha: 1)
         configureUI()
         dateSetting()
     }
@@ -86,13 +81,17 @@ class WeekendViewController: UIViewController {
     
     func configureUI() {
         
-        view.addSubview(label)
         view.addSubview(tableView)
         view.addSubview(weekCalendar)
         view.addSubview(saveBtn)
         
         weekCalendar.delegate = self
         weekCalendar.dataSource = self
+        
+        weekCalendar.appearance.borderSelectionColor = .red
+        weekCalendar.appearance.selectionColor = .systemPink
+        weekCalendar.appearance.todayColor = .systemGray4
+        weekCalendar.appearance.weekdayTextColor = .lightGray
         
         weekCalendar.addSubview(backBtn)
         tableView.dataSource = self
@@ -102,17 +101,12 @@ class WeekendViewController: UIViewController {
         weekCalendar.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.trailing.leading.equalToSuperview()
-            $0.height.equalTo(250)
+            $0.height.equalTo(200)
         }
         
         backBtn.snp.makeConstraints {
             $0.top.equalTo(weekCalendar).offset(10)
             $0.leading.equalTo(weekCalendar).offset(5)
-        }
-        
-        label.snp.makeConstraints {
-            $0.top.equalTo(backBtn.snp.bottom).offset(80)
-            $0.centerX.equalToSuperview()
         }
     
         tableView.snp.makeConstraints {
@@ -121,7 +115,7 @@ class WeekendViewController: UIViewController {
         }
         
         saveBtn.snp.makeConstraints {
-            $0.top.equalTo(label.snp.bottom).offset(10)
+            $0.top.equalTo(weekCalendar.snp.bottom).offset(10)
             $0.centerX.equalToSuperview()
             $0.width.equalTo(200)
             $0.height.equalTo(40)
