@@ -114,7 +114,6 @@ class CalendarViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setting()
-//        initializationData()
         viewModel.retrieve()
         setDayData(Date())
         setCollectionView()
@@ -142,7 +141,7 @@ class CalendarViewController: UIViewController {
         label.text = viewModel.selectedDay(Date())
         collectionView.reloadData()
         
-        let day = getDateToString(date: Date())
+        let day = getStringToDate(date: Date())
         viewModel.saveOfSelectedDay(date: day)
         
         totalSaveMoney.text = "절약한 돈: " + viewModel.calTodaySaveMoney()
@@ -176,11 +175,11 @@ extension CalendarViewController: UICollectionViewDelegate, UICollectionViewData
             self.viewModel.deleteOfSelectedDay(save: save, index: indexPath.item)
             collectionView.reloadData()
             
+            self.totalSaveMoney.text = "절약한 돈: " + self.viewModel.calTodaySaveMoney()
+
             DispatchQueue.main.async {
                 self.calendar.reloadData()
             }
-//            self.calendar.reloadData()
-            
         }
         return cell
     }
@@ -239,7 +238,7 @@ extension CalendarViewController{
         
         calendar.headerHeight = 50
         calendar.appearance.headerMinimumDissolvedAlpha = 0.0
-        calendar.appearance.headerDateFormat = "YYYY년 M월"
+        calendar.appearance.headerDateFormat = "M월"
         calendar.appearance.headerTitleFont = UIFont(name: "NotoSansKR-Medium", size: 16)
         calendar.appearance.titleFont = UIFont(name: "NotoSansKR-Regular", size: 14)
         calendar.appearance.weekdayFont = UIFont(name: "NotoSansKR-Regular", size: 14)
@@ -303,7 +302,7 @@ extension CalendarViewController{
     func setDayData(_ date: Date) {
         label.text = viewModel.selectedDay(date)
         
-        viewModel.saveOfSelectedDay(date: getDateToString(date: date))
+        viewModel.saveOfSelectedDay(date: getStringToDate(date: date))
         totalSaveMoney.text = "절약한 돈: " + viewModel.calTodaySaveMoney()
         collectionView.reloadData()
     }

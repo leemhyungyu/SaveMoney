@@ -48,6 +48,7 @@ class SaveManager {
     
     func saveStruct() {
         UserDefaults.standard.set(try? PropertyListEncoder().encode(saves), forKey: "Saves")
+        print("saveStruct - called")
     }
    
     func retrieveSave() {
@@ -67,8 +68,8 @@ class SaveManager {
         }
         
         for i in result {
-            if eventDay.contains(getStringToDate(text: i)!) == false {
-                self.eventDay.append(getStringToDate(text: i)!)
+            if eventDay.contains(getDateToString(text: i)!) == false {
+                self.eventDay.append(getDateToString(text: i)!)
             }
         }
     
@@ -76,7 +77,7 @@ class SaveManager {
     }
     
     func addEventDay(date: String) {
-        let date = getStringToDate(text: date)
+        let date = getDateToString(text: date)
         
         if eventDay.contains(date!) == false {
             eventDay.append(date!)

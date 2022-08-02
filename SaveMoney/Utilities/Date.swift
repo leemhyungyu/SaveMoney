@@ -6,7 +6,7 @@
 //
 import Foundation
 
-func getDateToString(date: Date) -> String {
+func getStringToDate(date: Date) -> String {
     let dateFormatter = DateFormatter()
     
     dateFormatter.dateFormat = "Y년 M월 dd일"
@@ -14,14 +14,19 @@ func getDateToString(date: Date) -> String {
     return dateFormatter.string(from: date)
 }
 
-func getStringToDate(text: String) -> Date? {
+func getMonthAndDayForString(date: Date) -> String {
+    
     let dateFormatter = DateFormatter()
-    // YYYY년 MM년 DD일 -> YYYY-MM-dd로 바꿔야함
     
+    dateFormatter.dateFormat = "M월 d일"
     
+    return dateFormatter.string(from: date)
+}
+
+func getDateToString(text: String) -> Date? {
+    let dateFormatter = DateFormatter()
+
     dateFormatter.dateFormat = "Y년 M월 dd일"
-    
-    let day = dateFormatter.date(from: text)
-    
-    return day!
+        
+    return dateFormatter.date(from: text)
 }

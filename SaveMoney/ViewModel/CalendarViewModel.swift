@@ -29,13 +29,13 @@ class CalendarViewModel {
     }
     
     func selectedDay(_ date: Date) -> String {
-        self.day = getDateToString(date: date)
+        self.day = getMonthAndDayForString(date: date)
         
         return self.day!
     }
     
     func selectedToday() -> String {
-        self.day = getDateToString(date: Date())
+        self.day = getMonthAndDayForString(date: Date())
 
         return self.day!
     }
