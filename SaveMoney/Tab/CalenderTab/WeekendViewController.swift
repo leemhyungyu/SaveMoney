@@ -30,7 +30,8 @@ class WeekendViewController: UIViewController {
         calendar.appearance.headerTitleFont = UIFont(name: "NotoSansKR-Medium", size: 16)
         calendar.appearance.titleFont = UIFont(name: "NotoSansKR-Regular", size: 14)
         calendar.appearance.weekdayFont = UIFont(name: "NotoSansKR-Regular", size: 14)
-        
+        calendar.weekdayHeight = 20
+
         calendar.backgroundColor = .white
         calendar.appearance.borderSelectionColor = .gray
         calendar.appearance.headerTitleColor = .black
@@ -41,9 +42,9 @@ class WeekendViewController: UIViewController {
     lazy var backBtn: UIButton = {
         var config = UIButton.Configuration.plain()
         config.image = UIImage(systemName: "arrow.left")
-        config.baseBackgroundColor = .black
         config.imagePadding = 10
         let btn = UIButton(configuration: config)
+        btn.tintColor = .systemPink
         btn.addTarget(self, action: #selector(backBtnClicked(_:)), for: .touchUpInside)
         return btn
     }()

@@ -48,6 +48,10 @@ class CalendarViewModel {
         self.saveOfDay = saveManager.saveOfSelectedDay(date: date)
     }
     
+    func deleteOfSelectedDay(save: Save, index: Int) {
+        saveManager.deleteSave(save: save)
+        self.saveOfDay.remove(at: index)
+    }
     func calTodaySaveMoney() -> String {
         
         var money: Int = 0

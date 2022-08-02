@@ -9,6 +9,8 @@ import SnapKit
 
 class MainCell: UICollectionViewCell {
  
+    var cancleButtonClosure: (() -> Void)?
+    
     static let identifier = "MainCell"
     
     var subView: UIView = {
@@ -58,6 +60,18 @@ class MainCell: UICollectionViewCell {
         return label
     }()
     
+    lazy var cancleBtn: UIButton = {
+        
+        var config = UIButton.Configuration.plain()
+        config.image = UIImage(systemName: "multiply")
+        
+        let btn = UIButton(configuration: config)
+        btn.tintColor = .systemPink
+        
+        btn.addTarget(self, action: #selector(cancleBtnClicked), for: .touchUpInside)
+        return btn
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setUp()
@@ -71,7 +85,7 @@ class MainCell: UICollectionViewCell {
         
         addSubview(subView)
         
-        [ categoryimage ,planNameLabel, finalNameLabel, arrowLabel, saveMoneyLabel] .forEach { subView.addSubview($0) }
+        [ categoryimage ,planNameLabel, finalNameLabel, arrowLabel, saveMoneyLabel, cancleBtn] .forEach { subView.addSubview($0) }
         
         subView.layer.shadowColor = UIColor.systemGray.cgColor
         subView.layer.masksToBounds = false
@@ -110,6 +124,10 @@ class MainCell: UICollectionViewCell {
             $0.top.equalTo(planNameLabel.snp.bottom).offset(10)
             $0.leading.equalTo(categoryimage)
         }
+        
+        cancleBtn.snp.makeConstraints {
+            $0.top.trailing.equalToSuperview()
+        }
     }
     
     func updateUI(save: Save) {
@@ -134,6 +152,12 @@ class MainCell: UICollectionViewCell {
             return UIImage(systemName: "wrench.and.screwdriver.fill")!
         } else {
             return UIImage()
+        }
+    }
+    
+    @objc func cancleBtnClicked() {
+        if let cancleButtonClosure = cancleButtonClosure {
+            cancleButtonClosure()
         }
     }
 }

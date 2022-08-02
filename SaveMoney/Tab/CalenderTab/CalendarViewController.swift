@@ -114,6 +114,7 @@ class CalendarViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setting()
+//        initializationData()
         viewModel.retrieve()
         setDayData(Date())
         setCollectionView()
@@ -152,6 +153,10 @@ class CalendarViewController: UIViewController {
         collectionViewHeightConstraint = collectionView.heightAnchor.constraint(equalToConstant: 50)
         collectionViewHeightConstraint.isActive = true
     }
+    
+    func initializationData() {
+        viewModel.saveManager.saveStruct()
+    }
 }
 
 extension CalendarViewController: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -164,8 +169,19 @@ extension CalendarViewController: UICollectionViewDelegate, UICollectionViewData
         
         let save = viewModel.saveOfDay[indexPath.row]
         
+        print(save)
         cell.updateUI(save: save)
-
+        
+        cell.cancleButtonClosure = {
+            self.viewModel.deleteOfSelectedDay(save: save, index: indexPath.item)
+            collectionView.reloadData()
+            
+            DispatchQueue.main.async {
+                self.calendar.reloadData()
+            }
+//            self.calendar.reloadData()
+            
+        }
         return cell
     }
 }
@@ -285,7 +301,7 @@ extension CalendarViewController{
     }
     
     func setDayData(_ date: Date) {
-        label.text = viewModel.selectedToday()
+        label.text = viewModel.selectedDay(date)
         
         viewModel.saveOfSelectedDay(date: getDateToString(date: date))
         totalSaveMoney.text = "절약한 돈: " + viewModel.calTodaySaveMoney()

@@ -11,8 +11,6 @@ class SaveManager {
     
     static let shared = SaveManager()
     
-    static var lastId: Int = 0
-
     private init () { }
     
     var saves = [Save]()
@@ -20,8 +18,13 @@ class SaveManager {
     
     func createSave(day: String, planName: String, finalName: String, planMoney: String, finalMoney: String, category: String) -> Save {
         
-        let nextId = SaveManager.lastId + 1
-        SaveManager.lastId = nextId
+        var nextId: Int = 0
+        
+        if saves.count == 0 {
+            nextId = nextId + 1
+        } else {
+            nextId = saves[saves.index(before: saves.endIndex)].id + 1
+        }
         
         let saveMoney = Int(planMoney)! - Int(finalMoney)!
         
@@ -35,6 +38,7 @@ class SaveManager {
 
     func deleteSave(save: Save) {
         saves = saves.filter { $0.id != save.id}
+        eventDay = setEventDay()
         saveStruct()
     }
     
@@ -53,17 +57,21 @@ class SaveManager {
     
     func setEventDay() -> [Date]{
         var result = [String]()
-        
+        eventDay = []
+
         self.saves.map {
             if result.contains($0.day) == false {
+                print($0.day)
                 result.append($0.day)
             }
         }
         
         for i in result {
-            self.eventDay.append(getStringToDate(text: i)!)
+            if eventDay.contains(getStringToDate(text: i)!) == false {
+                self.eventDay.append(getStringToDate(text: i)!)
+            }
         }
-        
+    
         return self.eventDay
     }
     
