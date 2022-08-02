@@ -80,6 +80,20 @@ class HomeViewController: UIViewController {
         return view
     }()
     
+    let totalLabel: UILabel = {
+        let label = UILabel()
+        
+        label.text = """
+                    총 502,000원을 절약하셨습니다.
+                    이번 달은 250,000원을 절약하셨습니다.
+                    이번 주는 82,000원을 절약하셨습니다.
+                    """
+        label.numberOfLines = 0
+        label.font = .systemFont(ofSize: 14)
+        
+        return label
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -100,6 +114,8 @@ class HomeViewController: UIViewController {
         [subView, totalView, monthView, weekendView, totalHeaderView, monthHeaderView, weekendHeaderView] .forEach { mainView.addSubview($0) }
 
         [barChartView, grpahHeaderView] .forEach { subView.addSubview($0) }
+        
+        totalView.addSubview(totalLabel)
         
         scrollView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
@@ -137,6 +153,10 @@ class HomeViewController: UIViewController {
             $0.top.equalTo(totalHeaderView.snp.bottom).offset(10)
             $0.leading.trailing.equalToSuperview().inset(10)
             $0.height.equalTo(100)
+        }
+        
+        totalLabel.snp.makeConstraints {
+            $0.top.leading.equalToSuperview()
         }
         
         monthHeaderView.snp.makeConstraints {

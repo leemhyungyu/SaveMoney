@@ -115,7 +115,7 @@ class CalendarViewController: UIViewController {
         super.viewDidLoad()
         setting()
         viewModel.retrieve()
-        getToday()
+        setDayData(Date())
         setCollectionView()
         viewModel.eventInCalendar()
         view.backgroundColor = #colorLiteral(red: 0.9933428168, green: 0.9469488263, blue: 0.9725527167, alpha: 1)
@@ -185,11 +185,7 @@ extension CalendarViewController: UICollectionViewDelegateFlowLayout {
 extension CalendarViewController: FSCalendarDelegate, FSCalendarDataSource {
     
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
-        label.text = viewModel.selectedDay(date)
-        let day = getDateToString(date: date)
-        viewModel.saveOfSelectedDay(date: day)
-        totalSaveMoney.text = "절약한 돈: " + viewModel.calTodaySaveMoney()
-        collectionView.reloadData()
+        setDayData(date)
     }
     
     func calendar(_ calendar: FSCalendar, numberOfEventsFor date: Date) -> Int {
@@ -250,7 +246,6 @@ extension CalendarViewController{
         calendar.snp.makeConstraints {
             $0.top.equalTo(scrollView)
             $0.leading.trailing.equalToSuperview().inset(10)
-//            $0.width.equalTo(scrollView)
             $0.height.equalTo(300)
         }
         
@@ -262,7 +257,6 @@ extension CalendarViewController{
         subView.snp.makeConstraints {
             $0.top.equalTo(calendar.snp.bottom).inset(-10)
             $0.leading.trailing.equalToSuperview().inset(10)
-//            $0.width.equalTo(scrollView)
             $0.height.equalTo(100)
         }
         
@@ -290,8 +284,12 @@ extension CalendarViewController{
         }
     }
     
-    func getToday() {
+    func setDayData(_ date: Date) {
         label.text = viewModel.selectedToday()
+        
+        viewModel.saveOfSelectedDay(date: getDateToString(date: date))
+        totalSaveMoney.text = "절약한 돈: " + viewModel.calTodaySaveMoney()
+        collectionView.reloadData()
     }
     
     @objc func addBtnClicked(_ sender: UITapGestureRecognizer) {
