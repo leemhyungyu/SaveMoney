@@ -123,8 +123,7 @@ class CalendarViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        calendar.reloadData()
-        collectionView.reloadData()
+        reloadMainData()
     }
     
     override func viewWillLayoutSubviews() {
@@ -156,6 +155,12 @@ class CalendarViewController: UIViewController {
     
     func initializationData() {
         viewModel.saveManager.saveStruct()
+    }
+    
+    func reloadMainData() {
+        collectionView.reloadData()
+        calendar.reloadData()
+        totalSaveMoney.text = "절약한 돈: " + viewModel.calTodaySaveMoney()
     }
 }
 
@@ -210,6 +215,14 @@ extension CalendarViewController: FSCalendarDelegate, FSCalendarDataSource {
             return 1
         } else {
             return 0
+        }
+    }
+    
+    func calendar(_ calendar: FSCalendar, subtitleFor date: Date) -> String? {
+        if viewModel.eventDay.contains(date) {
+            return String(viewModel.setCalendarEventData(date: date))
+        } else {
+            return nil
         }
     }
 }

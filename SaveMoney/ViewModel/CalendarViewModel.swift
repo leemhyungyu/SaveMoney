@@ -77,4 +77,17 @@ class CalendarViewModel {
     func eventInCalendar() {
         saveManager.setEventDay()
     }
+    
+    func setCalendarEventData(date: Date) -> Int {
+        
+        var saves = saveManager.returnSaveOfSelectedDay(date: getStringToDate(date: date))
+        
+        var result: Int = 0
+        
+        for i in saves {
+            result = result + Int(i.saveMoney)!
+        }
+        
+        return result
+    }
 }

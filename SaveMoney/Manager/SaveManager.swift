@@ -37,12 +37,7 @@ class SaveManager {
         saveStruct()
     }
 
-//    func deleteSave(save: Save) {
-//        saves = saves.filter { $0.id != save.id}
-//        eventDay = setEventDay()
-//        saveStruct()
-//    }
-  
+
     func deleteSave(save: Save, index: Int) {
         saves = saves.filter { $0.id != save.id}
         saveOfDay.remove(at: index)
@@ -50,12 +45,13 @@ class SaveManager {
         saveStruct()
     }
     
-//    func saveOfSelectedDay(date: String) -> [Save] {
-//        return saves.filter { $0.day == date }
-//    }
     
     func saveOfSelectedDay(date: String) {
         self.saveOfDay = saves.filter { $0.day == date }
+    }
+    
+    func returnSaveOfSelectedDay(date: String) -> [Save] {
+        return saves.filter { $0.day == date }
     }
     
     func saveStruct() {
