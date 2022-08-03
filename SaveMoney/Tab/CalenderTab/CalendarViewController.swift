@@ -207,17 +207,15 @@ extension CalendarViewController: FSCalendarDelegate, FSCalendarDataSource {
         setDayData(date)
     }
     
-    func calendar(_ calendar: FSCalendar, subtitleFor date: Date) -> String? {
-        if viewModel.eventDay.contains(date) {
-            return viewModel.setCalendarEventData(date: date)
-        } else {
-            return nil
-        }
-    }
-    
     func calendar(_ calendar: FSCalendar, willDisplay cell: FSCalendarCell, for date: Date, at monthPosition: FSCalendarMonthPosition) {
-        let eventScaleFactor: CGFloat = 5
-        cell.eventIndicator.transform = CGAffineTransform(scaleX: eventScaleFactor, y: eventScaleFactor)
+
+        let saveMoney = UILabel(frame: CGRect(x: 10, y: 35, width: cell.bounds.width, height: 20))
+        
+        if viewModel.setCalendarSubtitleData(date: date) != 0 {
+            saveMoney.text = setIntForWon(viewModel.setCalendarSubtitleData(date: date))
+            saveMoney.font = .systemFont(ofSize: 10)
+            cell.addSubview(saveMoney)
+        }
     }
 }
 
@@ -258,11 +256,10 @@ extension CalendarViewController{
         calendar.appearance.eventDefaultColor = .systemPink
         calendar.appearance.weekdayTextColor = .lightGray
         calendar.appearance.todayColor = .systemGray4
-        
+        calendar.appearance.calendar.sizeToFit()
         calendar.appearance.subtitleOffset = CGPoint(x: 0, y: 10)
-        calendar.appearance.eventOffset = CGPoint(x: 0, y: -10)
         calendar.placeholderType = .none
-
+        
         scrollView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.leading.trailing.equalTo(view)
