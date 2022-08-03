@@ -11,6 +11,8 @@ class InputViewController: UIViewController {
     
     let viewModel = InputViewModel.shared
 
+    var doneBtnClosure: (() -> Void)?
+    
     let subView: UIView = {
         let view = UIView()
         
@@ -468,5 +470,6 @@ extension InputViewController {
         
         viewModel.addSave(save: save)
         viewModel.addEventDay(save: save)
+        viewModel.addSelectedDay(save: save)
     }
 }

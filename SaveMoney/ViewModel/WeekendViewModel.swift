@@ -23,7 +23,7 @@ class WeekendViewModel {
         saveManager.retrieveSave()
     }
     
-    func saveOfSelectedDay(date: String) {
-        self.saveOfDay = saveManager.saveOfSelectedDay(date: date)
-    }
+//    func saveOfSelectedDay(date: String) {
+//        self.saveOfDay = saveManager.saveOfSelectedDay(date: date)
+//    }
 }

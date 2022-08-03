@@ -150,7 +150,7 @@ class WeekendViewController: UIViewController {
 extension WeekendViewController: FSCalendarDelegate, FSCalendarDataSource {
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         let day = getDateToString(date: date)
-        viewModel.saveOfSelectedDay(date: day!)
+//        viewModel.saveOfSelectedDay(date: day!)
         print(viewModel.saveOfDay)
         tableView.reloadData()
     }

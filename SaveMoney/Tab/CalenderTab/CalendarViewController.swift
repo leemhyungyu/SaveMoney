@@ -124,6 +124,7 @@ class CalendarViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         calendar.reloadData()
+        collectionView.reloadData()
     }
     
     override func viewWillLayoutSubviews() {
@@ -168,7 +169,7 @@ extension CalendarViewController: UICollectionViewDelegate, UICollectionViewData
         
         let save = viewModel.saveOfDay[indexPath.row]
         
-        print(save)
+        print("reload되었음 \(save)")
         cell.updateUI(save: save)
         
         cell.cancleButtonClosure = {
