@@ -209,21 +209,26 @@ extension CalendarViewController: FSCalendarDelegate, FSCalendarDataSource {
         setDayData(date)
     }
     
-    func calendar(_ calendar: FSCalendar, numberOfEventsFor date: Date) -> Int {
-
-        if viewModel.eventDay.contains(date) {
-            return 1
-        } else {
-            return 0
-        }
-    }
-    
+//    func calendar(_ calendar: FSCalendar, numberOfEventsFor date: Date) -> Int {
+//
+//        if viewModel.eventDay.contains(date) {
+//            return 1
+//        } else {
+//            return 0
+//        }
+//    }
+//
     func calendar(_ calendar: FSCalendar, subtitleFor date: Date) -> String? {
         if viewModel.eventDay.contains(date) {
-            return String(viewModel.setCalendarEventData(date: date))
+            return viewModel.setCalendarEventData(date: date)
         } else {
             return nil
         }
+    }
+    
+    func calendar(_ calendar: FSCalendar, willDisplay cell: FSCalendarCell, for date: Date, at monthPosition: FSCalendarMonthPosition) {
+        let eventScaleFactor: CGFloat = 5
+        cell.eventIndicator.transform = CGAffineTransform(scaleX: eventScaleFactor, y: eventScaleFactor)
     }
 }
 
@@ -264,8 +269,11 @@ extension CalendarViewController{
         calendar.appearance.eventDefaultColor = .systemPink
         calendar.appearance.weekdayTextColor = .lightGray
         calendar.appearance.todayColor = .systemGray4
-        calendar.placeholderType = .none
         
+        calendar.appearance.subtitleOffset = CGPoint(x: 0, y: 10)
+        calendar.appearance.eventOffset = CGPoint(x: 0, y: -10)
+        calendar.placeholderType = .none
+
         scrollView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.leading.trailing.equalTo(view)
@@ -275,7 +283,7 @@ extension CalendarViewController{
         calendar.snp.makeConstraints {
             $0.top.equalTo(scrollView)
             $0.leading.trailing.equalToSuperview().inset(10)
-            $0.height.equalTo(300)
+            $0.height.equalTo(350)
         }
         
         todayBtn.snp.makeConstraints {

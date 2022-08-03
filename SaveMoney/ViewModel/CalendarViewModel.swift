@@ -78,7 +78,7 @@ class CalendarViewModel {
         saveManager.setEventDay()
     }
     
-    func setCalendarEventData(date: Date) -> Int {
+    func setCalendarEventData(date: Date) -> String {
         
         var saves = saveManager.returnSaveOfSelectedDay(date: getStringToDate(date: date))
         
@@ -88,6 +88,6 @@ class CalendarViewModel {
             result = result + Int(i.saveMoney)!
         }
         
-        return result
+        return setIntForWon(result)
     }
 }

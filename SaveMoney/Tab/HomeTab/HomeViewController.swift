@@ -13,12 +13,15 @@ class HomeViewController: UIViewController {
     let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         
+        scrollView.backgroundColor = #colorLiteral(red: 0.9933428168, green: 0.9469488263, blue: 0.9725527167, alpha: 1)
+        scrollView.showsVerticalScrollIndicator = false
         return scrollView
     }()
     
     let mainView: UIView = {
         let view = UIView()
         
+        view.backgroundColor = #colorLiteral(red: 0.9933428168, green: 0.9469488263, blue: 0.9725527167, alpha: 1)
         return view
     }()
     
@@ -32,7 +35,6 @@ class HomeViewController: UIViewController {
         let view = UIView()
         
         view.setShadow()
-        
         return view
     }()
     
@@ -57,6 +59,7 @@ class HomeViewController: UIViewController {
     let monthView: UIView = {
         let view = UIView()
 
+        view.setShadow()
         view.backgroundColor = .white
         return view
     }()
@@ -70,12 +73,14 @@ class HomeViewController: UIViewController {
     
     let weekendView: UIView = {
         let view = UIView()
+        view.setShadow()
         view.backgroundColor = .white
         return view
     }()
     
     let totalView: UIView = {
         let view = UIView()
+        view.setShadow()
         view.backgroundColor = .white
         return view
     }()
@@ -106,7 +111,8 @@ class HomeViewController: UIViewController {
     }
     
     func configureUI() {
-
+        
+        view.backgroundColor = #colorLiteral(red: 0.9933428168, green: 0.9469488263, blue: 0.9725527167, alpha: 1)
         view.addSubview(scrollView)
         
         scrollView.addSubview(mainView)
@@ -119,13 +125,14 @@ class HomeViewController: UIViewController {
         
         scrollView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
-            $0.leading.trailing.height.equalTo(view)
+            $0.leading.trailing.equalTo(view).inset(10)
+            $0.height.equalTo(view)
         }
         
         mainView.snp.makeConstraints {
             $0.edges.equalTo(scrollView.contentLayoutGuide)
             $0.width.equalTo(scrollView)
-            $0.height.equalTo(850)
+            $0.height.equalTo(900)
         }
         
         subView.snp.makeConstraints {
@@ -135,12 +142,12 @@ class HomeViewController: UIViewController {
         }
 
         grpahHeaderView.snp.makeConstraints {
-            $0.top.leading.trailing.equalToSuperview()
+            $0.top.leading.trailing.equalToSuperview().inset(10)
             $0.bottom.equalTo(subView.snp.top).offset(30)
         }
 
         barChartView.snp.makeConstraints {
-            $0.top.equalTo(grpahHeaderView.snp.bottom).offset(10)
+            $0.top.equalTo(grpahHeaderView.snp.bottom)
             $0.leading.trailing.bottom.equalToSuperview().inset(10)
         }
 
@@ -150,7 +157,7 @@ class HomeViewController: UIViewController {
         }
 
         totalView.snp.makeConstraints {
-            $0.top.equalTo(totalHeaderView.snp.bottom).offset(10)
+            $0.top.equalTo(totalHeaderView.snp.bottom).offset(15)
             $0.leading.trailing.equalToSuperview().inset(10)
             $0.height.equalTo(100)
         }
@@ -165,7 +172,7 @@ class HomeViewController: UIViewController {
         }
         
         monthView.snp.makeConstraints {
-            $0.top.equalTo(monthHeaderView.snp.bottom).offset(10)
+            $0.top.equalTo(monthHeaderView.snp.bottom).offset(15)
             $0.leading.trailing.equalToSuperview().inset(10)
             $0.height.equalTo(100)
         }
@@ -176,7 +183,7 @@ class HomeViewController: UIViewController {
         }
         
         weekendView.snp.makeConstraints {
-            $0.top.equalTo(weekendHeaderView.snp.bottom).offset(10)
+            $0.top.equalTo(weekendHeaderView.snp.bottom).offset(15)
             $0.leading.trailing.equalToSuperview().inset(10)
             $0.height.equalTo(100)
         }
