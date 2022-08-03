@@ -10,10 +10,14 @@ import UIKit
 
 class InputViewModel {
     
+    static let shared = InputViewModel()
+
     let saveManager = SaveManager.shared
-    
+
     let categories: [Category] = [.food, .transportation, .hobby, .life, .coffee, .etc]
 
+    var date: Date?
+    
     var saves: [Save] {
         return saveManager.saves
     }

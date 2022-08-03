@@ -15,6 +15,5 @@ extension UIView {
         self.layer.shadowRadius = 7
         self.layer.shadowOpacity = 0.4
         self.layer.cornerRadius = 8
-        self.backgroundColor = .white
     }
 }

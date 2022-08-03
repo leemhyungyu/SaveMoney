@@ -9,6 +9,7 @@ import UIKit
 
 class CalendarViewModel {
     let saveManager = SaveManager.shared
+    let inputViewModel = InputViewModel.shared
     
     var day: String?
     var date: Date?

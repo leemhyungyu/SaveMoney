@@ -300,6 +300,7 @@ extension CalendarViewController{
     }
     
     func setDayData(_ date: Date) {
+        viewModel.date = date
         label.text = viewModel.selectedDay(date)
         
         viewModel.saveOfSelectedDay(date: getStringToDate(date: date))
@@ -309,11 +310,13 @@ extension CalendarViewController{
     
     @objc func addBtnClicked(_ sender: UITapGestureRecognizer) {
 
-        let WeekendVC = WeekendViewController()
-        WeekendVC.weekCalendar.select(calendar.selectedDate)
-        WeekendVC.delegate = self
-        WeekendVC.modalPresentationStyle = .fullScreen
-        present(WeekendVC, animated: true, completion: nil)
+
+        let InputVC = InputViewController()
+        viewModel.inputViewModel.date = viewModel.date
+        InputVC.label.text = getMonthAndDayForString(date: viewModel.date!)
+        
+        InputVC.modalPresentationStyle = .fullScreen
+        present(InputVC, animated: true, completion: nil)
     }
 }
 

@@ -9,23 +9,24 @@ import UIKit
 
 class InputViewController: UIViewController {
     
-    let viewModel = InputViewModel()
+    let viewModel = InputViewModel.shared
 
     let subView: UIView = {
-        let subView = UIView()
-
-        return subView
+        let view = UIView()
+        
+        view.backgroundColor = #colorLiteral(red: 0.9933428168, green: 0.9469488263, blue: 0.9725527167, alpha: 1)
+        return view
     }()
     
     let planView: UIView = {
         let view = UIView()
         
-        view.clipsToBounds = true
-        view.layer.cornerRadius = 10
+        view.setShadow()
+        view.backgroundColor = .white
         return view
     }()
     
-    let backBtn: UIButton = {
+    lazy var backBtn: UIButton = {
         var config = UIButton.Configuration.plain()
         config.image = UIImage(systemName: "arrow.left")
         config.imagePadding = 10
@@ -39,9 +40,8 @@ class InputViewController: UIViewController {
     let finalView: UIView = {
         let view = UIView()
         
-        view.clipsToBounds = true
-        view.layer.cornerRadius = 10
-        
+        view.setShadow()
+        view.backgroundColor = .white
         return view
     }()
     
@@ -212,7 +212,7 @@ class InputViewController: UIViewController {
         return pickerView
     }()
     
-    let toolbar: UIToolbar = {
+    lazy var toolbar: UIToolbar = {
         let toolbar = UIToolbar()
         
         toolbar.barStyle = .default
@@ -229,10 +229,10 @@ class InputViewController: UIViewController {
         return toolbar
     }()
     
-    let doneBtn: UIButton = {
+    lazy var doneBtn: UIButton = {
        
         var config = UIButton.Configuration.filled()
-        config.baseBackgroundColor = .systemBlue
+        config.baseBackgroundColor = .systemPink
         config.imagePadding = 10
         
         var titleAttr = AttributedString.init("완료")
@@ -240,7 +240,6 @@ class InputViewController: UIViewController {
         config.attributedTitle = titleAttr
         
         let btn = UIButton(configuration: config)
-        
         btn.addTarget(self, action: #selector(doneBtnClicked(_:)), for: .touchUpInside)
         
         return btn
@@ -253,9 +252,11 @@ class InputViewController: UIViewController {
         view.backgroundColor = .white
         setting()
         print(viewModel.saves)
+        print(viewModel.date)
     }
     
     func setting() {
+        view.backgroundColor = #colorLiteral(red: 0.9933428168, green: 0.9469488263, blue: 0.9725527167, alpha: 1)
         
         view.addSubview(subView)
         view.addSubview(planView)
@@ -282,9 +283,7 @@ class InputViewController: UIViewController {
         finalView.addSubview(finalNameLabel)
         finalView.addSubview(finalMoneyInput)
         finalView.addSubview(finalMoneyLabel)
-        
-        planView.backgroundColor = .systemGray5
-        finalView.backgroundColor = .systemGray5
+
 
         planPickerView.delegate = self
         planCategoriInput.inputView = planPickerView
@@ -294,15 +293,27 @@ class InputViewController: UIViewController {
         finalCategoriInput.inputView = finalPickerView
         finalCategoriInput.inputAccessoryView = toolbar
         
-        backBtn.snp.makeConstraints {
-            $0.top.equalTo(subView).offset(10)
-            $0.leading.equalTo(subView).offset(5)
-        }
         subView.snp.makeConstraints {
-            $0.top.trailing.leading.equalToSuperview()
+            $0.top.equalTo(view.safeAreaLayoutGuide)
+            $0.trailing.leading.equalToSuperview()
             $0.height.equalTo(150)
         }
         
+        backBtn.snp.makeConstraints {
+            $0.top.equalToSuperview()
+            $0.leading.equalToSuperview().offset(5)
+        }
+        
+        label.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(20)
+            $0.centerX.equalToSuperview()
+        }
+        
+        infoLabel.snp.makeConstraints {
+            $0.top.equalTo(label.snp.bottom).offset(5)
+            $0.centerX.equalToSuperview()
+        }
+    
         planViewLabel.snp.makeConstraints {
             $0.top.equalTo(subView.snp.bottom).inset(10)
             $0.leading.equalTo(planView.snp.leading)
@@ -324,18 +335,7 @@ class InputViewController: UIViewController {
             $0.trailing.leading.equalToSuperview().inset(20)
             $0.height.equalTo(160)
         }
-        
-        
-        label.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(50)
-            $0.centerX.equalToSuperview()
-        }
-        
-        infoLabel.snp.makeConstraints {
-            $0.top.equalTo(label.snp.bottom).offset(10)
-            $0.centerX.equalToSuperview()
-        }
-        
+
         planCategoriLabel.snp.makeConstraints {
             $0.top.equalTo(planViewLabel.snp.bottom).offset(20)
             $0.leading.equalToSuperview().offset(10)
@@ -462,9 +462,9 @@ extension InputViewController {
     @objc func doneBtnClicked(_ sender: UITapGestureRecognizer) {
         dismiss(animated: true)
         
-        guard let day = label.text, let planName = planNameInput.text, let planMoney = planMoneyInput.text, let finalName = finalNameInput.text, let finalMoney = finalMoneyInput.text, let category = finalCategoriInput.text else { return }
+        guard let planName = planNameInput.text, let planMoney = planMoneyInput.text, let finalName = finalNameInput.text, let finalMoney = finalMoneyInput.text, let category = finalCategoriInput.text else { return }
         
-        let save = viewModel.saveManager.createSave(day: day, planName: planName, finalName: finalName, planMoney: planMoney, finalMoney: finalMoney, category: category)
+        let save = viewModel.saveManager.createSave(day: getStringToDate(date: viewModel.date!), planName: planName, finalName: finalName, planMoney: planMoney, finalMoney: finalMoney, category: category)
         
         viewModel.addSave(save: save)
         viewModel.addEventDay(save: save)
