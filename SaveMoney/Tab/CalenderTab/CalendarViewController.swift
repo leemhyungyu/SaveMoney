@@ -174,18 +174,16 @@ extension CalendarViewController: UICollectionViewDelegate, UICollectionViewData
         
         let save = viewModel.saveOfDay[indexPath.row]
         
-        print("reload되었음 \(save)")
         cell.updateUI(save: save)
         
         cell.cancleButtonClosure = {
-            self.viewModel.deleteOfSelectedDay(save: save, index: indexPath.item)
-            collectionView.reloadData()
+            let alertViewController = self.presentAlertView(.delete)
             
-            self.totalSaveMoney.text = "절약한 돈: " + self.viewModel.calTodaySaveMoney()
-
-            DispatchQueue.main.async {
-                self.calendar.reloadData()
+            alertViewController.doneButtonClosure = {
+                self.viewModel.deleteOfSelectedDay(save: save, index: indexPath.item)
+                self.reloadMainData()
             }
+            self.present(alertViewController, animated: true)
         }
         return cell
     }
@@ -209,15 +207,6 @@ extension CalendarViewController: FSCalendarDelegate, FSCalendarDataSource {
         setDayData(date)
     }
     
-//    func calendar(_ calendar: FSCalendar, numberOfEventsFor date: Date) -> Int {
-//
-//        if viewModel.eventDay.contains(date) {
-//            return 1
-//        } else {
-//            return 0
-//        }
-//    }
-//
     func calendar(_ calendar: FSCalendar, subtitleFor date: Date) -> String? {
         if viewModel.eventDay.contains(date) {
             return viewModel.setCalendarEventData(date: date)
