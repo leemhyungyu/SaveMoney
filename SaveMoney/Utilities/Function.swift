@@ -11,20 +11,36 @@ func setStringForWon(_ text: String) -> String {
     let numberFormatter = NumberFormatter()
     numberFormatter.numberStyle = .decimal
     
-    let saveMoney = numberFormatter.string(from: NSNumber(value: Int(text)!))!
+    let result = numberFormatter.string(from: NSNumber(value: Int(text)!))!
     
-    return saveMoney + "원"
+    return result + "원"
 }
 
 // 정수를 입력받아 천단위로 ','넣고 '원' 붙혀주는 함수
 func setIntForWon(_ text: Int) -> String {
+    let numberFormatter = NumberFormatter()
+    numberFormatter.numberStyle = .decimal
     
-    let value = String(text)
+    let result = numberFormatter.string(from: NSNumber(value: text))!
+    
+    return result + "원"
+}
+
+func setIntForCommaPlus(_ text: Int) -> String {
     
     let numberFormatter = NumberFormatter()
     numberFormatter.numberStyle = .decimal
     
-    let saveMoney = numberFormatter.string(from: NSNumber(value: text))!
-    
-    return saveMoney + "원"
+    let result = numberFormatter.string(from: NSNumber(value: text))!
+
+    return "+" + result
+}
+
+func setInForCommaMinus(_ text: Int) -> String {        
+    let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = .decimal
+        
+    let result = numberFormatter.string(from: NSNumber(value: text))!
+
+    return "-" + result
 }

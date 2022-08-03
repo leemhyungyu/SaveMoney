@@ -207,17 +207,16 @@ extension CalendarViewController: FSCalendarDelegate, FSCalendarDataSource {
         setDayData(date)
     }
     
-    func calendar(_ calendar: FSCalendar, willDisplay cell: FSCalendarCell, for date: Date, at monthPosition: FSCalendarMonthPosition) {
-
-        let saveMoney = UILabel(frame: CGRect(x: 10, y: 35, width: cell.bounds.width, height: 20))
-        
-        if viewModel.setCalendarSubtitleData(date: date) != 0 {
-            saveMoney.text = setIntForWon(viewModel.setCalendarSubtitleData(date: date))
-            saveMoney.font = .systemFont(ofSize: 10)
-            cell.addSubview(saveMoney)
+    
+    func calendar(_ calendar: FSCalendar, subtitleFor date: Date) -> String? {
+        if viewModel.eventDay.contains(date) {
+            return setIntForCommaPlus(viewModel.setCalendarSubtitleData(date: date))
+        } else {
+            return nil
         }
     }
 }
+    
 
 extension CalendarViewController{
     func setting() {
@@ -259,7 +258,7 @@ extension CalendarViewController{
         calendar.appearance.calendar.sizeToFit()
         calendar.appearance.subtitleOffset = CGPoint(x: 0, y: 10)
         calendar.placeholderType = .none
-        
+        calendar.appearance.subtitleSelectionColor = .systemPink
         scrollView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.leading.trailing.equalTo(view)
