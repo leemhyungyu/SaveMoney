@@ -12,6 +12,7 @@ class CalendarViewController: UIViewController {
     
     let viewModel = CalendarViewModel()
     private var collectionViewHeightConstraint: NSLayoutConstraint!
+    private var calendarViewHegihtconstraint: NSLayoutConstraint!
     var layout = UICollectionViewFlowLayout()
     var events: [Date] = []
 
@@ -110,13 +111,25 @@ class CalendarViewController: UIViewController {
         
         return btn
     }()
+    
+    lazy var weekendButton: UIButton = {
+
+        let btn = UIButton()
+        
+        btn.setImage(UIImage(named: "arrowDown"), for: .normal)
+        btn.setImage(UIImage(named: "arrowUp"), for: .selected)
+        
+        btn.addTarget(self, action: #selector(weekendButtonClicked), for: .touchUpInside)
+        
+        return btn
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setting()
         viewModel.retrieve()
         setDayData(Date())
-        setCollectionView()
+        setHeigthConstraint()
         viewModel.eventInCalendar()
         view.backgroundColor = #colorLiteral(red: 0.9933428168, green: 0.9469488263, blue: 0.9725527167, alpha: 1)
     }
@@ -147,10 +160,25 @@ class CalendarViewController: UIViewController {
         totalSaveMoney.text = "절약한 돈: " + viewModel.calTodaySaveMoney()
     }
     
-    func setCollectionView() {
+    @objc func weekendButtonClicked() {
+        
+        weekendButton.isSelected = !weekendButton.isSelected
+        
+        if self.calendar.scope == .month {
+            calendar.scope = .week
+        } else {
+            calendar.scope = .month
+        }
+    }
+    
+    func setHeigthConstraint() {
         collectionView.invalidateIntrinsicContentSize()
         collectionViewHeightConstraint = collectionView.heightAnchor.constraint(equalToConstant: 50)
         collectionViewHeightConstraint.isActive = true
+        
+        calendar.invalidateIntrinsicContentSize()
+        calendarViewHegihtconstraint = calendar.heightAnchor.constraint(equalToConstant: 350)
+        calendarViewHegihtconstraint.isActive = true
     }
     
     func initializationData() {
@@ -215,6 +243,15 @@ extension CalendarViewController: FSCalendarDelegate, FSCalendarDataSource {
             return nil
         }
     }
+    
+    func calendar(_ calendar: FSCalendar, boundingRectWillChange bounds: CGRect, animated: Bool) {
+        
+        if calendar.scope == .week {
+            calendarViewHegihtconstraint.constant = bounds.height + 30
+        } else {
+            calendarViewHegihtconstraint.constant = bounds.height
+        }
+    }
 }
     
 
@@ -228,6 +265,8 @@ extension CalendarViewController{
         collectionView.dataSource = self
         
         view.addSubview(scrollView)
+        
+        calendar.addSubview(weekendButton)
         
         scrollView.addSubview(calendar)
         scrollView.addSubview(collectionView)
@@ -243,7 +282,9 @@ extension CalendarViewController{
         
         calendar.headerHeight = 50
         calendar.appearance.headerMinimumDissolvedAlpha = 0.0
-        calendar.appearance.headerDateFormat = "M월"
+        calendar.appearance.headerDateFormat = "YYYY. M"
+//        calendar.appearance.headerTitleAlignment = .left
+//        calendar.appearance.headerTitleOffset = CGPoint(x: -75, y: 0)
         calendar.appearance.headerTitleFont = UIFont(name: "NotoSansKR-Medium", size: 16)
         calendar.appearance.titleFont = UIFont(name: "NotoSansKR-Regular", size: 14)
         calendar.appearance.weekdayFont = UIFont(name: "NotoSansKR-Regular", size: 14)
@@ -259,6 +300,8 @@ extension CalendarViewController{
         calendar.appearance.subtitleOffset = CGPoint(x: 0, y: 10)
         calendar.placeholderType = .none
         calendar.appearance.subtitleSelectionColor = .systemPink
+        calendar.appearance.subtitleTodayColor = .darkGray
+        
         scrollView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.leading.trailing.equalTo(view)
@@ -268,12 +311,16 @@ extension CalendarViewController{
         calendar.snp.makeConstraints {
             $0.top.equalTo(scrollView)
             $0.leading.trailing.equalToSuperview().inset(10)
-            $0.height.equalTo(350)
         }
         
         todayBtn.snp.makeConstraints {
             $0.centerY.equalTo(calendar.calendarHeaderView.snp.centerY)
             $0.trailing.equalTo(scrollView).offset(-20)
+        }
+        
+        weekendButton.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.top.equalTo(calendar.snp.bottom).offset(-25)
         }
         
         subView.snp.makeConstraints {
