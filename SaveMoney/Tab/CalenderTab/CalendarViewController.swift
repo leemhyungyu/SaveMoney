@@ -39,15 +39,51 @@ class CalendarViewController: UIViewController {
         return scrollView
     }()
     
+    lazy var monthButton: UIButton = {
+        let btn = UIButton()
+        
+        btn.setTitle("월간", for: .normal)
+        btn.titleLabel!.font = .systemFont(ofSize: 25)
+        btn.setTitleColor(UIColor.systemPink, for: .normal)
+        btn.setTitleColor(UIColor.lightGray, for: .selected)
+                      
+        btn.addTarget(self, action: #selector(monthButtonClicked), for: .touchUpInside)
+        return btn
+    }()
+    
+    lazy var weekendButton: UIButton = {
+        let btn = UIButton()
+        
+        btn.setTitle("주간", for: .normal)
+        btn.titleLabel!.font = .systemFont(ofSize: 25)
+        btn.setTitleColor(UIColor.systemPink, for: .normal)
+        btn.setTitleColor(UIColor.lightGray, for: .selected)
+           
+        btn.addTarget(self, action: #selector(weekendButtonClicked), for: .touchUpInside)
+           
+        return btn
+    }()
+    
+    let weekendLabel: UILabel = {
+        
+        let label = UILabel()
+        
+        label.font = .systemFont(ofSize: 16)
+        label.text = "주간"
+        
+        return label
+    }()
+    
     let calendar: FSCalendar = {
         let calendar = FSCalendar()
-        
         
         calendar.layer.shadowColor = UIColor.systemGray.cgColor
         calendar.layer.masksToBounds = false
         calendar.layer.shadowRadius = 7
         calendar.layer.shadowOpacity = 0.4
         calendar.layer.cornerRadius = 8
+        calendar.backgroundColor = .white
+        
         return calendar
     }()
     
@@ -63,7 +99,7 @@ class CalendarViewController: UIViewController {
         
         return subView
     }()
-    
+
     let label: UILabel = {
         let label = UILabel()
         
@@ -111,18 +147,6 @@ class CalendarViewController: UIViewController {
         
         return btn
     }()
-    
-    lazy var weekendButton: UIButton = {
-
-        let btn = UIButton()
-        
-        btn.setImage(UIImage(named: "arrowDown"), for: .normal)
-        btn.setImage(UIImage(named: "arrowUp"), for: .selected)
-        
-        btn.addTarget(self, action: #selector(weekendButtonClicked), for: .touchUpInside)
-        
-        return btn
-    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -138,9 +162,7 @@ class CalendarViewController: UIViewController {
         super.viewWillAppear(true)
         reloadMainData()
     }
-    
-    var count = 0
-    
+        
     override func viewWillLayoutSubviews() {
         
         if view.frame.size.height < calendarViewHegihtconstraint.constant + subView.frame.size.height + layout.collectionViewContentSize.height {
@@ -164,13 +186,22 @@ class CalendarViewController: UIViewController {
     
     @objc func weekendButtonClicked() {
         
-        weekendButton.isSelected = !weekendButton.isSelected
-        
-        if self.calendar.scope == .month {
-            calendar.scope = .week
-        } else {
-            calendar.scope = .month
+        if weekendButton.isSelected == true && monthButton.isSelected == false {
+            weekendButton.isSelected = !weekendButton.isSelected
+            monthButton.isSelected = !monthButton.isSelected
         }
+        
+        calendar.scope = .week
+    }
+    
+    @objc func monthButtonClicked() {
+        if weekendButton.isSelected == false && monthButton.isSelected == true {
+            weekendButton.isSelected = !weekendButton.isSelected
+            monthButton.isSelected = !monthButton.isSelected
+        }
+        
+        calendar.scope = .month
+
     }
     
     func setHeigthConstraint() {
@@ -249,7 +280,7 @@ extension CalendarViewController: FSCalendarDelegate, FSCalendarDataSource {
     func calendar(_ calendar: FSCalendar, boundingRectWillChange bounds: CGRect, animated: Bool) {
         
         if calendar.scope == .week {
-            calendarViewHegihtconstraint.constant = bounds.height + 30
+            calendarViewHegihtconstraint.constant = bounds.height
         } else {
             calendarViewHegihtconstraint.constant = bounds.height
         }
@@ -268,8 +299,8 @@ extension CalendarViewController{
         
         view.addSubview(scrollView)
         
-        calendar.addSubview(weekendButton)
-        
+        scrollView.addSubview(monthButton)
+        scrollView.addSubview(weekendButton)
         scrollView.addSubview(calendar)
         scrollView.addSubview(collectionView)
         scrollView.addSubview(subView)
@@ -281,6 +312,8 @@ extension CalendarViewController{
         
         view.backgroundColor = .white
         calendar.backgroundColor = .white
+        
+        weekendButton.isSelected = true
         
         calendar.headerHeight = 50
         calendar.appearance.headerMinimumDissolvedAlpha = 0.0
@@ -301,15 +334,24 @@ extension CalendarViewController{
         calendar.placeholderType = .none
         calendar.appearance.subtitleSelectionColor = .systemPink
         calendar.appearance.subtitleTodayColor = .darkGray
-        
+    
         scrollView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.leading.trailing.height.equalTo(view)
-//            $0.height.equalTo(700)
+        }
+        
+        monthButton.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(10)
+            $0.leading.equalToSuperview().offset(10)
+        }
+        
+        weekendButton.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(10)
+            $0.leading.equalTo(monthButton.snp.trailing).offset(10)
         }
         
         calendar.snp.makeConstraints {
-            $0.top.equalTo(scrollView)
+            $0.top.equalTo(monthButton.snp.bottom)
             $0.leading.trailing.equalToSuperview().inset(10)
         }
         
@@ -318,13 +360,8 @@ extension CalendarViewController{
             $0.trailing.equalTo(scrollView).offset(-20)
         }
         
-        weekendButton.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.top.equalTo(calendar.snp.bottom).offset(-25)
-        }
-        
         subView.snp.makeConstraints {
-            $0.top.equalTo(calendar.snp.bottom).inset(-10)
+            $0.top.equalTo(calendar.snp.bottom).inset(-15)
             $0.leading.trailing.equalToSuperview().inset(10)
             $0.height.equalTo(100)
         }
@@ -341,7 +378,7 @@ extension CalendarViewController{
         
         addBtn.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalTo(calendar.snp.bottom).offset(20)
+            $0.top.equalTo(calendar.snp.bottom).offset(25)
             $0.leading.trailing.equalToSuperview().inset(10)
         }
         
