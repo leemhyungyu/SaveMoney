@@ -139,13 +139,15 @@ class CalendarViewController: UIViewController {
         reloadMainData()
     }
     
+    var count = 0
+    
     override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
         
-        if layout.collectionViewContentSize.height == 0 {
-            collectionViewHeightConstraint.constant = 300
+        if view.frame.size.height < calendarViewHegihtconstraint.constant + subView.frame.size.height + layout.collectionViewContentSize.height {
+            
+            collectionViewHeightConstraint.constant = layout.collectionViewContentSize.height + CGFloat(collectionView.numberOfItems(inSection: 0) * 10)
         } else {
-            collectionViewHeightConstraint.constant = layout.collectionViewContentSize.height + 10
+            collectionViewHeightConstraint.constant = view.frame.size.height - calendarViewHegihtconstraint.constant - subView.frame.size.height
         }
      }
     
@@ -283,8 +285,6 @@ extension CalendarViewController{
         calendar.headerHeight = 50
         calendar.appearance.headerMinimumDissolvedAlpha = 0.0
         calendar.appearance.headerDateFormat = "YYYY. M"
-//        calendar.appearance.headerTitleAlignment = .left
-//        calendar.appearance.headerTitleOffset = CGPoint(x: -75, y: 0)
         calendar.appearance.headerTitleFont = UIFont(name: "NotoSansKR-Medium", size: 16)
         calendar.appearance.titleFont = UIFont(name: "NotoSansKR-Regular", size: 14)
         calendar.appearance.weekdayFont = UIFont(name: "NotoSansKR-Regular", size: 14)
@@ -304,8 +304,8 @@ extension CalendarViewController{
         
         scrollView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
-            $0.leading.trailing.equalTo(view)
-            $0.height.equalTo(700)
+            $0.leading.trailing.height.equalTo(view)
+//            $0.height.equalTo(700)
         }
         
         calendar.snp.makeConstraints {
