@@ -243,7 +243,9 @@ extension CalendarViewController{
         
         calendar.headerHeight = 50
         calendar.appearance.headerMinimumDissolvedAlpha = 0.0
-        calendar.appearance.headerDateFormat = "M월"
+        calendar.appearance.headerDateFormat = "YYYY. M"
+//        calendar.appearance.headerTitleAlignment = .left
+//        calendar.appearance.headerTitleOffset = CGPoint(x: -75, y: 0)
         calendar.appearance.headerTitleFont = UIFont(name: "NotoSansKR-Medium", size: 16)
         calendar.appearance.titleFont = UIFont(name: "NotoSansKR-Regular", size: 14)
         calendar.appearance.weekdayFont = UIFont(name: "NotoSansKR-Regular", size: 14)
@@ -259,6 +261,7 @@ extension CalendarViewController{
         calendar.appearance.subtitleOffset = CGPoint(x: 0, y: 10)
         calendar.placeholderType = .none
         calendar.appearance.subtitleSelectionColor = .systemPink
+        calendar.appearance.subtitleTodayColor = .darkGray
         scrollView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.leading.trailing.equalTo(view)
