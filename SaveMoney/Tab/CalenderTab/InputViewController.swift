@@ -13,23 +13,27 @@ class InputViewController: UIViewController {
 
     var doneBtnClosure: (() -> Void)?
     
+    let imaginView = InputView()
+    let realView = InputView()
+    
     let subView: UIView = {
         let view = UIView()
         
-        view.backgroundColor = #colorLiteral(red: 0.9933428168, green: 0.9469488263, blue: 0.9725527167, alpha: 1)
-        return view
-    }()
-    
-    let planView: UIView = {
-        let view = UIView()
-        
-        view.setShadow()
         view.backgroundColor = .white
         return view
     }()
     
+    lazy var segmentedControl: UISegmentedControl = {
+        let control = UISegmentedControl(items: ["상상", "현실"])
+        control.translatesAutoresizingMaskIntoConstraints = false
+        control.selectedSegmentIndex = 0
+        control.addTarget(self, action: #selector(didChangeValue(segment:)), for: .valueChanged)
+        return control
+    }()
+    
     lazy var backBtn: UIButton = {
         var config = UIButton.Configuration.plain()
+        config.baseForegroundColor = .systemPink
         config.image = UIImage(systemName: "arrow.left")
         config.imagePadding = 10
         
@@ -39,13 +43,6 @@ class InputViewController: UIViewController {
         return btn
     }()
     
-    let finalView: UIView = {
-        let view = UIView()
-        
-        view.setShadow()
-        view.backgroundColor = .white
-        return view
-    }()
     
     lazy var label: UILabel = {
        
@@ -58,17 +55,6 @@ class InputViewController: UIViewController {
         return label
     }()
     
-    let planViewLabel: UILabel = {
-        let label = UILabel()
-        
-        label.text = "구매하려한 물품"
-        
-        label.font = .systemFont(ofSize: 20, weight: .bold)
-        
-        return label
-    }()
-    
-    
     lazy var infoLabel: UILabel = {
         let label = UILabel()
         
@@ -78,136 +64,8 @@ class InputViewController: UIViewController {
         
         return label
     }()
-
-    
-    let planCategoriLabel: UILabel = {
-        let label = UILabel()
-        
-        label.text = "카테고리"
-        
-        label.font = .systemFont(ofSize: 16)
-        
-        return label
-    }()
-    
-    let planNameLabel: UILabel = {
-        let label = UILabel()
-        
-        label.text = "물품명"
-        
-        label.font = .systemFont(ofSize: 16)
-        
-        return label
-    }()
-    
-    let planMoneyLabel: UILabel = {
-        
-        let label = UILabel()
-        label.text = "가격(원)"
-        label.font = .systemFont(ofSize: 16)
-
-        return label
-    }()
-    
-    let planCategoriInput: UITextField = {
-        
-        let textField = UITextField()
-        textField.borderStyle = .roundedRect
-        
-        return textField
-    }()
-    
-    let planNameInput: UITextField = {
-        
-        let textField = UITextField()
-        textField.borderStyle = .roundedRect
-        textField.placeholder = "순대국밥"
-
-        return textField
-    }()
-    
-    let planMoneyInput: UITextField = {
-        
-        let textField = UITextField()
-        textField.borderStyle = .roundedRect
-        textField.keyboardType = .numberPad
-        textField.placeholder = "7000"
-        
-        return textField
-    }()
-    
-    let finalViewLabel: UILabel = {
-        
-        let label = UILabel()
-        label.text = "구매한 내역"
-        label.font = .systemFont(ofSize: 20, weight: .bold)
-        
-        return label
-    }()
-    
-
-    let finalCategoriLabel: UILabel = {
-        
-        let label = UILabel()
-        label.text = "카테고리"
-        label.font = .systemFont(ofSize: 16)
-        
-        return label
-    }()
-    
-    let finalNameLabel: UILabel = {
-        
-        let label = UILabel()
-        label.text = "물품명"
-        label.font = .systemFont(ofSize: 16)
-        
-        return label
-    }()
-    
-    let finalMoneyLabel: UILabel = {
-        
-        let label = UILabel()
-        label.text = "가격(원)"
-        label.font = .systemFont(ofSize: 16)
-        
-        return label
-    }()
-    
-    let finalCategoriInput: UITextField = {
-        
-        let textField = UITextField()
-        textField.borderStyle = .roundedRect
-        
-        return textField
-    }()
-    
-    let finalNameInput: UITextField = {
-        
-        let textField = UITextField()
-        textField.borderStyle = .roundedRect
-        textField.placeholder = "컵밥"
-
-        return textField
-    }()
-    
-    let finalMoneyInput: UITextField = {
-        
-        let textField = UITextField()
-        textField.borderStyle = .roundedRect
-        textField.keyboardType = .numberPad
-        textField.placeholder = "3500"
-        
-        return textField
-    }()
     
     let planPickerView: UIPickerView = {
-        
-        let pickerView = UIPickerView()
-        
-        return pickerView
-    }()
-    
-    let finalPickerView: UIPickerView = {
         
         let pickerView = UIPickerView()
         
@@ -246,59 +104,30 @@ class InputViewController: UIViewController {
         
         return btn
     }()
-    
-    let categoriDate = ["식비", "교통", "취미", "생활", "커피", "기타"]
-        
+            
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         setting()
-        print(viewModel.saves)
-        print(viewModel.date)
     }
     
     func setting() {
         view.backgroundColor = #colorLiteral(red: 0.9933428168, green: 0.9469488263, blue: 0.9725527167, alpha: 1)
         
-        view.addSubview(subView)
-        view.addSubview(planView)
-        view.addSubview(planViewLabel)
-        view.addSubview(finalView)
-        view.addSubview(finalViewLabel)
-        view.addSubview(doneBtn)
-        
-        subView.addSubview(label)
-        subView.addSubview(infoLabel)
-        subView.addSubview(backBtn)
-
-        
-        planView.addSubview(planCategoriLabel)
-        planView.addSubview(planCategoriInput)
-        planView.addSubview(planNameInput)
-        planView.addSubview(planNameLabel)
-        planView.addSubview(planMoneyInput)
-        planView.addSubview(planMoneyLabel)
-        
-        finalView.addSubview(finalCategoriLabel)
-        finalView.addSubview(finalCategoriInput)
-        finalView.addSubview(finalNameInput)
-        finalView.addSubview(finalNameLabel)
-        finalView.addSubview(finalMoneyInput)
-        finalView.addSubview(finalMoneyLabel)
-
+        [subView, doneBtn, segmentedControl, imaginView, realView] .forEach { view.addSubview($0) }
+        [label, infoLabel, backBtn] .forEach { subView.addSubview($0) }
 
         planPickerView.delegate = self
-        planCategoriInput.inputView = planPickerView
-        planCategoriInput.inputAccessoryView = toolbar
         
-        finalPickerView.delegate = self
-        finalCategoriInput.inputView = finalPickerView
-        finalCategoriInput.inputAccessoryView = toolbar
-        
+        imaginView.categoriTextField.inputView = planPickerView
+        imaginView.categoriTextField.inputAccessoryView = toolbar
+        realView.categoriTextField.inputView = planPickerView
+        realView.categoriTextField.inputAccessoryView = toolbar
+                
         subView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.trailing.leading.equalToSuperview()
-            $0.height.equalTo(150)
+            $0.height.equalTo(100)
         }
         
         backBtn.snp.makeConstraints {
@@ -315,103 +144,26 @@ class InputViewController: UIViewController {
             $0.top.equalTo(label.snp.bottom).offset(5)
             $0.centerX.equalToSuperview()
         }
-    
-        planViewLabel.snp.makeConstraints {
-            $0.top.equalTo(subView.snp.bottom).inset(10)
-            $0.leading.equalTo(planView.snp.leading)
+        
+        segmentedControl.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.top.equalTo(subView.snp.bottom).offset(10)
         }
         
-        planView.snp.makeConstraints {
-            $0.top.equalTo(planViewLabel.snp.bottom).inset(-10)
-            $0.trailing.leading.equalToSuperview().inset(20)
-            $0.height.equalTo(160)
+        imaginView.snp.makeConstraints {
+            imaginView.backgroundColor = .white
+            $0.top.equalTo(segmentedControl.snp.bottom).offset(20)
+            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.height.equalTo(200)
         }
         
-        finalViewLabel.snp.makeConstraints {
-            $0.top.equalTo(planView.snp.bottom).inset(-10)
-            $0.leading.equalTo(planView.snp.leading)
-        }
-        
-        finalView.snp.makeConstraints {
-            $0.top.equalTo(finalViewLabel.snp.bottom).inset(-10)
-            $0.trailing.leading.equalToSuperview().inset(20)
-            $0.height.equalTo(160)
-        }
-
-        planCategoriLabel.snp.makeConstraints {
-            $0.top.equalTo(planViewLabel.snp.bottom).offset(20)
-            $0.leading.equalToSuperview().offset(10)
-        }
-        
-        planCategoriInput.snp.makeConstraints {
-            $0.top.equalTo(planCategoriLabel.snp.bottom).offset(10)
-            $0.leading.equalToSuperview().offset(10)
-            $0.width.equalTo(300)
-            $0.height.equalTo(30)
-        }
-        
-        planNameLabel.snp.makeConstraints {
-            $0.top.equalTo(planCategoriInput.snp.bottom).offset(20)
-            $0.leading.equalToSuperview().offset(10)
-        }
-        
-        planNameInput.snp.makeConstraints {
-            $0.top.equalTo(planNameLabel.snp.bottom).offset(10)
-            $0.leading.equalToSuperview().offset(10)
-            $0.width.equalTo(150)
-            $0.height.equalTo(30)
-        }
-        
-        planMoneyLabel.snp.makeConstraints {
-            $0.top.equalTo(planCategoriInput.snp.bottom).offset(20)
-            $0.leading.equalTo(planMoneyInput.snp.leading)
-        }
-        
-        planMoneyInput.snp.makeConstraints {
-            $0.top.equalTo(planMoneyLabel.snp.bottom).offset(10)
-            $0.leading.equalTo(planNameInput.snp.trailing).offset(10)
-            $0.width.equalTo(150)
-            $0.height.equalTo(30)
-        }
-
-        finalCategoriLabel.snp.makeConstraints {
-            $0.top.equalTo(finalViewLabel.snp.bottom).offset(20)
-            $0.leading.equalToSuperview().offset(10)
-        }
-
-        finalCategoriInput.snp.makeConstraints {
-            $0.top.equalTo(finalCategoriLabel.snp.bottom).offset(10)
-            $0.leading.equalToSuperview().offset(10)
-            $0.width.equalTo(300)
-            $0.height.equalTo(30)
-        }
-
-        finalNameLabel.snp.makeConstraints {
-            $0.top.equalTo(finalCategoriInput.snp.bottom).offset(20)
-            $0.leading.equalToSuperview().offset(10)
-        }
-
-        finalNameInput.snp.makeConstraints {
-            $0.top.equalTo(finalNameLabel.snp.bottom).offset(10)
-            $0.leading.equalToSuperview().offset(10)
-            $0.width.equalTo(150)
-            $0.height.equalTo(30)
-        }
-
-        finalMoneyLabel.snp.makeConstraints {
-            $0.top.equalTo(finalCategoriInput.snp.bottom).offset(20)
-            $0.leading.equalTo(finalMoneyInput.snp.leading)
-        }
-
-        finalMoneyInput.snp.makeConstraints {
-            $0.top.equalTo(finalMoneyLabel.snp.bottom).offset(10)
-            $0.leading.equalTo(finalNameInput.snp.trailing).offset(10)
-            $0.width.equalTo(150)
-            $0.height.equalTo(30)
+        realView.snp.makeConstraints {
+            $0.edges.equalTo(imaginView)
+            $0.height.equalTo(200)
         }
         
         doneBtn.snp.makeConstraints {
-            $0.top.equalTo(finalView.snp.bottom).offset(30)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).offset(-30)
             $0.centerX.equalToSuperview()
             $0.width.equalTo(200)
             $0.height.equalTo(40)
@@ -426,35 +178,31 @@ extension InputViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         
-        return categoriDate.count
+        return viewModel.categories.count
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return categoriDate[row]
+        return viewModel.categories[row].title
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        
-        if pickerView == planPickerView {
-            planCategoriInput.text =  viewModel.categories[row].title
 
-        } else {
-            finalCategoriInput.text = viewModel.categories[row].title
-        }
-        
+        imaginView.categoriTextField.text = viewModel.categories[row].title
+            
+        realView.categoriTextField.text = viewModel.categories[row].title
     }
 }
 
 extension InputViewController {
     
     @objc func doneBtnOfToolbarClicked() {
-        planCategoriInput.resignFirstResponder()
+        imaginView.categoriTextField.resignFirstResponder()
+        realView.categoriTextField.resignFirstResponder()
     }
     
     @objc func cancleBtnOfToolbarClicked() {
-        
-        planCategoriInput.text = ""
-        planCategoriInput.resignFirstResponder()
+        imaginView.categoriTextField.resignFirstResponder()
+        realView.categoriTextField.resignFirstResponder()
     }
     
     @objc func backBtnClicked(_ sender: UITapGestureRecognizer) {
@@ -464,12 +212,25 @@ extension InputViewController {
     @objc func doneBtnClicked(_ sender: UITapGestureRecognizer) {
         dismiss(animated: true)
         
-        guard let planName = planNameInput.text, let planMoney = planMoneyInput.text, let finalName = finalNameInput.text, let finalMoney = finalMoneyInput.text, let category = finalCategoriInput.text else { return }
+        guard let planName = imaginView.nameTextField.text, let planMoney = imaginView.moneyTextField.text, let finalName = realView.nameTextField.text, let finalMoney = realView.moneyTextField.text, let category = realView.categoriTextField.text else { return }
         
         let save = viewModel.saveManager.createSave(day: getStringToDate(date: viewModel.date!), planName: planName, finalName: finalName, planMoney: planMoney, finalMoney: finalMoney, category: category)
         
         viewModel.addSave(save: save)
         viewModel.addEventDay(save: save)
         viewModel.addSelectedDay(save: save)
+    }
+    
+    @objc func didChangeValue(segment: UISegmentedControl) {
+
+        switch segment.selectedSegmentIndex {
+        case 0:
+            imaginView.isHidden = false
+        case 1:
+            imaginView.isHidden = true
+        default:
+            return
+        }
+        realView.isHidden = !imaginView.isHidden
     }
 }

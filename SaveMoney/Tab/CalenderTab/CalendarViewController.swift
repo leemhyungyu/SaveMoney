@@ -89,12 +89,12 @@ class CalendarViewController: UIViewController {
     
     let subView: UIView = {
         let subView = UIView()
-        
-        subView.layer.shadowColor = UIColor.systemGray.cgColor
-        subView.layer.masksToBounds = false
-        subView.layer.shadowRadius = 7
-        subView.layer.shadowOpacity = 0.4
-        subView.layer.cornerRadius = 8
+//        
+//        subView.layer.shadowColor = UIColor.systemGray.cgColor
+//        subView.layer.masksToBounds = false
+//        subView.layer.shadowRadius = 7
+//        subView.layer.shadowOpacity = 0.4
+//        subView.layer.cornerRadius = 8
         subView.backgroundColor = .white
         
         return subView
@@ -133,18 +133,17 @@ class CalendarViewController: UIViewController {
     }()
     
     lazy var addBtn: UIButton = {
-        var config = UIButton.Configuration.filled()
-        config.baseBackgroundColor = .systemPink
+        var config = UIButton.Configuration.plain()
+        config.baseForegroundColor = .systemPink
         
-        var titleAttr = AttributedString.init("절약하기")
-        titleAttr.font = .systemFont(ofSize: 16)
-        config.attributedTitle = titleAttr
+        var titleArr = AttributedString.init("절약하기")
+        titleArr.font = .systemFont(ofSize: 16)
         
-        let btn = UIButton(configuration: config)
+        config.attributedTitle = titleArr
         
+        var btn = UIButton(configuration: config)
         
-        btn.addTarget(self, action: #selector(addBtnClicked(_:)), for: .touchUpInside)
-        
+        btn.addTarget(self, action: #selector(addBtnClicked), for: .touchUpInside)
         return btn
     }()
 
@@ -305,10 +304,10 @@ extension CalendarViewController{
         scrollView.addSubview(collectionView)
         scrollView.addSubview(subView)
         scrollView.addSubview(todayBtn)
+        scrollView.addSubview(addBtn)
         
         subView.addSubview(label)
         subView.addSubview(totalSaveMoney)
-        subView.addSubview(addBtn)
         
         view.backgroundColor = .white
         calendar.backgroundColor = .white
@@ -352,22 +351,22 @@ extension CalendarViewController{
         
         calendar.snp.makeConstraints {
             $0.top.equalTo(monthButton.snp.bottom)
-            $0.leading.trailing.equalToSuperview().inset(10)
+            $0.leading.trailing.equalToSuperview()
         }
         
         todayBtn.snp.makeConstraints {
             $0.centerY.equalTo(calendar.calendarHeaderView.snp.centerY)
-            $0.trailing.equalTo(scrollView).offset(-20)
+            $0.leading.equalToSuperview().inset(10)
         }
         
         subView.snp.makeConstraints {
-            $0.top.equalTo(calendar.snp.bottom).inset(-15)
-            $0.leading.trailing.equalToSuperview().inset(10)
-            $0.height.equalTo(100)
+            $0.top.equalTo(calendar.snp.bottom)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(50)
         }
         
         label.snp.makeConstraints {
-            $0.top.equalTo(addBtn.snp.bottom).offset(20)
+            $0.centerY.equalToSuperview()
             $0.leading.equalTo(subView).inset(20)
         }
         
@@ -377,9 +376,8 @@ extension CalendarViewController{
         }
         
         addBtn.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.top.equalTo(calendar.snp.bottom).offset(25)
-            $0.leading.trailing.equalToSuperview().inset(10)
+            $0.centerY.equalTo(calendar.calendarHeaderView.snp.centerY)
+            $0.trailing.equalToSuperview().inset(20)
         }
         
         collectionView.snp.makeConstraints {
@@ -399,7 +397,7 @@ extension CalendarViewController{
         collectionView.reloadData()
     }
     
-    @objc func addBtnClicked(_ sender: UITapGestureRecognizer) {
+    @objc func addBtnClicked() {
 
 
         let InputVC = InputViewController()
