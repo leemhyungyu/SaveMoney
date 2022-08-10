@@ -16,6 +16,8 @@ class InputViewModel {
 
     let categories: [Category] = [.food, .transportation, .hobby, .life, .coffee, .etc]
 
+    var checkBoxData: Bool?
+    
     var date: Date?
     
     var saves: [Save] {

@@ -146,7 +146,7 @@ class InputViewController: UIViewController {
     
     func setting() {
         view.backgroundColor = #colorLiteral(red: 0.9933428168, green: 0.9469488263, blue: 0.9725527167, alpha: 1)
-        
+        viewModel.checkBoxData = false
         [subView, doneBtn, segmentedControl, imaginView, realView] .forEach { view.addSubview($0) }
         [label, infoLabel, backBtn] .forEach { subView.addSubview($0) }
 
@@ -256,7 +256,12 @@ extension InputViewController {
     @objc func doneBtnClicked(_ sender: UITapGestureRecognizer) {
         dismiss(animated: true)
         
-        guard let planName = imaginView.nameTextField.text, let planMoney = imaginView.moneyTextField.text, let finalName = realView.nameTextField.text, let finalMoney = realView.moneyTextField.text, let category = realView.categoriTextField.text else { return }
+        guard let planName = imaginView.nameTextField.text, let planMoney = imaginView.moneyTextField.text, let category = imaginView.categoriTextField.text, var finalName = realView.nameTextField.text, var finalMoney = realView.moneyTextField.text else { return }
+        
+        if viewModel.checkBoxData == true {
+            finalName = "구매 X"
+            finalMoney = "0"
+        }
         
         let save = viewModel.saveManager.createSave(day: getStringToDate(date: viewModel.date!), planName: planName, finalName: finalName, planMoney: planMoney, finalMoney: finalMoney, category: category)
         
@@ -283,6 +288,7 @@ extension InputViewController {
         checkBox.isSelected = !checkBox.isSelected
         
         if checkBox.isSelected == true {
+            viewModel.checkBoxData = true
             realView.categoriTextField.backgroundColor = .systemGray4
             realView.moneyTextField.backgroundColor = .systemGray4
             realView.nameTextField.backgroundColor = .systemGray4
@@ -291,6 +297,7 @@ extension InputViewController {
             realView.moneyTextField.isUserInteractionEnabled = false
             realView.nameTextField.isUserInteractionEnabled = false
         } else {
+            viewModel.checkBoxData = false
             realView.categoriTextField.backgroundColor = .white
             realView.moneyTextField.backgroundColor = .white
             realView.nameTextField.backgroundColor = .white
