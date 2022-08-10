@@ -12,22 +12,55 @@ class InputViewController: UIViewController {
     let viewModel = InputViewModel.shared
 
     var doneBtnClosure: (() -> Void)?
-    
-    let imaginView = InputView()
-    let realView = InputView()
-    
+        
     let subView: UIView = {
         let view = UIView()
         
-        view.backgroundColor = .white
         return view
+    }()
+    
+    let imaginView: InputView = {
+        let view = InputView()
+        
+        return view
+    }()
+    
+    let realView: InputView = {
+        let view = InputView()
+        view.isHidden = true
+        
+        return view
+    }()
+    
+    lazy var checkBox: UIButton = {
+        
+        let button = UIButton()
+        button.setImage(UIImage(systemName: "square"), for: .normal)
+        button.setImage(UIImage(systemName: "checkmark.square"), for: .selected)
+        button.tintColor = .systemGray
+        button.addTarget(self, action: #selector(checkButtonClicked), for: .touchUpInside)
+        return button
+    }()
+    
+    let checkBoxLabel: UILabel = {
+        let label = UILabel()
+        
+        label.text = "구매하지 않으셨나요?"
+        label.textColor = .systemGray
+        label.font = .systemFont(ofSize: 13)
+        
+        return label
     }()
     
     lazy var segmentedControl: UISegmentedControl = {
         let control = UISegmentedControl(items: ["상상", "현실"])
+        control.tintColor = .systemPink
+//        control.selectedSegmentTintColor = .systemPink
+//        control.backgroundColor = .systemPink
         control.translatesAutoresizingMaskIntoConstraints = false
         control.selectedSegmentIndex = 0
         control.addTarget(self, action: #selector(didChangeValue(segment:)), for: .valueChanged)
+        
         return control
     }()
     
@@ -117,6 +150,7 @@ class InputViewController: UIViewController {
         [subView, doneBtn, segmentedControl, imaginView, realView] .forEach { view.addSubview($0) }
         [label, infoLabel, backBtn] .forEach { subView.addSubview($0) }
 
+        [checkBox, checkBoxLabel] .forEach { realView.addSubview($0) }
         planPickerView.delegate = self
         
         imaginView.categoriTextField.inputView = planPickerView
@@ -148,10 +182,10 @@ class InputViewController: UIViewController {
         segmentedControl.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.top.equalTo(subView.snp.bottom).offset(10)
+            $0.width.equalTo(200)
         }
         
         imaginView.snp.makeConstraints {
-            imaginView.backgroundColor = .white
             $0.top.equalTo(segmentedControl.snp.bottom).offset(20)
             $0.leading.trailing.equalToSuperview().inset(20)
             $0.height.equalTo(200)
@@ -167,6 +201,16 @@ class InputViewController: UIViewController {
             $0.centerX.equalToSuperview()
             $0.width.equalTo(200)
             $0.height.equalTo(40)
+        }
+        
+        checkBox.snp.makeConstraints {
+            $0.top.equalTo(realView.categoriLabel)
+            $0.trailing.equalToSuperview().inset(20)
+        }
+        
+        checkBoxLabel.snp.makeConstraints {
+            $0.centerY.equalTo(checkBox)
+            $0.trailing.equalTo(checkBox.snp.leading).offset(-3)
         }
     }
 }
@@ -232,5 +276,28 @@ extension InputViewController {
             return
         }
         realView.isHidden = !imaginView.isHidden
+    }
+    
+    @objc func checkButtonClicked() {
+        
+        checkBox.isSelected = !checkBox.isSelected
+        
+        if checkBox.isSelected == true {
+            realView.categoriTextField.backgroundColor = .systemGray4
+            realView.moneyTextField.backgroundColor = .systemGray4
+            realView.nameTextField.backgroundColor = .systemGray4
+            
+            realView.categoriTextField.isUserInteractionEnabled = false
+            realView.moneyTextField.isUserInteractionEnabled = false
+            realView.nameTextField.isUserInteractionEnabled = false
+        } else {
+            realView.categoriTextField.backgroundColor = .white
+            realView.moneyTextField.backgroundColor = .white
+            realView.nameTextField.backgroundColor = .white
+            
+            realView.categoriTextField.isUserInteractionEnabled = true
+            realView.moneyTextField.isUserInteractionEnabled = true
+            realView.nameTextField.isUserInteractionEnabled = true
+        }
     }
 }

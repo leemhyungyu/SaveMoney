@@ -14,6 +14,7 @@ class InputView: UIView {
         
         let view = UIView()
         
+        view.backgroundColor = .white
         view.setShadow()
         
         return view
@@ -123,7 +124,7 @@ class InputView: UIView {
         moneyTextField.snp.makeConstraints {
             $0.top.equalTo(moneyLabel.snp.bottom).offset(10)
             $0.leading.equalTo(nameTextField.snp.trailing).offset(10)
-            $0.width.equalTo(150)
+            $0.width.equalTo(140)
             $0.height.equalTo(30)
         }
         
