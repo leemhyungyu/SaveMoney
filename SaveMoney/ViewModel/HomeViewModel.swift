@@ -23,6 +23,9 @@ class HomeViewModel {
         return setIntForWon(saveManager.totalMoney!)
     }
     
+    var maxSaveMoney: String?
+    var weekendMoney: String?
+    
     let day = ["일", "월", "화", "수", "목", "금", "토"]
     var weekendData: [Double] = [0, 0, 0, 0, 0, 0, 0]
 
@@ -51,11 +54,15 @@ class HomeViewModel {
     
     func setWeekendData() {
         var count = 0
+        var calMoney = 0
         for i in weekendDate {
             let money = totalMoneyOfDate(date: i)
             self.weekendData[count] = (Double(money))
+            calMoney += money
             count += 1
         }
+        
+        weekendMoney = setIntForWon(calMoney)
     }
     
     
@@ -79,9 +86,10 @@ class HomeViewModel {
         }
     }
     
-//    func setMoneyData() {
-//        totalMoney = 0
-//        
-//    }
+    func setMaxSaveMoney() {
+        let save = save.sorted(by: { Int($0.saveMoney)! > Int($1.saveMoney)!})
+        
+        maxSaveMoney = setStringForWon(save[0].saveMoney)
+    }
 }
 

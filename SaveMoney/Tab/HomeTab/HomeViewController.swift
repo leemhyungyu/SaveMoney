@@ -96,19 +96,40 @@ class HomeViewController: UIViewController {
         return label
     }()
     
+    let weekendLabel: UILabel = {
+        let label = UILabel()
+        
+        label.numberOfLines = 0
+        label.font = .systemFont(ofSize: 14)
+        
+        return label
+    }()
+    
+    let monthLabel: UILabel = {
+        let label = UILabel()
+        
+        label.numberOfLines = 0
+        label.font = .systemFont(ofSize: 14)
+        
+        return label
+    }()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         viewModel.retrieve()
         viewModel.setWeekendDate()
-        
         configureUI()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         viewModel.setWeekendData()
+        viewModel.setMaxSaveMoney()
         configureChartView()
-        totalLabel.text = "총 \(viewModel.totalMoney)을 세이브 하셨습니다."
+        totalLabel.text = "총 \(viewModel.totalMoney)을 세이브 하셨습니다.\n최고 저축액은 \(viewModel.maxSaveMoney!)입니다."
+        monthLabel.text = "이번 달은 20,000원을 세이브 하셨습니다."
+        weekendLabel.text = "이번 주는 \(viewModel.weekendMoney!)을 세이브 하셨습니다."
     }
     
     func configureUI() {
@@ -121,13 +142,14 @@ class HomeViewController: UIViewController {
         
         [subView, totalView, monthView, weekendView] .forEach { mainView.addSubview($0) }
 
-        totalView.addSubview(totalHeaderView)
-        monthView.addSubview(monthHeaderView)
-        weekendView.addSubview(weekendHeaderView)
+        
+        [totalHeaderView, totalLabel] .forEach { totalView.addSubview($0) }
+        
+        [monthHeaderView, monthLabel] .forEach { monthView.addSubview($0) }
+        
+        [weekendHeaderView, weekendLabel] .forEach { weekendView.addSubview($0) }
         
         [barChartView, grpahHeaderView] .forEach { subView.addSubview($0) }
-        
-        totalView.addSubview(totalLabel)
         
         scrollView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
@@ -184,6 +206,11 @@ class HomeViewController: UIViewController {
             $0.height.equalTo(100)
         }
         
+        monthLabel.snp.makeConstraints {
+            $0.top.equalTo(monthHeaderView.snp.bottom).offset(10)
+            $0.leading.equalTo(monthHeaderView)
+        }
+        
         weekendHeaderView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(5)
             $0.leading.trailing.equalToSuperview().inset(5)
@@ -193,6 +220,11 @@ class HomeViewController: UIViewController {
             $0.top.equalTo(monthView.snp.bottom).offset(30)
             $0.leading.trailing.equalToSuperview().inset(10)
             $0.height.equalTo(100)
+        }
+        
+        weekendLabel.snp.makeConstraints {
+            $0.top.equalTo(weekendHeaderView.snp.bottom).offset(10)
+            $0.leading.equalTo(weekendHeaderView)
         }
     }
     
