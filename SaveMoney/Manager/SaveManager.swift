@@ -56,7 +56,6 @@ class SaveManager {
     
     func saveStruct() {
         UserDefaults.standard.set(try? PropertyListEncoder().encode(saves), forKey: "Saves")
-        print("saveStruct - called")
     }
    
     func retrieveSave() {
@@ -70,7 +69,6 @@ class SaveManager {
 
         self.saves.map {
             if result.contains($0.day) == false {
-                print($0.day)
                 result.append($0.day)
             }
         }

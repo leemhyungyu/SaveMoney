@@ -124,8 +124,6 @@ class WeekendViewController: UIViewController {
     }
     
     @objc func backBtnClicked(_ sender: UITapGestureRecognizer) {
-        print("Back Btn Clicked")
-        
         if let data = weekCalendar.selectedDate {
             delegate?.sendData(data: data)
         }
@@ -138,7 +136,6 @@ class WeekendViewController: UIViewController {
         
         if let date = getDateToString(date: weekCalendar.selectedDate!) {
             InputVC.label.text = date
-            print(weekCalendar.selectedDate)
         } else {
             print("error")
         }
@@ -150,8 +147,6 @@ class WeekendViewController: UIViewController {
 extension WeekendViewController: FSCalendarDelegate, FSCalendarDataSource {
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         let day = getDateToString(date: date)
-//        viewModel.saveOfSelectedDay(date: day!)
-        print(viewModel.saveOfDay)
         tableView.reloadData()
     }
 }

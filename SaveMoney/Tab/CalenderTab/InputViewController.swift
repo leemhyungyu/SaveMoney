@@ -289,9 +289,9 @@ extension InputViewController {
         
         if checkBox.isSelected == true {
             viewModel.checkBoxData = true
-            realView.categoriTextField.backgroundColor = .systemGray4
-            realView.moneyTextField.backgroundColor = .systemGray4
-            realView.nameTextField.backgroundColor = .systemGray4
+            realView.categoriTextField.backgroundColor = .systemGray5
+            realView.moneyTextField.backgroundColor = .systemGray5
+            realView.nameTextField.backgroundColor = .systemGray5
             
             realView.categoriTextField.isUserInteractionEnabled = false
             realView.moneyTextField.isUserInteractionEnabled = false

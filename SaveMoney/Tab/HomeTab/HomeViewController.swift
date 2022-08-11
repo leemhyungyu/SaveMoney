@@ -10,6 +10,8 @@ import Charts
 
 class HomeViewController: UIViewController {
 
+    let viewModel = HomeViewModel()
+    
     let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         
@@ -102,16 +104,19 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        viewModel.retrieve()
+        viewModel.setWeekendDate()
         configureUI()
-        configureChartView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        
+        viewModel.setWeekendData()
         configureChartView()
     }
     
     func configureUI() {
-        
+       
         view.backgroundColor = #colorLiteral(red: 0.9933428168, green: 0.9469488263, blue: 0.9725527167, alpha: 1)
         view.addSubview(scrollView)
         
@@ -192,10 +197,8 @@ class HomeViewController: UIViewController {
     func configureChartView() {
         
         // UI테스트를 위한 임시 데이터
-        let dummyDateData = ["월", "화", "수", "목", "금", "토", "일"]
-        let dummyMoneyData: [Double] = [2000, 5000, 14000, 4100, 23100, 10000, 4000]
         
-        setChart(dataPoints: dummyDateData, values: dummyMoneyData)
+        setChart(dataPoints: viewModel.day, values: viewModel.weekendData)
         
         barChartView.noDataText = "데이터가 없습니다."
         barChartView.noDataFont = .systemFont(ofSize: 16)
@@ -205,7 +208,7 @@ class HomeViewController: UIViewController {
         barChartView.xAxis.labelPosition = .bottom
         barChartView.xAxis.labelFont = .systemFont(ofSize: 16)
         barChartView.xAxis.axisLineColor = .black
-        barChartView.xAxis.valueFormatter = IndexAxisValueFormatter(values: dummyDateData)
+        barChartView.xAxis.valueFormatter = IndexAxisValueFormatter(values: viewModel.day)
         barChartView.rightAxis.enabled = false
         barChartView.leftAxis.enabled = false
         barChartView.doubleTapToZoomEnabled = false

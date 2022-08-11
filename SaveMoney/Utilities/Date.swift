@@ -30,3 +30,20 @@ func getDateToString(text: String) -> Date? {
         
     return dateFormatter.date(from: text)
 }
+
+func getDayToDate(date: Date) -> String {
+    
+    let dateFormatter = DateFormatter()
+    
+    dateFormatter.dateFormat = "E"
+    
+    return dateFormatter.string(from: date)
+}
+
+func getDateToDay(day: String) -> Date {
+    let dateFormatter = DateFormatter()
+    
+    dateFormatter.dateFormat = "Y년 M월 dd일 E요일"
+    
+    return dateFormatter.date(from: day)!
+}
