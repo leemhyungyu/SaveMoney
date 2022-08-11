@@ -35,7 +35,7 @@ class HomeViewController: UIViewController {
     
     let subView: UIView = {
         let view = UIView()
-        
+        view.backgroundColor = .white
         view.setShadow()
         return view
     }()
@@ -90,11 +90,6 @@ class HomeViewController: UIViewController {
     let totalLabel: UILabel = {
         let label = UILabel()
         
-        label.text = """
-                    총 502,000원을 절약하셨습니다.
-                    이번 달은 250,000원을 절약하셨습니다.
-                    이번 주는 82,000원을 절약하셨습니다.
-                    """
         label.numberOfLines = 0
         label.font = .systemFont(ofSize: 14)
         
@@ -106,31 +101,37 @@ class HomeViewController: UIViewController {
         view.backgroundColor = .white
         viewModel.retrieve()
         viewModel.setWeekendDate()
+        
         configureUI()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        
         viewModel.setWeekendData()
         configureChartView()
+        totalLabel.text = "총 \(viewModel.totalMoney)을 세이브 하셨습니다."
     }
     
     func configureUI() {
-       
+        
+        
         view.backgroundColor = #colorLiteral(red: 0.9933428168, green: 0.9469488263, blue: 0.9725527167, alpha: 1)
         view.addSubview(scrollView)
         
         scrollView.addSubview(mainView)
         
-        [subView, totalView, monthView, weekendView, totalHeaderView, monthHeaderView, weekendHeaderView] .forEach { mainView.addSubview($0) }
+        [subView, totalView, monthView, weekendView] .forEach { mainView.addSubview($0) }
 
+        totalView.addSubview(totalHeaderView)
+        monthView.addSubview(monthHeaderView)
+        weekendView.addSubview(weekendHeaderView)
+        
         [barChartView, grpahHeaderView] .forEach { subView.addSubview($0) }
         
         totalView.addSubview(totalLabel)
         
         scrollView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
-            $0.leading.trailing.equalTo(view).inset(10)
+            $0.leading.trailing.equalTo(view)
             $0.height.equalTo(view)
         }
         
@@ -147,8 +148,8 @@ class HomeViewController: UIViewController {
         }
 
         grpahHeaderView.snp.makeConstraints {
-            $0.top.leading.trailing.equalToSuperview().inset(10)
-            $0.bottom.equalTo(subView.snp.top).offset(30)
+            $0.top.leading.trailing.equalToSuperview()
+            $0.bottom.equalTo(subView.snp.top).offset(25)
         }
 
         barChartView.snp.makeConstraints {
@@ -157,47 +158,46 @@ class HomeViewController: UIViewController {
         }
 
         totalHeaderView.snp.makeConstraints {
-            $0.top.equalTo(subView.snp.bottom).offset(30)
-            $0.leading.trailing.equalToSuperview().inset(10)
+            $0.top.equalToSuperview().offset(5)
+            $0.leading.trailing.equalToSuperview().inset(5)
         }
 
         totalView.snp.makeConstraints {
-            $0.top.equalTo(totalHeaderView.snp.bottom).offset(15)
+            $0.top.equalTo(subView.snp.bottom).offset(30)
             $0.leading.trailing.equalToSuperview().inset(10)
             $0.height.equalTo(100)
         }
         
         totalLabel.snp.makeConstraints {
-            $0.top.leading.equalToSuperview()
+            $0.top.equalTo(totalHeaderView.snp.bottom).offset(10)
+            $0.leading.equalTo(totalHeaderView)
         }
         
         monthHeaderView.snp.makeConstraints {
-            $0.top.equalTo(totalView.snp.bottom).offset(30)
-            $0.leading.trailing.equalToSuperview().inset(10)
+            $0.top.equalToSuperview().offset(5)
+            $0.leading.trailing.equalToSuperview().inset(5)
         }
         
         monthView.snp.makeConstraints {
-            $0.top.equalTo(monthHeaderView.snp.bottom).offset(15)
+            $0.top.equalTo(totalView.snp.bottom).offset(30)
             $0.leading.trailing.equalToSuperview().inset(10)
             $0.height.equalTo(100)
         }
         
         weekendHeaderView.snp.makeConstraints {
-            $0.top.equalTo(monthView.snp.bottom).offset(30)
-            $0.leading.trailing.equalToSuperview().inset(10)
+            $0.top.equalToSuperview().offset(5)
+            $0.leading.trailing.equalToSuperview().inset(5)
         }
         
         weekendView.snp.makeConstraints {
-            $0.top.equalTo(weekendHeaderView.snp.bottom).offset(15)
+            $0.top.equalTo(monthView.snp.bottom).offset(30)
             $0.leading.trailing.equalToSuperview().inset(10)
             $0.height.equalTo(100)
         }
     }
     
     func configureChartView() {
-        
-        // UI테스트를 위한 임시 데이터
-        
+                
         setChart(dataPoints: viewModel.day, values: viewModel.weekendData)
         
         barChartView.noDataText = "데이터가 없습니다."
@@ -215,7 +215,6 @@ class HomeViewController: UIViewController {
         barChartView.legend.enabled = false
         barChartView.xAxis.drawGridLinesEnabled = false
         barChartView.animate(xAxisDuration: 2.0, yAxisDuration: 2.0)
-        
     }
     
     func setChart(dataPoints: [String], values: [Double]) {

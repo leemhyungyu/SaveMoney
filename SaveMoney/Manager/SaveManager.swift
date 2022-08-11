@@ -16,6 +16,7 @@ class SaveManager {
     var saves = [Save]()
     var eventDay = [Date]()
     var saveOfDay = [Save]()
+    var totalMoney: Int?
     
     func createSave(day: String, planName: String, finalName: String, planMoney: String, finalMoney: String, category: String) -> Save {
         
@@ -34,13 +35,16 @@ class SaveManager {
     
     func addSave(save: Save) {
         saves.append(save)
+        totalMoney! += Int(save.saveMoney)!
         saveStruct()
     }
 
 
     func deleteSave(save: Save, index: Int) {
         saves = saves.filter { $0.id != save.id}
+        totalMoney! -= Int(saveOfDay[index].saveMoney)!
         saveOfDay.remove(at: index)
+
         eventDay = setEventDay()
         saveStruct()
     }
@@ -56,11 +60,13 @@ class SaveManager {
     
     func saveStruct() {
         UserDefaults.standard.set(try? PropertyListEncoder().encode(saves), forKey: "Saves")
+        UserDefaults.standard.set(totalMoney, forKey: "totalMoney")
     }
    
     func retrieveSave() {
         guard let data = UserDefaults.standard.data(forKey: "Saves") else { return }
         saves = (try? PropertyListDecoder().decode([Save].self, from: data))!
+        totalMoney = UserDefaults.standard.integer(forKey: "totalMoney")
     }
     
     func setEventDay() -> [Date]{

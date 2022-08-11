@@ -19,9 +19,13 @@ class HomeViewModel {
         return saveManager.saveOfDay
     }
     
-    let day = ["월", "화", "수", "목", "금", "토", "일"]
-    var weekendData: [Double] = [0, 0, 0, 0, 0, 0, 0]
+    var totalMoney: String {
+        return setIntForWon(saveManager.totalMoney!)
+    }
     
+    let day = ["일", "월", "화", "수", "목", "금", "토"]
+    var weekendData: [Double] = [0, 0, 0, 0, 0, 0, 0]
+
     var weekendDate: [Date] = []
     
     func retrieve() {
@@ -74,5 +78,10 @@ class HomeViewModel {
             weekendDate.append(Date())
         }
     }
+    
+//    func setMoneyData() {
+//        totalMoney = 0
+//        
+//    }
 }
 

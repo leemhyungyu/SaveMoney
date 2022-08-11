@@ -20,13 +20,6 @@ class HomeSubHeaderView: UIView {
         return label
     }()
     
-    let headerLabelLine: UIView = {
-        let view = UIView()
-        
-        view.backgroundColor = .systemGray3
-        return view
-    }()
-    
     init(title: String) {
         self.title = title
         super.init(frame: .zero)
@@ -41,16 +34,10 @@ class HomeSubHeaderView: UIView {
         
         headerLabel.text = title
         
-        [headerLabel, headerLabelLine] .forEach { addSubview($0) }
+        [headerLabel] .forEach { addSubview($0) }
         
         headerLabel.snp.makeConstraints {
             $0.edges.equalToSuperview()
-        }
-        
-        headerLabelLine.snp.makeConstraints {
-            $0.top.equalTo(headerLabel.snp.bottom).offset(3)
-            $0.height.equalTo(1)
-            $0.leading.trailing.equalToSuperview()
-        }
+        } 
     }
 }
