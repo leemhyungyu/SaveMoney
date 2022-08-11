@@ -27,6 +27,8 @@ class CalendarViewController: UIViewController {
     
         collectionView.register(MainCell.self, forCellWithReuseIdentifier: MainCell.identifier)
         
+        collectionView.register(EmptyCell.self, forCellWithReuseIdentifier: EmptyCell.identifier)
+        
         collectionView.isScrollEnabled = false
         collectionView.backgroundColor = #colorLiteral(red: 0.9933428168, green: 0.9469488263, blue: 0.9725527167, alpha: 1)
         return collectionView
@@ -227,25 +229,38 @@ class CalendarViewController: UIViewController {
 extension CalendarViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.numOfCell
+        
+        if viewModel.numOfCell == 0 {
+            return 1
+        } else {
+            return viewModel.numOfCell
+        }
     }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainCell.identifier, for: indexPath) as? MainCell else { return UICollectionViewCell() }
         
-        let save = viewModel.saveOfDay[indexPath.row]
+        guard let emptyCell = collectionView.dequeueReusableCell(withReuseIdentifier: EmptyCell.identifier, for: indexPath) as? EmptyCell else { return UICollectionViewCell() }
         
-        cell.updateUI(save: save)
-        
-        cell.cancleButtonClosure = {
-            let alertViewController = self.presentAlertView(.delete)
+        if viewModel.numOfCell == 0 {
+            return emptyCell
+        } else {
+            let save = viewModel.saveOfDay[indexPath.row]
             
-            alertViewController.doneButtonClosure = {
-                self.viewModel.deleteOfSelectedDay(save: save, index: indexPath.item)
-                self.reloadMainData()
+            cell.updateUI(save: save)
+            
+            cell.cancleButtonClosure = {
+                let alertViewController = self.presentAlertView(.delete)
+                
+                alertViewController.doneButtonClosure = {
+                    self.viewModel.deleteOfSelectedDay(save: save, index: indexPath.item)
+                    self.reloadMainData()
+                }
+                self.present(alertViewController, animated: true)
             }
-            self.present(alertViewController, animated: true)
+            return cell
         }
-        return cell
+        
     }
 }
 

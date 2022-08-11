@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		11598499F5FDA10659ED9B66 /* Pods_SaveMoneyTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 350F3F2E11BC18B0BA512F3E /* Pods_SaveMoneyTests.framework */; };
 		2C192A3F28A5046C00199B64 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C192A3E28A5046C00199B64 /* HomeViewModel.swift */; };
+		2C192A4128A559CA00199B64 /* EmptyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C192A4028A559CA00199B64 /* EmptyCell.swift */; };
 		2C2A6D4C28917DDC000F7150 /* SaveManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2A6D4B28917DDC000F7150 /* SaveManager.swift */; };
 		2C2A6D4F28917E48000F7150 /* Save.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2A6D4E28917E48000F7150 /* Save.swift */; };
 		2C58F31B289ACFC70046676C /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C58F31A289ACFC70046676C /* AlertView.swift */; };
@@ -65,6 +66,7 @@
 		1D9CD49891492A60C269A65C /* Pods_SaveMoney_SaveMoneyUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SaveMoney_SaveMoneyUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		285BEE2B28E861E5C29F13CB /* Pods-SaveMoney-SaveMoneyUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SaveMoney-SaveMoneyUITests.debug.xcconfig"; path = "Target Support Files/Pods-SaveMoney-SaveMoneyUITests/Pods-SaveMoney-SaveMoneyUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		2C192A3E28A5046C00199B64 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		2C192A4028A559CA00199B64 /* EmptyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyCell.swift; sourceTree = "<group>"; };
 		2C2A6D4B28917DDC000F7150 /* SaveManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveManager.swift; sourceTree = "<group>"; };
 		2C2A6D4E28917E48000F7150 /* Save.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Save.swift; sourceTree = "<group>"; };
 		2C58F31A289ACFC70046676C /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
@@ -267,6 +269,7 @@
 			children = (
 				2CD7F8E0285F574800E5C446 /* MainCell.swift */,
 				2CD7F8F42868685C00E5C446 /* SaveCell.swift */,
+				2C192A4028A559CA00199B64 /* EmptyCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -572,6 +575,7 @@
 				2CD7F8A8285F390300E5C446 /* SceneDelegate.swift in Sources */,
 				2C58F31D289AD0980046676C /* AlertViewController.swift in Sources */,
 				2CBCF06B2893A5D70016A962 /* Function.swift in Sources */,
+				2C192A4128A559CA00199B64 /* EmptyCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
