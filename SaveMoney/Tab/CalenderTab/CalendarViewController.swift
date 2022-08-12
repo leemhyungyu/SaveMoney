@@ -7,6 +7,7 @@
 import UIKit
 import FSCalendar
 import SnapKit
+import SwiftMessages
 
 class CalendarViewController: UIViewController {
     
@@ -413,8 +414,6 @@ extension CalendarViewController{
     }
     
     @objc func addBtnClicked() {
-
-
         let InputVC = InputViewController()
         viewModel.inputViewModel.date = viewModel.date
         InputVC.label.text = getMonthAndDayForString(date: viewModel.date!)

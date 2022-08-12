@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import SwiftMessages
 
 extension UIViewController {
     func presentAlertView(_ Alert: Alert) -> AlertViewCotroller {
@@ -15,5 +16,15 @@ extension UIViewController {
         alertViewController.modalTransitionStyle = .crossDissolve
         alertViewController.modalPresentationStyle = .overFullScreen
         return alertViewController
+    }
+    
+    func presentWarningView() {
+        let warningView = WarningView()
+        
+        var config = SwiftMessages.Config()
+        config.duration = .seconds(seconds: 1)
+        config.keyboardTrackingView = KeyboardTrackingView()
+        config.presentationStyle = .center
+        SwiftMessages.show(config: config, view: warningView)
     }
 }

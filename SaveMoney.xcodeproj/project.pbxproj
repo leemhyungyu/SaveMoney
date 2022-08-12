@@ -17,6 +17,7 @@
 		2C58F31F289AD1D40046676C /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C58F31E289AD1D40046676C /* Alert.swift */; };
 		2C58F321289AD4710046676C /* UIViewController++Extenstions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C58F320289AD4700046676C /* UIViewController++Extenstions.swift */; };
 		2C5920422897F41C00D54523 /* HomeSubHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5920412897F41C00D54523 /* HomeSubHeaderView.swift */; };
+		2C63870028A6418300BF8B01 /* WarningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6386FF28A6418300BF8B01 /* WarningView.swift */; };
 		2C6CD3C928A1078A001ADB26 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C6CD3C828A1078A001ADB26 /* LaunchScreen.storyboard */; };
 		2C78921228A3FA000069326E /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C78921128A3FA000069326E /* InputView.swift */; };
 		2CBCF061289180310016A962 /* DayInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBCF060289180310016A962 /* DayInfo.swift */; };
@@ -74,6 +75,7 @@
 		2C58F31E289AD1D40046676C /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		2C58F320289AD4700046676C /* UIViewController++Extenstions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController++Extenstions.swift"; sourceTree = "<group>"; };
 		2C5920412897F41C00D54523 /* HomeSubHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSubHeaderView.swift; sourceTree = "<group>"; };
+		2C6386FF28A6418300BF8B01 /* WarningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarningView.swift; sourceTree = "<group>"; };
 		2C6CD3C828A1078A001ADB26 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2C78921128A3FA000069326E /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		2CBCF060289180310016A962 /* DayInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayInfo.swift; sourceTree = "<group>"; };
@@ -211,6 +213,7 @@
 				2C5920412897F41C00D54523 /* HomeSubHeaderView.swift */,
 				2C58F31A289ACFC70046676C /* AlertView.swift */,
 				2C78921128A3FA000069326E /* InputView.swift */,
+				2C6386FF28A6418300BF8B01 /* WarningView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -574,6 +577,7 @@
 				2CD7F8E1285F574800E5C446 /* MainCell.swift in Sources */,
 				2CD7F8A8285F390300E5C446 /* SceneDelegate.swift in Sources */,
 				2C58F31D289AD0980046676C /* AlertViewController.swift in Sources */,
+				2C63870028A6418300BF8B01 /* WarningView.swift in Sources */,
 				2CBCF06B2893A5D70016A962 /* Function.swift in Sources */,
 				2C192A4128A559CA00199B64 /* EmptyCell.swift in Sources */,
 			);
