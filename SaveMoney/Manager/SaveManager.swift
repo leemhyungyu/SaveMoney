@@ -16,7 +16,7 @@ class SaveManager {
     var saves = [Save]()
     var eventDay = [Date]()
     var saveOfDay = [Save]()
-    var totalMoney: Int?
+    var totalMoney: Int = 0
     
     func createSave(day: String, planName: String, finalName: String, planMoney: String, finalMoney: String, category: String) -> Save {
         
@@ -35,14 +35,14 @@ class SaveManager {
     
     func addSave(save: Save) {
         saves.append(save)
-        totalMoney! += Int(save.saveMoney)!
+        totalMoney += Int(save.saveMoney)!
         saveStruct()
     }
 
 
     func deleteSave(save: Save, index: Int) {
         saves = saves.filter { $0.id != save.id}
-        totalMoney! -= Int(saveOfDay[index].saveMoney)!
+        totalMoney -= Int(saveOfDay[index].saveMoney)!
         saveOfDay.remove(at: index)
 
         eventDay = setEventDay()

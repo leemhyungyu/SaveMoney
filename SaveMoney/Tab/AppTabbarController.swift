@@ -11,7 +11,7 @@ class AppTabbarController: UITabBarController {
     
     let homeVC = HomeViewController()
     let calendarVC = CalendarViewController()
-    let UserVC = UserViewController()
+    let MyPageVC = MyPageViewController()
     
     let homeTab: UITabBarItem = {
         
@@ -53,10 +53,10 @@ class AppTabbarController: UITabBarController {
         tabBar.tintColor = .systemPink
         tabBar.backgroundColor = .white
         
-        viewControllers = [homeVC, calendarVC, UserVC]
+        viewControllers = [homeVC, calendarVC, MyPageVC]
         
         homeVC.tabBarItem = homeTab
         calendarVC.tabBarItem = calendarTab
-        UserVC.tabBarItem = UserTab
+        MyPageVC.tabBarItem = UserTab
     }
 }

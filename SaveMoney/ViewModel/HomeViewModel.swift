@@ -87,7 +87,7 @@ class HomeViewModel {
         
         if save.count >= 1 {
             let save = save.sorted(by: { Int($0.saveMoney)! > Int($1.saveMoney)!})
-            totalMoney = setIntForWon(saveManager.totalMoney!)
+            totalMoney = setIntForWon(saveManager.totalMoney)
             maxSaveMoney = setStringForWon(save[0].saveMoney)
         } else {
             totalMoney = "0원"

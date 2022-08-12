@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 
 class WarningView: UIView {
-    
+        
     var subView: UIView = {
         let view = UIView()
         
@@ -25,7 +25,6 @@ class WarningView: UIView {
         
         label.font = .systemFont(ofSize: 16)
         label.textColor = .white
-        label.text = "필수 정보를 모두 입력해주세요"
         
         return label
     }()

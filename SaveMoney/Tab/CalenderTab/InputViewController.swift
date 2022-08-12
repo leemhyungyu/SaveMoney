@@ -254,43 +254,21 @@ extension InputViewController {
     }
     
     @objc func doneBtnClicked(_ sender: UITapGestureRecognizer) {
-        // 완료 버튼을 눌렀을 떄
-        
-        // 필수 정보 (상상 - 카테고리, 물품명, 가격, 현실 - 만약 체크했으면 없고, 체크 안했으면 카테고리, 물품명, 가격)
-        // 필수정보가 입력안됐을 떄 warningView띄워주고 완료되도 저장안되고 dismiss안되게
-        // 필수정보가 다 입력됐으면 저장되고 dismiss되게
-        
-        // 방법 1
-        // 각각의 프로퍼티들을 뷰모델에 정의를 해놓고 완료버튼을 누르면 뷰모델에 있는 프로퍼티에 값을 넣는 것임
-        // 그러면 값이 들어온값과 안들어온 값을 구분할 수 있고
-        // 값이 안들언온 필드는 색상을 다르게 해주면 될듯
-        
-        // 방법 2
-        // 각각의 필드의 내용이 있는지 검사하는 메소드를 사용해서
-        // 어떤 필드가 값이 안채워져있는지 확인해서 값이 없는 필드는 색상을 다르게 해주면 될듯 즉, textField.text.count == 0인 경우 텍스트필드의 색을 다르게 해주면 됨
-        // 그리고 textField.text.count == 0 인것이 하나라도 있으면 완료를 눌렀을 떄 dismiss안되게하고 warningView띄워주면 될듯
-        
-        
-        // 일단 먼저 체크가 되어있는지 안되어있는지부터 해야 할듯
-        
-        // 체크가 되어있는 경우
-        guard let planName = imaginView.nameTextField.text, let planMoney = imaginView.moneyTextField.text, let category = imaginView.categoriTextField.text, var finalName = realView.nameTextField.text, var finalMoney = realView.moneyTextField.text else { return }
+
+        guard let planName = imaginView.nameTextField.text, let planMoney = imaginView.moneyTextField.text, let category = imaginView.categoriTextField.text, let finalName = realView.nameTextField.text, let finalMoney = realView.moneyTextField.text else { return }
         
         if viewModel.checkBoxData == true {
             if imaginView.nameTextField.text?.count == 0 || imaginView.moneyTextField.text?.count == 0 || imaginView.categoriTextField.text?.count == 0 {
-                presentWarningView()
+                presentWarningView(.input)
             } else {
-                
                 addSaveData(date: viewModel.date!, planName: planName, finalName: "구매 X", planMoney: planMoney, finalMoney:  "0", category: category)
                 dismiss(animated: true)
             }
-        // 체크가 안되어있는 경우
         } else {
             if imaginView.nameTextField.text?.count == 0 || imaginView.moneyTextField.text?.count == 0 || imaginView.categoriTextField.text?.count == 0 || realView.nameTextField.text?.count == 0 || realView.moneyTextField.text?.count == 0 {
                 
-                presentWarningView()
+                presentWarningView(.input)
             } else {
-
                 addSaveData(date: viewModel.date!, planName: planName, finalName: finalName, planMoney: planMoney, finalMoney: finalMoney, category: category)
                 dismiss(animated: true)
             }

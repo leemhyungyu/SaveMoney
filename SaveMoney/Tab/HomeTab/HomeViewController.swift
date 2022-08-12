@@ -118,12 +118,12 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        viewModel.retrieve()
         viewModel.setWeekendDate()
         configureUI()
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        viewModel.retrieve()
         viewModel.setWeekendData()
         viewModel.setMoneyData()
         configureChartView()

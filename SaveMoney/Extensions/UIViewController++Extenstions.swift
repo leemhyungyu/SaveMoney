@@ -18,9 +18,10 @@ extension UIViewController {
         return alertViewController
     }
     
-    func presentWarningView() {
+    func presentWarningView(_ Warning: Warning) {
         let warningView = WarningView()
         
+        warningView.warningLabel.text = Warning.body
         var config = SwiftMessages.Config()
         config.duration = .seconds(seconds: 1)
         config.keyboardTrackingView = KeyboardTrackingView()
