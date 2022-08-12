@@ -14,6 +14,7 @@ target 'SaveMoney' do
   pod 'FSCalendar'
   pod 'SnapKit'
   pod 'Charts'
+  pod 'SwiftMessages'
   target 'SaveMoneyUITests' do
     # Pods for testing
   end

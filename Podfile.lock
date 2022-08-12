@@ -6,11 +6,15 @@ PODS:
   - FSCalendar (2.8.4)
   - SnapKit (5.6.0)
   - SwiftAlgorithms (1.0.0)
+  - SwiftMessages (9.0.6):
+    - SwiftMessages/App (= 9.0.6)
+  - SwiftMessages/App (9.0.6)
 
 DEPENDENCIES:
   - Charts
   - FSCalendar
   - SnapKit
+  - SwiftMessages
 
 SPEC REPOS:
   trunk:
@@ -18,13 +22,15 @@ SPEC REPOS:
     - FSCalendar
     - SnapKit
     - SwiftAlgorithms
+    - SwiftMessages
 
 SPEC CHECKSUMS:
   Charts: d959d6723c8eedfdd0735dfc28cb0a71762ac4d9
   FSCalendar: 2d1d0d9398f12d439f55c1fe0f01525b151b8260
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
   SwiftAlgorithms: 38dda4731d19027fdeee1125f973111bf3386b53
+  SwiftMessages: f0c7ef4705a570ad6c5e208b611f4333e660ed92
 
-PODFILE CHECKSUM: cbee8797583e36f4839657c15a768b427116fd7a
+PODFILE CHECKSUM: f5ffd08409c6af7470c3d7b262253ce1086fe0ef
 
 COCOAPODS: 1.11.3
