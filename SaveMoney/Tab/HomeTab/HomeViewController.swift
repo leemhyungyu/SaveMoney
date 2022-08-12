@@ -114,6 +114,35 @@ class HomeViewController: UIViewController {
         return label
     }()
     
+    lazy var yearButton: UIButton = {
+        let button = UIButton()
+        
+        button.setButtonShape(title: "년간")
+        button.addTarget(self, action: #selector(yearButtonClicked), for: .touchUpInside)
+        button.isSelected = false
+
+        return button
+    }()
+
+    lazy var monthButton: UIButton = {
+        let button = UIButton()
+        
+        button.setButtonShape(title: "월간")
+        button.addTarget(self, action: #selector(monthButtonClicked), for: .touchUpInside)
+        
+        button.isSelected = false
+        return button
+    }()
+
+    lazy var weekButton: UIButton = {
+        let button = UIButton()
+        
+        button.setButtonShape(title: "주간")
+        button.addTarget(self, action: #selector(weekButtonClicked), for: .touchUpInside)
+        
+        button.isSelected = true
+        return button
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -132,15 +161,51 @@ class HomeViewController: UIViewController {
         weekendLabel.text = "이번 주는 \(viewModel.weekendMoney!)을 세이브 하셨습니다."
     }
     
-    func configureUI() {
+    
+    @objc func weekButtonClicked() {
         
+        if weekButton.isSelected == true {
+            monthButton.isSelected = !weekButton.isSelected
+            yearButton.isSelected = !weekButton.isSelected
+        } else {
+            weekButton.isSelected = !weekButton.isSelected
+            monthButton.isSelected = !weekButton.isSelected
+            yearButton.isSelected = !weekButton.isSelected
+        }
+    }
+     
+    @objc func monthButtonClicked() {
+        
+        if monthButton.isSelected == true {
+            weekButton.isSelected = !monthButton.isSelected
+            yearButton.isSelected = !monthButton.isSelected
+        } else {
+            monthButton.isSelected = !monthButton.isSelected
+            weekButton.isSelected = !monthButton.isSelected
+            yearButton.isSelected = !monthButton.isSelected
+        }
+    }
+    
+    @objc func yearButtonClicked() {
+        
+        if yearButton.isSelected == true {
+            weekButton.isSelected = !yearButton.isSelected
+            monthButton.isSelected = !yearButton.isSelected
+        } else {
+            yearButton.isSelected = !yearButton.isSelected
+            weekButton.isSelected = !yearButton.isSelected
+            monthButton.isSelected = !yearButton.isSelected
+        }
+    }
+
+    func configureUI() {
         
         view.backgroundColor = #colorLiteral(red: 0.9933428168, green: 0.9469488263, blue: 0.9725527167, alpha: 1)
         view.addSubview(scrollView)
         
         scrollView.addSubview(mainView)
         
-        [subView, totalView, monthView, weekendView] .forEach { mainView.addSubview($0) }
+        [subView, totalView, monthView, weekendView, yearButton, monthButton, weekButton] .forEach { mainView.addSubview($0) }
 
         
         [totalHeaderView, totalLabel] .forEach { totalView.addSubview($0) }
@@ -149,8 +214,8 @@ class HomeViewController: UIViewController {
         
         [weekendHeaderView, weekendLabel] .forEach { weekendView.addSubview($0) }
         
-        [barChartView, grpahHeaderView] .forEach { subView.addSubview($0) }
-        
+        [barChartView] .forEach { subView.addSubview($0) }
+                
         scrollView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.leading.trailing.equalTo(view)
@@ -164,19 +229,28 @@ class HomeViewController: UIViewController {
         }
         
         subView.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(20)
-            $0.leading.trailing.equalToSuperview().inset(10)
+            $0.top.equalTo(weekButton.snp.bottom)
+            $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(300)
         }
-
-        grpahHeaderView.snp.makeConstraints {
-            $0.top.leading.trailing.equalToSuperview()
-            $0.bottom.equalTo(subView.snp.top).offset(25)
+        
+        weekButton.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(10)
+            $0.leading.equalToSuperview().inset(10)
+        }
+        
+        monthButton.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(10)
+            $0.leading.equalTo(weekButton.snp.trailing).offset(5)
+        }
+        
+        yearButton.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(10)
+            $0.leading.equalTo(monthButton.snp.trailing).offset(5)
         }
 
         barChartView.snp.makeConstraints {
-            $0.top.equalTo(grpahHeaderView.snp.bottom)
-            $0.leading.trailing.bottom.equalToSuperview().inset(10)
+            $0.top.leading.trailing.bottom.equalToSuperview().inset(10)
         }
 
         totalHeaderView.snp.makeConstraints {

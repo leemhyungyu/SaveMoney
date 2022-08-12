@@ -45,25 +45,18 @@ class CalendarViewController: UIViewController {
     lazy var monthButton: UIButton = {
         let btn = UIButton()
         
-        btn.setTitle("월간", for: .normal)
-        btn.titleLabel!.font = .systemFont(ofSize: 25)
-        btn.setTitleColor(UIColor.systemPink, for: .normal)
-        btn.setTitleColor(UIColor.lightGray, for: .selected)
-                      
+        btn.setButtonShape(title: "월간")
         btn.addTarget(self, action: #selector(monthButtonClicked), for: .touchUpInside)
+        btn.isSelected = true
         return btn
     }()
     
     lazy var weekendButton: UIButton = {
         let btn = UIButton()
         
-        btn.setTitle("주간", for: .normal)
-        btn.titleLabel!.font = .systemFont(ofSize: 25)
-        btn.setTitleColor(UIColor.systemPink, for: .normal)
-        btn.setTitleColor(UIColor.lightGray, for: .selected)
-           
+        btn.setButtonShape(title: "주간")
         btn.addTarget(self, action: #selector(weekendButtonClicked), for: .touchUpInside)
-           
+        btn.isSelected = false
         return btn
     }()
     
@@ -92,12 +85,7 @@ class CalendarViewController: UIViewController {
     
     let subView: UIView = {
         let subView = UIView()
-//        
-//        subView.layer.shadowColor = UIColor.systemGray.cgColor
-//        subView.layer.masksToBounds = false
-//        subView.layer.shadowRadius = 7
-//        subView.layer.shadowOpacity = 0.4
-//        subView.layer.cornerRadius = 8
+
         subView.backgroundColor = .white
         
         return subView
@@ -188,7 +176,7 @@ class CalendarViewController: UIViewController {
     
     @objc func weekendButtonClicked() {
         
-        if weekendButton.isSelected == true && monthButton.isSelected == false {
+        if weekendButton.isSelected == false && monthButton.isSelected == true {
             weekendButton.isSelected = !weekendButton.isSelected
             monthButton.isSelected = !monthButton.isSelected
         }
@@ -197,7 +185,7 @@ class CalendarViewController: UIViewController {
     }
     
     @objc func monthButtonClicked() {
-        if weekendButton.isSelected == false && monthButton.isSelected == true {
+        if weekendButton.isSelected == true && monthButton.isSelected == false {
             weekendButton.isSelected = !weekendButton.isSelected
             monthButton.isSelected = !monthButton.isSelected
         }
@@ -327,9 +315,7 @@ extension CalendarViewController{
         
         view.backgroundColor = .white
         calendar.backgroundColor = .white
-        
-        weekendButton.isSelected = true
-        
+                
         calendar.headerHeight = 50
         calendar.appearance.headerMinimumDissolvedAlpha = 0.0
         calendar.appearance.headerDateFormat = "YYYY. M"
