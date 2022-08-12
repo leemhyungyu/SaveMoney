@@ -125,9 +125,9 @@ class HomeViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         viewModel.setWeekendData()
-        viewModel.setMaxSaveMoney()
+        viewModel.setMoneyData()
         configureChartView()
-        totalLabel.text = "총 \(viewModel.totalMoney)을 세이브 하셨습니다.\n최고 저축액은 \(viewModel.maxSaveMoney!)입니다."
+        totalLabel.text = "총 \(viewModel.totalMoney!)을 세이브 하셨습니다.\n최고 저축액은 \(viewModel.maxSaveMoney!)입니다."
         monthLabel.text = "이번 달은 20,000원을 세이브 하셨습니다."
         weekendLabel.text = "이번 주는 \(viewModel.weekendMoney!)을 세이브 하셨습니다."
     }

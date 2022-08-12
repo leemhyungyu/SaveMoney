@@ -19,10 +19,7 @@ class HomeViewModel {
         return saveManager.saveOfDay
     }
     
-    var totalMoney: String {
-        return setIntForWon(saveManager.totalMoney!)
-    }
-    
+    var totalMoney: String?
     var maxSaveMoney: String?
     var weekendMoney: String?
     
@@ -86,10 +83,16 @@ class HomeViewModel {
         }
     }
     
-    func setMaxSaveMoney() {
-        let save = save.sorted(by: { Int($0.saveMoney)! > Int($1.saveMoney)!})
+    func setMoneyData() {
         
-        maxSaveMoney = setStringForWon(save[0].saveMoney)
+        if save.count >= 1 {
+            let save = save.sorted(by: { Int($0.saveMoney)! > Int($1.saveMoney)!})
+            totalMoney = setIntForWon(saveManager.totalMoney!)
+            maxSaveMoney = setStringForWon(save[0].saveMoney)
+        } else {
+            totalMoney = "0원"
+            maxSaveMoney = "0원"
+        }
     }
 }
 
