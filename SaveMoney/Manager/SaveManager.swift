@@ -17,6 +17,7 @@ class SaveManager {
     var eventDay = [Date]()
     var saveOfDay = [Save]()
     var totalMoney: Int = 0
+    var monthMoney: [Double] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     
     func createSave(day: String, planName: String, finalName: String, planMoney: String, finalMoney: String, category: String) -> Save {
         
@@ -36,6 +37,7 @@ class SaveManager {
     func addSave(save: Save) {
         saves.append(save)
         totalMoney += Int(save.saveMoney)!
+        setMonthMoneyData(save: save)
         saveStruct()
     }
 
@@ -44,7 +46,8 @@ class SaveManager {
         saves = saves.filter { $0.id != save.id}
         totalMoney -= Int(saveOfDay[index].saveMoney)!
         saveOfDay.remove(at: index)
-
+        deleteMonthMoneyData(save: save)
+        
         eventDay = setEventDay()
         saveStruct()
     }
@@ -98,5 +101,18 @@ class SaveManager {
     
     func addSelectedDay(save: Save) {
         saveOfDay.append(save)
+    }
+    
+    func setMonthMoneyData(save: Save) {
+        let month = getMonthToString(date: save.day)
+        
+        print(save.day, save.saveMoney)
+        monthMoney[month] += Double(Int(save.saveMoney)!)
+    }
+    
+    func deleteMonthMoneyData(save: Save) {
+        let month = getMonthToString(date: save.day)
+        
+        monthMoney[month] -= Double(Int(save.saveMoney)!)
     }
 }

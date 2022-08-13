@@ -11,19 +11,27 @@ import Charts
 
 class CustomBarChartView: BarChartView {
     
-    var values: [String]?
+//    var dataPoint: [String]?
+//    var value: [Double]?
+    
     let barChartView: BarChartView = {
         
         let charVIew = BarChartView()
         
         return charVIew
     }()
+//
+//    init(dataPoint: [String], value: [Double]) {
+//        self.dataPoint = dataPoint
+//        self.value = value
+//        super.init(frame: .zero)
+//        configureUI()
+//        setChart(dataPoints: dataPoint, values: value)
+//    }
     
-    init(value: [String]) {
-        self.values = value
-        super.init(frame: .zero)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         configureUI()
-        setChart(dataPoints: values!, values: [5.5, 20, 5.5, 5.5, 5.5, 5.5, 5.5, 5.5, 5.5, 5.5, 5.5, 5.5])
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -45,7 +53,6 @@ class CustomBarChartView: BarChartView {
         barChartView.xAxis.labelPosition = .bottom
         barChartView.xAxis.labelFont = .systemFont(ofSize: 16)
         barChartView.xAxis.axisLineColor = .black
-        barChartView.xAxis.valueFormatter = IndexAxisValueFormatter(values: values!)
         barChartView.xAxis.granularity = 1
         barChartView.xAxis.labelCount = 12
         barChartView.rightAxis.enabled = false
@@ -57,22 +64,25 @@ class CustomBarChartView: BarChartView {
     }
     
     func setChart(dataPoints: [String], values: [Double]) {
-        
+
         var dataEntries: [BarChartDataEntry] = []
-        
+
         for i in 0..<dataPoints.count {
             let dataEntry = BarChartDataEntry(x: Double(i), y: values[i])
             dataEntries.append(dataEntry)
         }
 
         let chartDataSet = BarChartDataSet(entries: dataEntries)
-        
+
         chartDataSet.colors = [.systemPink]
         chartDataSet.valueFont = .systemFont(ofSize: 12)
         chartDataSet.highlightEnabled = false
-        
+
         let chartData = BarChartData(dataSet: chartDataSet)
         chartData.barWidth = 0.3
         barChartView.data = chartData
         barChartView.data?.setValueFormatter(YAxisValueFormatter())
-    }}
+        barChartView.xAxis.valueFormatter = IndexAxisValueFormatter(values: dataPoints)
+
+    }
+}

@@ -35,22 +35,23 @@ class HomeViewController: UIViewController {
     }()
             
     let dayBarChartView: CustomBarChartView = {
-        let barChartView = CustomBarChartView(value: HomeViewModel().day)
+        let barChartView = CustomBarChartView()
         
+        print(HomeViewModel().weekendData)
         barChartView.xAxis.labelCount = 7
         barChartView.isHidden = false
         return barChartView
     }()
     
     let weekBarChartView: CustomBarChartView = {
-        let barChartView = CustomBarChartView(value: ["주간", "주간", "주간", "주간", "주간", "주간", "주간", "주간", "주간", "주간", "주간", "주간"])
+        let barChartView = CustomBarChartView()
         barChartView.xAxis.labelCount = 12
         barChartView.isHidden = true
         return barChartView
     }()
     
     var monthBarChartView: CustomBarChartView = {
-        let barCharView = CustomBarChartView(value: HomeViewModel().month)
+        let barCharView = CustomBarChartView()
         
         barCharView.isHidden = true
         return barCharView
@@ -163,16 +164,21 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        viewModel.retrieve()
         viewModel.setWeekendDate()
+        viewModel.setMonthData()
         configureUI()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         viewModel.retrieve()
+
         viewModel.setWeekendData()
         viewModel.setMoneyData()
+        configureChartView()
+        print(viewModel.monthMoney)
         totalLabel.text = "총 \(viewModel.totalMoney!)을 세이브 하셨습니다.\n최고 저축액은 \(viewModel.maxSaveMoney!)입니다."
-        monthLabel.text = "이번 달은 20,000원을 세이브 하셨습니다."
+        monthLabel.text = "이번 달은 \(viewModel.thisMonthMoney!)을 세이브 하셨습니다."
         weekendLabel.text = "이번 주는 \(viewModel.weekendMoney!)을 세이브 하셨습니다."
     }
     
@@ -207,8 +213,8 @@ class HomeViewController: UIViewController {
             dayBarChartView.isHidden = weekButton.isSelected
             monthBarChartView.isHidden = weekButton.isSelected
             
-            dayButton.isSelected = !monthButton.isSelected
-            monthButton.isSelected = !monthButton.isSelected
+            dayButton.isSelected = !weekButton.isSelected
+            monthButton.isSelected = !weekButton.isSelected
         } else {
             weekBarChartView.isHidden = weekButton.isSelected
             weekButton.isSelected = !weekButton.isSelected
@@ -353,6 +359,34 @@ class HomeViewController: UIViewController {
         }
     }
     
+    func configureChartView() {
+        
+        dayBarChartView.setChart(dataPoints: viewModel.day, values: viewModel.weekendData)
+        
+        monthBarChartView.setChart(dataPoints: viewModel.month, values: viewModel.monthMoney)
+    }
+    
+    func setChart(barchartView: BarChartView, dataPoints: [String], values: [Double]) {
+
+        var dataEntries: [BarChartDataEntry] = []
+
+        for i in 0..<dataPoints.count {
+            let dataEntry = BarChartDataEntry(x: Double(i), y: values[i])
+            dataEntries.append(dataEntry)
+        }
+
+        let chartDataSet = BarChartDataSet(entries: dataEntries)
+
+        chartDataSet.colors = [.systemPink]
+        chartDataSet.valueFont = .systemFont(ofSize: 12)
+        chartDataSet.highlightEnabled = false
+
+        let chartData = BarChartData(dataSet: chartDataSet)
+        chartData.barWidth = 0.3
+        barchartView.data = chartData
+        barchartView.data?.setValueFormatter(YAxisValueFormatter())
+    }
+//
 //    func configureChartView() {
 //
 //        setChart(dataPoints: viewModel.day, values: viewModel.weekendData)
