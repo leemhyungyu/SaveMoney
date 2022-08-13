@@ -23,7 +23,7 @@ class CustomBarChartView: BarChartView {
         self.values = value
         super.init(frame: .zero)
         configureUI()
-        setChart(dataPoints: values!, values: [5.5, 5.5, 5.5, 5.5, 5.5, 5.5, 5.5, 5.5, 5.5, 5.5, 5.5, 5.5])
+        setChart(dataPoints: values!, values: [5.5, 20, 5.5, 5.5, 5.5, 5.5, 5.5, 5.5, 5.5, 5.5, 5.5, 5.5])
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -46,6 +46,8 @@ class CustomBarChartView: BarChartView {
         barChartView.xAxis.labelFont = .systemFont(ofSize: 16)
         barChartView.xAxis.axisLineColor = .black
         barChartView.xAxis.valueFormatter = IndexAxisValueFormatter(values: values!)
+        barChartView.xAxis.granularity = 1
+        barChartView.xAxis.labelCount = 12
         barChartView.rightAxis.enabled = false
         barChartView.leftAxis.enabled = false
         barChartView.doubleTapToZoomEnabled = false

@@ -34,22 +34,23 @@ class HomeViewController: UIViewController {
         return view
     }()
             
-    let weekBarChartView: CustomBarChartView = {
+    let dayBarChartView: CustomBarChartView = {
         let barChartView = CustomBarChartView(value: HomeViewModel().day)
         
+        barChartView.xAxis.labelCount = 7
         barChartView.isHidden = false
         return barChartView
     }()
     
-    let monthBarChartView: CustomBarChartView = {
-        let barChartView = CustomBarChartView(value: ["월간", "월간", "월간", "월간", "월간", "월간", "월간", "월간", "월간", "월간", "월간", "월간"])
-        
+    let weekBarChartView: CustomBarChartView = {
+        let barChartView = CustomBarChartView(value: ["주간", "주간", "주간", "주간", "주간", "주간", "주간", "주간", "주간", "주간", "주간", "주간"])
+        barChartView.xAxis.labelCount = 12
         barChartView.isHidden = true
         return barChartView
     }()
     
-    var yearBarChartView: CustomBarChartView = {
-        let barCharView = CustomBarChartView(value: ["년간", "년간", "년간", "년간", "년간", "년간", "년간", "년간", "년간", "년간", "년간", "년간"])
+    var monthBarChartView: CustomBarChartView = {
+        let barCharView = CustomBarChartView(value: HomeViewModel().month)
         
         barCharView.isHidden = true
         return barCharView
@@ -129,23 +130,13 @@ class HomeViewController: UIViewController {
         return label
     }()
     
-    lazy var yearButton: UIButton = {
-        let button = UIButton()
-        
-        button.setButtonShape(title: "년간")
-        button.addTarget(self, action: #selector(yearButtonClicked), for: .touchUpInside)
-        button.isSelected = false
-
-        return button
-    }()
-
     lazy var monthButton: UIButton = {
         let button = UIButton()
         
         button.setButtonShape(title: "월간")
         button.addTarget(self, action: #selector(monthButtonClicked), for: .touchUpInside)
-        
         button.isSelected = false
+
         return button
     }()
 
@@ -154,6 +145,16 @@ class HomeViewController: UIViewController {
         
         button.setButtonShape(title: "주간")
         button.addTarget(self, action: #selector(weekButtonClicked), for: .touchUpInside)
+        
+        button.isSelected = false
+        return button
+    }()
+
+    lazy var dayButton: UIButton = {
+        let button = UIButton()
+        
+        button.setButtonShape(title: "일간")
+        button.addTarget(self, action: #selector(dayButtonClicked), for: .touchUpInside)
         
         button.isSelected = true
         return button
@@ -176,69 +177,69 @@ class HomeViewController: UIViewController {
     }
     
     
+    @objc func dayButtonClicked() {
+        
+        if dayButton.isSelected == true {
+            dayBarChartView.isHidden = !dayButton.isSelected
+            
+            weekBarChartView.isHidden = dayButton.isSelected
+            monthBarChartView.isHidden = dayButton.isSelected
+            
+            weekButton.isSelected = !dayButton.isSelected
+            monthButton.isSelected = !dayButton.isSelected
+        } else {
+            dayBarChartView.isHidden = dayButton.isSelected
+            dayButton.isSelected = !dayButton.isSelected
+            
+            weekBarChartView.isHidden = dayButton.isSelected
+            monthBarChartView.isHidden = dayButton.isSelected
+            
+            weekButton.isSelected = !dayButton.isSelected
+            monthButton.isSelected = !dayButton.isSelected
+        }
+    }
+     
     @objc func weekButtonClicked() {
         
         if weekButton.isSelected == true {
             weekBarChartView.isHidden = !weekButton.isSelected
             
+            dayBarChartView.isHidden = weekButton.isSelected
             monthBarChartView.isHidden = weekButton.isSelected
-            yearBarChartView.isHidden = weekButton.isSelected
             
-            monthButton.isSelected = !weekButton.isSelected
-            yearButton.isSelected = !weekButton.isSelected
+            dayButton.isSelected = !monthButton.isSelected
+            monthButton.isSelected = !monthButton.isSelected
         } else {
             weekBarChartView.isHidden = weekButton.isSelected
             weekButton.isSelected = !weekButton.isSelected
             
+            dayBarChartView.isHidden = weekButton.isSelected
             monthBarChartView.isHidden = weekButton.isSelected
-            yearBarChartView.isHidden = weekButton.isSelected
             
+            dayButton.isSelected = !weekButton.isSelected
             monthButton.isSelected = !weekButton.isSelected
-            yearButton.isSelected = !weekButton.isSelected
         }
     }
-     
+    
     @objc func monthButtonClicked() {
         
         if monthButton.isSelected == true {
             monthBarChartView.isHidden = !monthButton.isSelected
             
+            dayBarChartView.isHidden = monthButton.isSelected
             weekBarChartView.isHidden = monthButton.isSelected
-            yearBarChartView.isHidden = monthButton.isSelected
             
+            dayButton.isSelected = !monthButton.isSelected
             weekButton.isSelected = !monthButton.isSelected
-            yearButton.isSelected = !monthButton.isSelected
         } else {
             monthBarChartView.isHidden = monthButton.isSelected
             monthButton.isSelected = !monthButton.isSelected
             
+            dayBarChartView.isHidden = monthButton.isSelected
             weekBarChartView.isHidden = monthButton.isSelected
-            yearBarChartView.isHidden = monthButton.isSelected
             
+            dayButton.isSelected = !monthButton.isSelected
             weekButton.isSelected = !monthButton.isSelected
-            yearButton.isSelected = !monthButton.isSelected
-        }
-    }
-    
-    @objc func yearButtonClicked() {
-        
-        if yearButton.isSelected == true {
-            yearBarChartView.isHidden = !yearButton.isSelected
-            
-            weekBarChartView.isHidden = yearButton.isSelected
-            monthBarChartView.isHidden = yearButton.isSelected
-            
-            weekButton.isSelected = !yearButton.isSelected
-            monthButton.isSelected = !yearButton.isSelected
-        } else {
-            yearBarChartView.isHidden = yearButton.isSelected
-            yearButton.isSelected = !yearButton.isSelected
-            
-            weekBarChartView.isHidden = yearButton.isSelected
-            monthBarChartView.isHidden = yearButton.isSelected
-            
-            weekButton.isSelected = !yearButton.isSelected
-            monthButton.isSelected = !yearButton.isSelected
         }
     }
 
@@ -248,7 +249,7 @@ class HomeViewController: UIViewController {
         
         scrollView.addSubview(mainView)
         
-        [subView, totalView, monthView, weekendView, yearButton, monthButton, weekButton] .forEach { mainView.addSubview($0) }
+        [subView, totalView, monthView, weekendView, dayButton, weekButton, monthButton] .forEach { mainView.addSubview($0) }
 
         
         [totalHeaderView, totalLabel] .forEach { totalView.addSubview($0) }
@@ -257,7 +258,7 @@ class HomeViewController: UIViewController {
         
         [weekendHeaderView, weekendLabel] .forEach { weekendView.addSubview($0) }
         
-        [weekBarChartView, monthBarChartView, yearBarChartView] .forEach { subView.addSubview($0) }
+        [dayBarChartView, weekBarChartView, monthBarChartView] .forEach { subView.addSubview($0) }
                 
         scrollView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
@@ -277,30 +278,30 @@ class HomeViewController: UIViewController {
             $0.height.equalTo(300)
         }
         
-        weekButton.snp.makeConstraints {
+        dayButton.snp.makeConstraints {
             $0.top.equalToSuperview().inset(10)
             $0.leading.equalToSuperview().inset(10)
+        }
+        
+        weekButton.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(10)
+            $0.leading.equalTo(dayButton.snp.trailing).offset(5)
         }
         
         monthButton.snp.makeConstraints {
             $0.top.equalToSuperview().inset(10)
             $0.leading.equalTo(weekButton.snp.trailing).offset(5)
         }
-        
-        yearButton.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(10)
-            $0.leading.equalTo(monthButton.snp.trailing).offset(5)
+
+        dayBarChartView.snp.makeConstraints {
+            $0.top.leading.trailing.bottom.equalToSuperview().inset(10)
         }
 
         weekBarChartView.snp.makeConstraints {
             $0.top.leading.trailing.bottom.equalToSuperview().inset(10)
         }
-
-        monthBarChartView.snp.makeConstraints {
-            $0.top.leading.trailing.bottom.equalToSuperview().inset(10)
-        }
         
-        yearBarChartView.snp.makeConstraints {
+        monthBarChartView.snp.makeConstraints {
             $0.top.leading.trailing.bottom.equalToSuperview().inset(10)
         }
         totalHeaderView.snp.makeConstraints {
