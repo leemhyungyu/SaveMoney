@@ -27,17 +27,32 @@ class HomeViewController: UIViewController {
         return view
     }()
     
-    let barChartView: BarChartView = {
-        let chartView = BarChartView()
-
-        return chartView
-    }()
-    
     let subView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
         view.setShadow()
         return view
+    }()
+            
+    let weekBarChartView: CustomBarChartView = {
+        let barChartView = CustomBarChartView(value: HomeViewModel().day)
+        
+        barChartView.isHidden = false
+        return barChartView
+    }()
+    
+    let monthBarChartView: CustomBarChartView = {
+        let barChartView = CustomBarChartView(value: ["월간", "월간", "월간", "월간", "월간", "월간", "월간", "월간", "월간", "월간", "월간", "월간"])
+        
+        barChartView.isHidden = true
+        return barChartView
+    }()
+    
+    var yearBarChartView: CustomBarChartView = {
+        let barCharView = CustomBarChartView(value: ["년간", "년간", "년간", "년간", "년간", "년간", "년간", "년간", "년간", "년간", "년간", "년간"])
+        
+        barCharView.isHidden = true
+        return barCharView
     }()
     
     let grpahHeaderView: UIView = {
@@ -155,7 +170,6 @@ class HomeViewController: UIViewController {
         viewModel.retrieve()
         viewModel.setWeekendData()
         viewModel.setMoneyData()
-        configureChartView()
         totalLabel.text = "총 \(viewModel.totalMoney!)을 세이브 하셨습니다.\n최고 저축액은 \(viewModel.maxSaveMoney!)입니다."
         monthLabel.text = "이번 달은 20,000원을 세이브 하셨습니다."
         weekendLabel.text = "이번 주는 \(viewModel.weekendMoney!)을 세이브 하셨습니다."
@@ -165,10 +179,20 @@ class HomeViewController: UIViewController {
     @objc func weekButtonClicked() {
         
         if weekButton.isSelected == true {
+            weekBarChartView.isHidden = !weekButton.isSelected
+            
+            monthBarChartView.isHidden = weekButton.isSelected
+            yearBarChartView.isHidden = weekButton.isSelected
+            
             monthButton.isSelected = !weekButton.isSelected
             yearButton.isSelected = !weekButton.isSelected
         } else {
+            weekBarChartView.isHidden = weekButton.isSelected
             weekButton.isSelected = !weekButton.isSelected
+            
+            monthBarChartView.isHidden = weekButton.isSelected
+            yearBarChartView.isHidden = weekButton.isSelected
+            
             monthButton.isSelected = !weekButton.isSelected
             yearButton.isSelected = !weekButton.isSelected
         }
@@ -177,10 +201,20 @@ class HomeViewController: UIViewController {
     @objc func monthButtonClicked() {
         
         if monthButton.isSelected == true {
+            monthBarChartView.isHidden = !monthButton.isSelected
+            
+            weekBarChartView.isHidden = monthButton.isSelected
+            yearBarChartView.isHidden = monthButton.isSelected
+            
             weekButton.isSelected = !monthButton.isSelected
             yearButton.isSelected = !monthButton.isSelected
         } else {
+            monthBarChartView.isHidden = monthButton.isSelected
             monthButton.isSelected = !monthButton.isSelected
+            
+            weekBarChartView.isHidden = monthButton.isSelected
+            yearBarChartView.isHidden = monthButton.isSelected
+            
             weekButton.isSelected = !monthButton.isSelected
             yearButton.isSelected = !monthButton.isSelected
         }
@@ -189,17 +223,26 @@ class HomeViewController: UIViewController {
     @objc func yearButtonClicked() {
         
         if yearButton.isSelected == true {
+            yearBarChartView.isHidden = !yearButton.isSelected
+            
+            weekBarChartView.isHidden = yearButton.isSelected
+            monthBarChartView.isHidden = yearButton.isSelected
+            
             weekButton.isSelected = !yearButton.isSelected
             monthButton.isSelected = !yearButton.isSelected
         } else {
+            yearBarChartView.isHidden = yearButton.isSelected
             yearButton.isSelected = !yearButton.isSelected
+            
+            weekBarChartView.isHidden = yearButton.isSelected
+            monthBarChartView.isHidden = yearButton.isSelected
+            
             weekButton.isSelected = !yearButton.isSelected
             monthButton.isSelected = !yearButton.isSelected
         }
     }
 
     func configureUI() {
-        
         view.backgroundColor = #colorLiteral(red: 0.9933428168, green: 0.9469488263, blue: 0.9725527167, alpha: 1)
         view.addSubview(scrollView)
         
@@ -214,7 +257,7 @@ class HomeViewController: UIViewController {
         
         [weekendHeaderView, weekendLabel] .forEach { weekendView.addSubview($0) }
         
-        [barChartView] .forEach { subView.addSubview($0) }
+        [weekBarChartView, monthBarChartView, yearBarChartView] .forEach { subView.addSubview($0) }
                 
         scrollView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
@@ -249,10 +292,17 @@ class HomeViewController: UIViewController {
             $0.leading.equalTo(monthButton.snp.trailing).offset(5)
         }
 
-        barChartView.snp.makeConstraints {
+        weekBarChartView.snp.makeConstraints {
             $0.top.leading.trailing.bottom.equalToSuperview().inset(10)
         }
 
+        monthBarChartView.snp.makeConstraints {
+            $0.top.leading.trailing.bottom.equalToSuperview().inset(10)
+        }
+        
+        yearBarChartView.snp.makeConstraints {
+            $0.top.leading.trailing.bottom.equalToSuperview().inset(10)
+        }
         totalHeaderView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(5)
             $0.leading.trailing.equalToSuperview().inset(5)
@@ -302,47 +352,31 @@ class HomeViewController: UIViewController {
         }
     }
     
-    func configureChartView() {
-                
-        setChart(dataPoints: viewModel.day, values: viewModel.weekendData)
-        
-        barChartView.noDataText = "데이터가 없습니다."
-        barChartView.noDataFont = .systemFont(ofSize: 16)
-        barChartView.noDataTextColor = .lightGray
-        
-        barChartView.backgroundColor = .white
-        barChartView.xAxis.labelPosition = .bottom
-        barChartView.xAxis.labelFont = .systemFont(ofSize: 16)
-        barChartView.xAxis.axisLineColor = .black
-        barChartView.xAxis.valueFormatter = IndexAxisValueFormatter(values: viewModel.day)
-        barChartView.rightAxis.enabled = false
-        barChartView.leftAxis.enabled = false
-        barChartView.doubleTapToZoomEnabled = false
-        barChartView.legend.enabled = false
-        barChartView.xAxis.drawGridLinesEnabled = false
-        barChartView.animate(xAxisDuration: 2.0, yAxisDuration: 2.0)
-    }
-    
-    func setChart(dataPoints: [String], values: [Double]) {
-        
-        var dataEntries: [BarChartDataEntry] = []
-        
-        for i in 0..<dataPoints.count {
-            let dataEntry = BarChartDataEntry(x: Double(i), y: values[i])
-            dataEntries.append(dataEntry)
-        }
-
-        let chartDataSet = BarChartDataSet(entries: dataEntries)
-        
-        chartDataSet.colors = [.systemPink]
-        chartDataSet.valueFont = .systemFont(ofSize: 12)
-        chartDataSet.highlightEnabled = false
-        
-        let chartData = BarChartData(dataSet: chartDataSet)
-        chartData.barWidth = 0.3
-        barChartView.data = chartData
-        barChartView.data?.setValueFormatter(YAxisValueFormatter())
-    }
+//    func configureChartView() {
+//
+//        setChart(dataPoints: viewModel.day, values: viewModel.weekendData)
+//    }
+//
+//    func setChart(dataPoints: [String], values: [Double]) {
+//
+//        var dataEntries: [BarChartDataEntry] = []
+//
+//        for i in 0..<dataPoints.count {
+//            let dataEntry = BarChartDataEntry(x: Double(i), y: values[i])
+//            dataEntries.append(dataEntry)
+//        }
+//
+//        let chartDataSet = BarChartDataSet(entries: dataEntries)
+//
+//        chartDataSet.colors = [.systemPink]
+//        chartDataSet.valueFont = .systemFont(ofSize: 12)
+//        chartDataSet.highlightEnabled = false
+//
+//        let chartData = BarChartData(dataSet: chartDataSet)
+//        chartData.barWidth = 0.3
+//        barChartView.data = chartData
+//        barChartView.data?.setValueFormatter(YAxisValueFormatter())
+//    }
 }
 
 class YAxisValueFormatter: ValueFormatter {
