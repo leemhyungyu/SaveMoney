@@ -22,6 +22,11 @@ class HomeViewModel {
     var monthMoney: [Double] {
         return saveManager.monthMoney
     }
+    
+    var eachDayAndMoney: [String: Double] {
+        return saveManager.eachDayAndMoney
+    }
+    
     var totalMoney: String?
     var maxSaveMoney: String?
     var weekendMoney: String?
@@ -57,36 +62,16 @@ class HomeViewModel {
         return result
     }
     
-    // 일주일의 절약한 값의 합해서 저장하는 함수
-    func setWeekendData() {
-
-        EachDayMoney = [Double]()
-        day.map {
-            EachDayMoney.append(Double(totalMoneyOfDate(date: getDateToString(text: $0)!)))
-        }
-    }
-    
     func setMonthData() {
         for i in save {
             saveManager.setMonthMoneyData(save: i)
         }
     }
     
-    func setWeekendDate() {
-        var weekendData = [String: Double]()
-
-        for i in (1...7).reversed() {
-            let date = Date(timeIntervalSinceNow: -Double((86400 * (i - 1))))
-            
-            weekendData[getStringToDate(date: date)] = 0
-        }
-        
-        self.day = Array(weekendData.keys).sorted(by: <)
-        
-        self.day.map { self.EachDayDate.append(getMonthAndDayForString(date: $0)) }
-    }
     
     func setMoneyData() {
+        
+        saveManager.setEachDayDate()
         
         self.thisMonthMoney = setIntForWon(Int((monthMoney[Int(getMonthToDate(date: Date()))!])))
         
@@ -97,6 +82,18 @@ class HomeViewModel {
         } else {
             totalMoney = "0원"
             maxSaveMoney = "0원"
+        }
+    }
+    
+    func setEachDayDate() {
+        
+        EachDayDate = [String]()
+        EachDayMoney = [Double]()
+        
+        self.day = Array(eachDayAndMoney.keys).sorted(by: <)
+        
+        self.day.map { self.EachDayDate.append(getMonthAndDayForString(date: $0))
+            self.EachDayMoney.append(Double(totalMoneyOfDate(date: getDateToString(text: $0)!)))
         }
     }
 }
