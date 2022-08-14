@@ -9,7 +9,7 @@ import Foundation
 func getStringToDate(date: Date) -> String {
     let dateFormatter = DateFormatter()
     
-    dateFormatter.dateFormat = "Y-M-dd"
+    dateFormatter.dateFormat = "Y/M/dd"
     
     return dateFormatter.string(from: date)
 }
@@ -18,7 +18,7 @@ func getMonthAndDayForString(date: Date) -> String {
     
     let dateFormatter = DateFormatter()
     
-    dateFormatter.dateFormat = "M-d"
+    dateFormatter.dateFormat = "M/d"
     
     return dateFormatter.string(from: date)
 }
@@ -26,17 +26,22 @@ func getMonthAndDayForString(date: Date) -> String {
 func getDateToString(text: String) -> Date? {
     let dateFormatter = DateFormatter()
 
-    dateFormatter.dateFormat = "Y-MM-dd"
+    dateFormatter.dateFormat = "Y/MM/dd"
         
     return dateFormatter.date(from: text)
 }
 
-// 2022년 08월
 func getMonthToString(date: String) -> Int {
    
-    let day = date.components(separatedBy: "-")
+    let day = date.components(separatedBy: "/")
     
     return Int(day[1])!
+}
+
+func getMonthAndDayForString(date: String) -> String {
+    let date = date.components(separatedBy: "/")
+    
+    return date[1] + "/" + date[2]
 }
 
 func getMonthToDate(date: Date) -> String {

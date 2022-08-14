@@ -37,7 +37,6 @@ class HomeViewController: UIViewController {
     let dayBarChartView: CustomBarChartView = {
         let barChartView = CustomBarChartView()
         
-        print(HomeViewModel().weekendData)
         barChartView.xAxis.labelCount = 7
         barChartView.isHidden = false
         return barChartView
@@ -172,14 +171,14 @@ class HomeViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         viewModel.retrieve()
-
         viewModel.setWeekendData()
         viewModel.setMoneyData()
         configureChartView()
+        
         print(viewModel.monthMoney)
         totalLabel.text = "총 \(viewModel.totalMoney!)을 세이브 하셨습니다.\n최고 저축액은 \(viewModel.maxSaveMoney!)입니다."
-        monthLabel.text = "이번 달은 \(viewModel.thisMonthMoney!)을 세이브 하셨습니다."
-        weekendLabel.text = "이번 주는 \(viewModel.weekendMoney!)을 세이브 하셨습니다."
+        monthLabel.text = "이번 달은 \(viewModel.thisMonthMoney!)을 세이브 하셨습니다.\n이번 달 최고 저축 금액은 50,000원입니다."
+//        weekendLabel.text = "이번 주는 \(viewModel.weekendMoney!)을 세이브 하셨습니다.\n이번 주 최고 저축 금액은 50,000원입니다."
     }
     
     
@@ -361,7 +360,7 @@ class HomeViewController: UIViewController {
     
     func configureChartView() {
         
-        dayBarChartView.setChart(dataPoints: viewModel.day, values: viewModel.weekendData)
+        dayBarChartView.setChart(dataPoints: viewModel.EachDayDate, values: viewModel.EachDayMoney)
         
         monthBarChartView.setChart(dataPoints: viewModel.month, values: viewModel.monthMoney)
     }

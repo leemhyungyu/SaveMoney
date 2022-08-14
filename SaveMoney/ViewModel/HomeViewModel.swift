@@ -27,11 +27,12 @@ class HomeViewModel {
     var weekendMoney: String?
     var thisMonthMoney: String?
     
-    let day = ["일", "월", "화", "수", "목", "금", "토"]
+    var day = [String]()
+    var EachDayDate = [String]()
+    var EachDayMoney = [Double]()
+    
     let month = ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"]
     
-    var weekendData: [Double] = [0, 0, 0, 0, 0, 0, 0]
-
     var weekendDate: [Date] = []
     
     func retrieve() {
@@ -58,47 +59,31 @@ class HomeViewModel {
     
     // 일주일의 절약한 값의 합해서 저장하는 함수
     func setWeekendData() {
-        var count = 0
-        var calMoney = 0
-        for i in weekendDate {
-            let money = totalMoneyOfDate(date: i)
-            print(money)
-            self.weekendData[count] = (Double(money))
-            print(weekendData)
-            calMoney += money
-            count += 1
+
+        EachDayMoney = [Double]()
+        day.map {
+            EachDayMoney.append(Double(totalMoneyOfDate(date: getDateToString(text: $0)!)))
         }
-        
-        weekendMoney = setIntForWon(calMoney)
     }
     
     func setMonthData() {
         for i in save {
-            print(i.day)
             saveManager.setMonthMoneyData(save: i)
         }
     }
     
     func setWeekendDate() {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "Y-M-dd-e-E"
-        
-        let day = formatter.string(from: Date())
-        
-        let today = day.components(separatedBy: "-")
-        
-        let interval = Int(today[3])! // e (1 ~ 7) (sun ~ sat) // 5
-        print(interval)
-        if interval >= 2 {
-            for i in (1...interval).reversed() {
-                let date = Date(timeIntervalSinceNow: -Double((86400 * (i - 1))))
-                
-                weekendDate.append(date)
-            }
-        } else { // interval < 2
-            print(Date())
-            weekendDate.append(Date())
+        var weekendData = [String: Double]()
+
+        for i in (1...7).reversed() {
+            let date = Date(timeIntervalSinceNow: -Double((86400 * (i - 1))))
+            
+            weekendData[getStringToDate(date: date)] = 0
         }
+        
+        self.day = Array(weekendData.keys).sorted(by: <)
+        
+        self.day.map { self.EachDayDate.append(getMonthAndDayForString(date: $0)) }
     }
     
     func setMoneyData() {
