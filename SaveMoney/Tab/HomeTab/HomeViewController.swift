@@ -170,6 +170,7 @@ class HomeViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        print("viewWillAppear 실행됨")
         viewModel.retrieve()
         viewModel.setMoneyData()
         viewModel.setEachDayDate()

@@ -132,4 +132,13 @@ class SaveManager {
     func deleteEachDayMoneyData(save: Save) {
         eachDayAndMoney[save.day] = eachDayAndMoney[save.day]! - Double(Int(save.saveMoney)!)
     }
+    
+    func initializationAllData() {
+        saves = [Save]()
+        eventDay = [Date]()
+        saveOfDay = [Save]()
+        totalMoney = 0
+        monthMoney = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        eachDayAndMoney = [String: Double]()
+    }
 }

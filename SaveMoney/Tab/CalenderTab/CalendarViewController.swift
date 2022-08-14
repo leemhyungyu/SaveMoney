@@ -150,6 +150,7 @@ class CalendarViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        viewModel.retrieve()
         reloadMainData()
     }
         
