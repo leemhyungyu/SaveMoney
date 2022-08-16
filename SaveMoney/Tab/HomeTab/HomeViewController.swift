@@ -166,14 +166,16 @@ class HomeViewController: UIViewController {
         viewModel.retrieve()
         viewModel.setMonthData()
         viewModel.setEachDayDate()
+        viewModel.setWeekendDayDate()
         configureUI()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        print("viewWillAppear 실행됨")
         viewModel.retrieve()
         viewModel.setMoneyData()
         viewModel.setEachDayDate()
+        viewModel.setWeekendDayDate()
+
         configureChartView()
         
         totalLabel.text = "총 \(viewModel.totalMoney!)을 세이브 하셨습니다.\n최고 저축액은 \(viewModel.maxSaveMoney!)입니다."
@@ -361,6 +363,8 @@ class HomeViewController: UIViewController {
     func configureChartView() {
         
         dayBarChartView.setChart(dataPoints: viewModel.EachDayDate, values: viewModel.EachDayMoney)
+        
+        weekBarChartView.setChart(dataPoints: viewModel.EachWeekendDate, values: viewModel.EachWeekendMoney)
         
         monthBarChartView.setChart(dataPoints: viewModel.month, values: viewModel.monthMoney)
     }

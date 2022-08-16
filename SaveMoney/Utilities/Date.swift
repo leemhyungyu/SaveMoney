@@ -44,6 +44,14 @@ func getMonthAndDayForString(date: String) -> String {
     return date[1] + "/" + date[2]
 }
 
+func getWaveMonthDayForString(date: Date) -> String {
+    let dateFormatter = DateFormatter()
+    
+    dateFormatter.dateFormat = "~M/d"
+    
+    return dateFormatter.string(from: date)
+}
+
 func getMonthToDate(date: Date) -> String {
     let dateFormatter = DateFormatter()
     
@@ -59,6 +67,15 @@ func getDayToDate(date: Date) -> String {
     dateFormatter.dateFormat = "E"
     
     return dateFormatter.string(from: date)
+}
+
+func getMonthForInt(date: Date) -> Int {
+    
+    let dateFormatter = DateFormatter()
+    
+    dateFormatter.dateFormat = "e"
+    
+    return Int(dateFormatter.string(from: date))!
 }
 
 func getDateToDay(day: String) -> Date {

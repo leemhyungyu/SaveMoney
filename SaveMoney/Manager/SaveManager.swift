@@ -19,6 +19,7 @@ class SaveManager {
     var totalMoney: Int = 0
     var monthMoney: [Double] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     var eachDayAndMoney = [String: Double]()
+    var EachWeekendDayAndMoney = [String: Double]()
     
     func createSave(day: String, planName: String, finalName: String, planMoney: String, finalMoney: String, category: String) -> Save {
         
@@ -40,6 +41,7 @@ class SaveManager {
         totalMoney += Int(save.saveMoney)!
         setMonthMoneyData(save: save)
         setEachDayMoneyData(save: save)
+        setEachWeekendMoneyData(save: save)
         saveStruct()
     }
 
@@ -50,6 +52,7 @@ class SaveManager {
         saveOfDay.remove(at: index)
         deleteMonthMoneyData(save: save)
         deleteEachDayMoneyData(save: save)
+        deleteEachWeekendDayMoneyData(save: save)
         eventDay = setEventDay()
         saveStruct()
     }
@@ -108,7 +111,7 @@ class SaveManager {
     func setMonthMoneyData(save: Save) {
         let month = getMonthToString(date: save.day)
         
-        monthMoney[month] += Double(Int(save.saveMoney)!)
+        monthMoney[month - 1] += Double(Int(save.saveMoney)!)
     }
     
     func setEachDayMoneyData(save: Save) {
@@ -126,11 +129,66 @@ class SaveManager {
     func deleteMonthMoneyData(save: Save) {
         let month = getMonthToString(date: save.day)
         
-        monthMoney[month] -= Double(Int(save.saveMoney)!)
+        monthMoney[month - 1] -= Double(Int(save.saveMoney)!)
     }
     
     func deleteEachDayMoneyData(save: Save) {
         eachDayAndMoney[save.day] = eachDayAndMoney[save.day]! - Double(Int(save.saveMoney)!)
+    }
+    
+    func deleteEachWeekendDayMoneyData(save: Save) {
+        let date = getDateToString(text: save.day)!
+        
+        let interval = getMonthForInt(date: date)
+        
+        if interval != 7 {
+            let sat = Date(timeInterval: Double(86400 * (7 - interval)), since: date)
+            EachWeekendDayAndMoney[getWaveMonthDayForString(date: sat)]! -= Double(Int(save.saveMoney)!)
+
+        } else {
+            EachWeekendDayAndMoney[getWaveMonthDayForString(date: date)]! -= Double(Int(save.saveMoney)!)
+        }
+    }
+    
+    func setEachWeekendMoneyData(save: Save) {
+        
+        let date = getDateToString(text: save.day)!
+
+        let interval = getMonthForInt(date: date)
+        
+        if interval != 7 {
+            let sat = Date(timeInterval: Double(86400 * (7 - interval)), since: date)
+            
+            EachWeekendDayAndMoney[getStringToDate(date: sat)]! += Double(Int(save.saveMoney)!)
+
+            
+        } else {
+            EachWeekendDayAndMoney[getStringToDate(date: date)]! += Double(Int(save.saveMoney)!)
+
+        }
+    }
+    
+    
+    func setEachWeekendDate() {
+        
+        let interval = getMonthForInt(date: Date())
+        
+        if interval != 7 {
+            let sat = Date(timeIntervalSinceNow: Double(86400 * (7 - interval)))
+            
+            for i in (0...6).reversed() {
+                let pastSat = Date(timeInterval: -(Double((604800) * i)), since: sat)
+                
+                EachWeekendDayAndMoney[getStringToDate(date: pastSat)] = 0
+            }
+            
+        } else {
+            for i in (0...6).reversed() {
+                let pastSat = Date(timeInterval: -(Double((604800) * i)), since: Date())
+                
+                EachWeekendDayAndMoney[getStringToDate(date: pastSat)] = 0
+            }
+        }
     }
     
     func initializationAllData() {
