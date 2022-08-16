@@ -179,8 +179,8 @@ class HomeViewController: UIViewController {
         configureChartView()
         
         totalLabel.text = "총 \(viewModel.totalMoney!)을 세이브 하셨습니다.\n최고 저축액은 \(viewModel.maxSaveMoney!)입니다."
-        monthLabel.text = "이번 달은 \(viewModel.thisMonthMoney!)을 세이브 하셨습니다.\n이번 달 최고 저축 금액은 50,000원입니다."
-//        weekendLabel.text = "이번 주는 \(viewModel.weekendMoney!)을 세이브 하셨습니다.\n이번 주 최고 저축 금액은 50,000원입니다."
+        monthLabel.text = "이번 달은 \(viewModel.thisMonthMoney!)을 세이브 하셨습니다.\n이번 달 최고 저축 금액은 \(viewModel.maxThisMonthMoney)원입니다."
+        weekendLabel.text = "이번 주는 \(viewModel.thisWeekendMoney!)을 세이브 하셨습니다.\n이번 주 최고 저축 금액은 \(viewModel.maxThisWeekendMoney)원입니다."
     }
     
     

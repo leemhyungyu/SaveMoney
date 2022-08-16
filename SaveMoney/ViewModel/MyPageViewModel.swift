@@ -43,8 +43,5 @@ class MyPageViewModel {
     func initializationData() {
         print("initializationData - called")
         saveManager.initializationAllData()
-        UserDefaults.standard.set(try? PropertyListEncoder().encode([Save]()), forKey: "Saves")
-        UserDefaults.standard.set(0, forKey: "totalMoney")
-        
     }
 }

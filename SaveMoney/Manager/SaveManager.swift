@@ -16,10 +16,15 @@ class SaveManager {
     var saves = [Save]()
     var eventDay = [Date]()
     var saveOfDay = [Save]()
+    var thisMonthSaves = [Save]()
+    var thisWeekendSaves = [Save]()
     var totalMoney: Int = 0
     var monthMoney: [Double] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     var eachDayAndMoney = [String: Double]()
     var EachWeekendDayAndMoney = [String: Double]()
+    
+    var maxThisMonthMoney: String = "0"
+    var maxThisWeekendMoney: String = "0"
     
     func createSave(day: String, planName: String, finalName: String, planMoney: String, finalMoney: String, category: String) -> Save {
         
@@ -40,8 +45,6 @@ class SaveManager {
         saves.append(save)
         totalMoney += Int(save.saveMoney)!
         setMonthMoneyData(save: save)
-        setEachDayMoneyData(save: save)
-        setEachWeekendMoneyData(save: save)
         saveStruct()
     }
 
@@ -51,8 +54,6 @@ class SaveManager {
         totalMoney -= Int(saveOfDay[index].saveMoney)!
         saveOfDay.remove(at: index)
         deleteMonthMoneyData(save: save)
-        deleteEachDayMoneyData(save: save)
-        deleteEachWeekendDayMoneyData(save: save)
         eventDay = setEventDay()
         saveStruct()
     }
@@ -64,6 +65,26 @@ class SaveManager {
     
     func returnSaveOfSelectedDay(date: String) -> [Save] {
         return saves.filter { $0.day == date }
+    }
+    
+    func setThisMonthSaves() {
+        self.thisMonthSaves = saves.filter { getMonthToString(date: $0.day) == getMonthToString(date: getStringToDate(date: Date()))}
+        
+        let save = thisMonthSaves.sorted(by: { Int($0.saveMoney)! > Int($1.saveMoney)!})
+        
+        if save.count >= 1 {
+            maxThisMonthMoney = setStringForWon(save[0].saveMoney)
+        }
+    }
+    
+    func setThisWeekendSaves() {
+        self.thisWeekendSaves = saves.filter { getSatToString(date: getDateToString(text: $0.day)!) == getSatToString(date: Date()) }
+        
+        let save = thisWeekendSaves.sorted(by: { Int($0.saveMoney)! > Int($1.saveMoney)!} )
+        
+        if save.count >= 1 {
+            maxThisWeekendMoney = setStringForWon(save[0].saveMoney)
+        }
     }
     
     func saveStruct() {
@@ -114,15 +135,11 @@ class SaveManager {
         monthMoney[month - 1] += Double(Int(save.saveMoney)!)
     }
     
-    func setEachDayMoneyData(save: Save) {
-        eachDayAndMoney[save.day] = Double(Int(save.saveMoney)!)
-    }
-    
     func setEachDayDate() {
         for i in (1...7).reversed() {
             let date = Date(timeIntervalSinceNow: -Double((86400 * (i - 1))))
             
-            eachDayAndMoney[getStringToDate(date: date)] = 0
+            eachDayAndMoney[getStringToDate(date: date)] = Double(totalMoneyOfDate(date: date))
         }
     }
     
@@ -132,46 +149,9 @@ class SaveManager {
         monthMoney[month - 1] -= Double(Int(save.saveMoney)!)
     }
     
-    func deleteEachDayMoneyData(save: Save) {
-        eachDayAndMoney[save.day] = eachDayAndMoney[save.day]! - Double(Int(save.saveMoney)!)
-    }
-    
-    func deleteEachWeekendDayMoneyData(save: Save) {
-        let date = getDateToString(text: save.day)!
-        
-        let interval = getMonthForInt(date: date)
-        
-        if interval != 7 {
-            let sat = Date(timeInterval: Double(86400 * (7 - interval)), since: date)
-            EachWeekendDayAndMoney[getWaveMonthDayForString(date: sat)]! -= Double(Int(save.saveMoney)!)
-
-        } else {
-            EachWeekendDayAndMoney[getWaveMonthDayForString(date: date)]! -= Double(Int(save.saveMoney)!)
-        }
-    }
-    
-    func setEachWeekendMoneyData(save: Save) {
-        
-        let date = getDateToString(text: save.day)!
-
-        let interval = getMonthForInt(date: date)
-        
-        if interval != 7 {
-            let sat = Date(timeInterval: Double(86400 * (7 - interval)), since: date)
-            
-            EachWeekendDayAndMoney[getStringToDate(date: sat)]! += Double(Int(save.saveMoney)!)
-
-            
-        } else {
-            EachWeekendDayAndMoney[getStringToDate(date: date)]! += Double(Int(save.saveMoney)!)
-
-        }
-    }
-    
-    
     func setEachWeekendDate() {
         
-        let interval = getMonthForInt(date: Date())
+        let interval = getDateForInt(date: Date())
         
         if interval != 7 {
             let sat = Date(timeIntervalSinceNow: Double(86400 * (7 - interval)))
@@ -179,16 +159,43 @@ class SaveManager {
             for i in (0...6).reversed() {
                 let pastSat = Date(timeInterval: -(Double((604800) * i)), since: sat)
                 
-                EachWeekendDayAndMoney[getStringToDate(date: pastSat)] = 0
+                EachWeekendDayAndMoney[getStringToDate(date: pastSat)] = setWeekendMoney(date: pastSat)
             }
             
         } else {
             for i in (0...6).reversed() {
                 let pastSat = Date(timeInterval: -(Double((604800) * i)), since: Date())
                 
-                EachWeekendDayAndMoney[getStringToDate(date: pastSat)] = 0
+                EachWeekendDayAndMoney[getStringToDate(date: pastSat)] = setWeekendMoney(date: pastSat)
             }
         }
+    }
+    
+    func setWeekendMoney(date: Date) -> Double {
+        
+        let interval = getDateForInt(date: date)
+        
+        var result: Double = 0.0
+
+        for i in 0...interval - 1 {
+            let pastDate = Date(timeInterval: -(Double(86400 * i)), since: date)
+            result += Double(totalMoneyOfDate(date: pastDate))
+        }
+        
+        return result
+    }
+    
+    func totalMoneyOfDate(date: Date) -> Int {
+        
+        let saves = self.returnSaveOfSelectedDay(date: getStringToDate(date: date))
+        
+        var result = 0
+        
+        for i in saves {
+            result = result + Int(i.saveMoney)!
+        }
+        
+        return result
     }
     
     func initializationAllData() {
@@ -198,5 +205,9 @@ class SaveManager {
         totalMoney = 0
         monthMoney = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         eachDayAndMoney = [String: Double]()
+        maxThisWeekendMoney = "0"
+        maxThisMonthMoney = "0"
+        UserDefaults.standard.set(try? PropertyListEncoder().encode([Save]()), forKey: "Saves")
+        UserDefaults.standard.set(0, forKey: "totalMoney")
     }
 }

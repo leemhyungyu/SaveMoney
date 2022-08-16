@@ -31,9 +31,19 @@ class HomeViewModel {
         return saveManager.EachWeekendDayAndMoney
     }
     
+    var maxThisMonthMoney: String {
+        return saveManager.maxThisMonthMoney
+    }
+    
+    var maxThisWeekendMoney: String {
+        return saveManager.maxThisWeekendMoney
+    }
+    
     var totalMoney: String?
     var maxSaveMoney: String?
+
     var thisMonthMoney: String?
+    var thisWeekendMoney: String?
     
     var day = [String]()
     var EachDayDate = [String]()
@@ -53,34 +63,21 @@ class HomeViewModel {
         saveManager.saveOfSelectedDay(date: date)
     }
     
-    // 입력받은 Date의 절약한 값을 가져오는 함수
-    func totalMoneyOfDate(date: Date) -> Int {
-        
-        let saves = saveManager.returnSaveOfSelectedDay(date: getStringToDate(date: date))
-        
-        var result = 0
-        
-        for i in saves {
-            result = result + Int(i.saveMoney)!
-        }
-        
-        return result
-    }
-    
     func setMonthData() {
         for i in save {
             saveManager.setMonthMoneyData(save: i)
         }
     }
     
-    
     func setMoneyData() {
         
         saveManager.setEachDayDate()
         saveManager.setEachWeekendDate()
+        saveManager.setThisMonthSaves()
+        saveManager.setThisWeekendSaves()
         
         self.thisMonthMoney = setIntForWon(Int((monthMoney[Int(getMonthToDate(date: Date()))! - 1])))
-        
+        self.thisWeekendMoney = setIntForWon(Int(eachWeekendDayAndMoney[getStringToDate(date: getSatToDate(date: Date()))]!))
         if save.count >= 1 {
             let save = save.sorted(by: { Int($0.saveMoney)! > Int($1.saveMoney)!})
             totalMoney = setIntForWon(saveManager.totalMoney)
@@ -99,7 +96,7 @@ class HomeViewModel {
         self.day = Array(eachDayAndMoney.keys).sorted(by: <)
         
         self.day.map { self.EachDayDate.append(getMonthAndDayForString(date: $0))
-            self.EachDayMoney.append(Double(totalMoneyOfDate(date: getDateToString(text: $0)!)))
+            self.EachDayMoney.append(eachDayAndMoney[$0]!)
         }
     }
     
@@ -113,22 +110,8 @@ class HomeViewModel {
         self.EachWeekend.map {
             self.EachWeekendDate.append(getWaveMonthDayForString(date: getDateToString(text: $0)!))
             
-            self.EachWeekendMoney.append(setWeekendMoney(date: getDateToString(text: $0)!))
+            self.EachWeekendMoney.append(eachWeekendDayAndMoney[$0]!)
         }
-    }
-    
-    func setWeekendMoney(date: Date) -> Double {
-        
-        let interval = getMonthForInt(date: date)
-        
-        var result: Double = 0.0
-
-        for i in 0...interval - 1 {
-            let pastDate = Date(timeInterval: -(Double(86400 * i)), since: date)
-            result += Double(totalMoneyOfDate(date: pastDate))
-        }
-        
-        return result
     }
 }
 

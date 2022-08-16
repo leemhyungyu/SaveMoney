@@ -69,7 +69,7 @@ func getDayToDate(date: Date) -> String {
     return dateFormatter.string(from: date)
 }
 
-func getMonthForInt(date: Date) -> Int {
+func getDateForInt(date: Date) -> Int {
     
     let dateFormatter = DateFormatter()
     
@@ -84,4 +84,33 @@ func getDateToDay(day: String) -> Date {
     dateFormatter.dateFormat = "Y년 M월 dd일 E요일"
     
     return dateFormatter.date(from: day)!
+}
+
+func getSatToDate(date: Date) -> Date {
+    
+    let interval = getDateForInt(date: date)
+    
+    if interval != 7 {
+        let sat = Date(timeInterval: Double(86400 * (7 - interval)), since: date)
+        
+        return sat
+    } else {
+        return date
+    }
+}
+
+func getSatToString(date: Date) -> String {
+    let dateFormatter = DateFormatter()
+    
+    dateFormatter.dateFormat = "Y/MM/dd"
+    
+    let interval = getDateForInt(date: date)
+    
+    if interval != 7 {
+        let sat = Date(timeInterval: Double(86400 * (7 - interval)), since: date)
+        
+        return dateFormatter.string(from: sat)
+    } else {
+        return dateFormatter.string(from: date)
+    }
 }
