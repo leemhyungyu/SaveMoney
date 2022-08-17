@@ -109,6 +109,7 @@ class HomeViewController: UIViewController {
         viewModel.setMoneyData()
         viewModel.setEachDayDate()
         viewModel.setWeekendDayDate()
+        tableView.reloadData()
         configureChartView()
     }
     
@@ -284,8 +285,8 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: HomeCell.identifier, for: indexPath) as? HomeCell else { return UITableViewCell() }
         
-        cell.titleLabel.text = "총 저축 금액"
-        cell.moneyLabel.text = viewModel.totalMoney
+        cell.titleLabel.text = viewModel.titleOfCell(index: indexPath.row)
+        cell.moneyLabel.text = viewModel.moneyOfCell(index: indexPath.row)
         return cell
     }
 }

@@ -11,6 +11,8 @@ class HomeViewModel {
     
     let saveManager = SaveManager.shared
     
+    var HomeCellData: [Home] = [.total, .month, .week]
+    
     var save: [Save] {
         return saveManager.saves
     }
@@ -48,7 +50,7 @@ class HomeViewModel {
     }
     
     var numOfCell: Int {
-        return 1
+        return HomeCellData.count
     }
     
     var totalMoney: String?
@@ -67,6 +69,23 @@ class HomeViewModel {
     
     let month = ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"]
         
+    func titleOfCell(index: Int) -> String {
+        return HomeCellData[index].title
+    }
+    
+    func moneyOfCell(index: Int) -> String {
+        switch index {
+        case 0:
+            return totalMoney!
+        case 1:
+            return thisMonthMoney!
+        case 2:
+            return thisWeekendMoney!
+        default:
+            return "0원"
+        }
+    }
+    
     func retrieve() {
         saveManager.retrieveSave()
     }
