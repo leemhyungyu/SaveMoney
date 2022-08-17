@@ -7,7 +7,8 @@
 
 import UIKit
 import Charts
-import ex
+import ExpyTableView
+
 class HomeViewController: UIViewController {
 
     let viewModel = HomeViewModel()
@@ -27,11 +28,13 @@ class HomeViewController: UIViewController {
         return view
     }()
     
-    let tableView: UITableView = {
-        let tableView = UITableView(frame: .zero)
+    let tableView: ExpyTableView = {
+        let tableView = ExpyTableView(frame: .zero)
         
         tableView.register(HomeCell.self, forCellReuseIdentifier: HomeCell.identifier)
+        tableView.register(MaxSaveCell.self, forCellReuseIdentifier: MaxSaveCell.identifier)
         
+        tableView.isScrollEnabled = false
         return tableView
     }()
     
@@ -241,7 +244,7 @@ class HomeViewController: UIViewController {
         tableView.snp.makeConstraints {
             $0.top.equalTo(subView.snp.bottom).offset(10)
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(210)
+            $0.height.equalTo(400)
         }
     }
     
@@ -276,22 +279,71 @@ class HomeViewController: UIViewController {
     }
 }
 
-extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
+extension HomeViewController: ExpyTableViewDelegate, ExpyTableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        viewModel.numOfCell
+        return 2
     }
     
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: HomeCell.identifier, for: indexPath) as? HomeCell else { return UITableViewCell() }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: MaxSaveCell.identifier, for: indexPath) as? MaxSaveCell else { return UITableViewCell() }
         
-        cell.titleLabel.text = viewModel.titleOfCell(index: indexPath.row)
-        cell.moneyLabel.text = viewModel.moneyOfCell(index: indexPath.row)
+        switch indexPath.section {
+        case 0:
+            cell.upDateUI(save: viewModel.maxThisMonthSave)
+        case 1:
+            cell.upDateUI(save: viewModel.maxThisMonthSave)
+        case 2:
+            cell.upDateUI(save: viewModel.maxThisWeekendSave)
+        default:
+            break
+        }
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 70
+        switch indexPath.row {
+        case 0:
+            return 40
+        default:
+            return 130
+        }
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return viewModel.numOfCell
+    }
+    
+    func tableView(_ tableView: ExpyTableView, canExpandSection section: Int) -> Bool {
+        true
+    }
+    
+    func tableView(_ tableView: ExpyTableView, expyState state: ExpyState, changeForSection section: Int) {
+        print("\(section)섹션")
+        
+        switch state {
+        case .willExpand:
+         print("WILL EXPAND")
+
+        case .willCollapse:
+         print("WILL COLLAPSE")
+
+        case .didExpand:
+         print("DID EXPAND")
+
+        case .didCollapse:
+         print("DID COLLAPSE")
+        }
+    }
+    
+    func tableView(_ tableView: ExpyTableView, expandableCellForSection section: Int) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: HomeCell.identifier) as? HomeCell else { return UITableViewCell() }
+        
+        cell.titleLabel.text = viewModel.titleOfCell(index: section)
+        cell.moneyLabel.text = viewModel.moneyOfCell(index: section)
+        
+        return cell
     }
 }
 class YAxisValueFormatter: ValueFormatter {
