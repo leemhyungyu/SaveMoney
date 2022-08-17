@@ -15,6 +15,8 @@ target 'SaveMoney' do
   pod 'SnapKit'
   pod 'Charts'
   pod 'SwiftMessages'
+  pod 'ExpyTableView'
+
   target 'SaveMoneyUITests' do
     # Pods for testing
   end

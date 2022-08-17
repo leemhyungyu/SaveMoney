@@ -7,7 +7,7 @@
 
 import UIKit
 import Charts
-
+import ex
 class HomeViewController: UIViewController {
 
     let viewModel = HomeViewModel()
@@ -241,7 +241,7 @@ class HomeViewController: UIViewController {
         tableView.snp.makeConstraints {
             $0.top.equalTo(subView.snp.bottom).offset(10)
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(300)
+            $0.height.equalTo(210)
         }
     }
     
@@ -288,6 +288,10 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         cell.titleLabel.text = viewModel.titleOfCell(index: indexPath.row)
         cell.moneyLabel.text = viewModel.moneyOfCell(index: indexPath.row)
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 70
     }
 }
 class YAxisValueFormatter: ValueFormatter {
