@@ -27,6 +27,14 @@ class HomeViewController: UIViewController {
         return view
     }()
     
+    let tableView: UITableView = {
+        let tableView = UITableView(frame: .zero)
+        
+        tableView.register(HomeCell.self, forCellReuseIdentifier: HomeCell.identifier)
+        
+        return tableView
+    }()
+    
     let subView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
@@ -54,80 +62,6 @@ class HomeViewController: UIViewController {
         
         barCharView.isHidden = true
         return barCharView
-    }()
-    
-    let grpahHeaderView: UIView = {
-        let view = HomeHeaderView(title: "이번 주 그래프")
-        
-        return view
-    }()
-
-    let totalHeaderView: UIView = {
-        let view = HomeSubHeaderView(title: "총 저축 금액")
-        
-        return view
-    }()
-    
-    let monthHeaderView: UIView = {
-        let view = HomeSubHeaderView(title: "이번 달 저축 금액")
-        
-        return view
-    }()
-    
-    let monthView: UIView = {
-        let view = UIView()
-
-        view.setShadow()
-        view.backgroundColor = .white
-        return view
-    }()
-    
-    let weekendHeaderView: UIView = {
-        let view = HomeSubHeaderView(title: "이번 주 저축 금액")
-        
-        return view
-    }()
-    
-    
-    let weekendView: UIView = {
-        let view = UIView()
-        view.setShadow()
-        view.backgroundColor = .white
-        return view
-    }()
-    
-    let totalView: UIView = {
-        let view = UIView()
-        view.setShadow()
-        view.backgroundColor = .white
-        return view
-    }()
-    
-    let totalLabel: UILabel = {
-        let label = UILabel()
-        
-        label.numberOfLines = 0
-        label.font = .systemFont(ofSize: 14)
-        
-        return label
-    }()
-    
-    let weekendLabel: UILabel = {
-        let label = UILabel()
-        
-        label.numberOfLines = 0
-        label.font = .systemFont(ofSize: 14)
-        
-        return label
-    }()
-    
-    let monthLabel: UILabel = {
-        let label = UILabel()
-        
-        label.numberOfLines = 0
-        label.font = .systemFont(ofSize: 14)
-        
-        return label
     }()
     
     lazy var monthButton: UIButton = {
@@ -175,12 +109,7 @@ class HomeViewController: UIViewController {
         viewModel.setMoneyData()
         viewModel.setEachDayDate()
         viewModel.setWeekendDayDate()
-
         configureChartView()
-        
-        totalLabel.text = "총 \(viewModel.totalMoney!)을 세이브 하셨습니다.\n최고 저축액은 \(viewModel.maxSaveMoney!)입니다."
-        monthLabel.text = "이번 달은 \(viewModel.thisMonthMoney!)을 세이브 하셨습니다.\n이번 달 최고 저축 금액은 \(viewModel.maxThisMonthMoney)원입니다."
-        weekendLabel.text = "이번 주는 \(viewModel.thisWeekendMoney!)을 세이브 하셨습니다.\n이번 주 최고 저축 금액은 \(viewModel.maxThisWeekendMoney)원입니다."
     }
     
     
@@ -254,17 +183,13 @@ class HomeViewController: UIViewController {
         view.backgroundColor = #colorLiteral(red: 0.9933428168, green: 0.9469488263, blue: 0.9725527167, alpha: 1)
         view.addSubview(scrollView)
         
+        tableView.delegate = self
+        tableView.dataSource = self
+        
         scrollView.addSubview(mainView)
         
-        [subView, totalView, monthView, weekendView, dayButton, weekButton, monthButton] .forEach { mainView.addSubview($0) }
+        [subView, dayButton, weekButton, monthButton, tableView] .forEach { mainView.addSubview($0) }
 
-        
-        [totalHeaderView, totalLabel] .forEach { totalView.addSubview($0) }
-        
-        [monthHeaderView, monthLabel] .forEach { monthView.addSubview($0) }
-        
-        [weekendHeaderView, weekendLabel] .forEach { weekendView.addSubview($0) }
-        
         [dayBarChartView, weekBarChartView, monthBarChartView] .forEach { subView.addSubview($0) }
                 
         scrollView.snp.makeConstraints {
@@ -311,52 +236,11 @@ class HomeViewController: UIViewController {
         monthBarChartView.snp.makeConstraints {
             $0.top.leading.trailing.bottom.equalToSuperview().inset(10)
         }
-        totalHeaderView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(5)
-            $0.leading.trailing.equalToSuperview().inset(5)
-        }
-
-        totalView.snp.makeConstraints {
-            $0.top.equalTo(subView.snp.bottom).offset(30)
-            $0.leading.trailing.equalToSuperview().inset(10)
-            $0.height.equalTo(100)
-        }
         
-        totalLabel.snp.makeConstraints {
-            $0.top.equalTo(totalHeaderView.snp.bottom).offset(10)
-            $0.leading.equalTo(totalHeaderView)
-        }
-        
-        monthHeaderView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(5)
-            $0.leading.trailing.equalToSuperview().inset(5)
-        }
-        
-        monthView.snp.makeConstraints {
-            $0.top.equalTo(totalView.snp.bottom).offset(30)
-            $0.leading.trailing.equalToSuperview().inset(10)
-            $0.height.equalTo(100)
-        }
-        
-        monthLabel.snp.makeConstraints {
-            $0.top.equalTo(monthHeaderView.snp.bottom).offset(10)
-            $0.leading.equalTo(monthHeaderView)
-        }
-        
-        weekendHeaderView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(5)
-            $0.leading.trailing.equalToSuperview().inset(5)
-        }
-        
-        weekendView.snp.makeConstraints {
-            $0.top.equalTo(monthView.snp.bottom).offset(30)
-            $0.leading.trailing.equalToSuperview().inset(10)
-            $0.height.equalTo(100)
-        }
-        
-        weekendLabel.snp.makeConstraints {
-            $0.top.equalTo(weekendHeaderView.snp.bottom).offset(10)
-            $0.leading.equalTo(weekendHeaderView)
+        tableView.snp.makeConstraints {
+            $0.top.equalTo(subView.snp.bottom).offset(10)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(300)
         }
     }
     
@@ -389,34 +273,22 @@ class HomeViewController: UIViewController {
         barchartView.data = chartData
         barchartView.data?.setValueFormatter(YAxisValueFormatter())
     }
-//
-//    func configureChartView() {
-//
-//        setChart(dataPoints: viewModel.day, values: viewModel.weekendData)
-//    }
-//
-//    func setChart(dataPoints: [String], values: [Double]) {
-//
-//        var dataEntries: [BarChartDataEntry] = []
-//
-//        for i in 0..<dataPoints.count {
-//            let dataEntry = BarChartDataEntry(x: Double(i), y: values[i])
-//            dataEntries.append(dataEntry)
-//        }
-//
-//        let chartDataSet = BarChartDataSet(entries: dataEntries)
-//
-//        chartDataSet.colors = [.systemPink]
-//        chartDataSet.valueFont = .systemFont(ofSize: 12)
-//        chartDataSet.highlightEnabled = false
-//
-//        let chartData = BarChartData(dataSet: chartDataSet)
-//        chartData.barWidth = 0.3
-//        barChartView.data = chartData
-//        barChartView.data?.setValueFormatter(YAxisValueFormatter())
-//    }
 }
 
+extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        viewModel.numOfCell
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: HomeCell.identifier, for: indexPath) as? HomeCell else { return UITableViewCell() }
+        
+        cell.titleLabel.text = "총 저축 금액"
+        cell.moneyLabel.text = viewModel.totalMoney
+        return cell
+    }
+}
 class YAxisValueFormatter: ValueFormatter {
     func stringForValue(_ value: Double, entry: ChartDataEntry, dataSetIndex: Int, viewPortHandler: ViewPortHandler?) -> String {
         

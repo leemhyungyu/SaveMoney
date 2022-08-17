@@ -39,6 +39,18 @@ class HomeViewModel {
         return saveManager.maxThisWeekendMoney
     }
     
+    var maxThisMonthSave: Save {
+        return saveManager.maxThisMonthSave!
+    }
+    
+    var maxThisWeekendSave: Save {
+        return saveManager.maxThisWeekendSave!
+    }
+    
+    var numOfCell: Int {
+        return 1
+    }
+    
     var totalMoney: String?
     var maxSaveMoney: String?
 

@@ -10,24 +10,13 @@ import SnapKit
 import Charts
 
 class CustomBarChartView: BarChartView {
-    
-//    var dataPoint: [String]?
-//    var value: [Double]?
-    
+
     let barChartView: BarChartView = {
         
         let charVIew = BarChartView()
         
         return charVIew
     }()
-//
-//    init(dataPoint: [String], value: [Double]) {
-//        self.dataPoint = dataPoint
-//        self.value = value
-//        super.init(frame: .zero)
-//        configureUI()
-//        setChart(dataPoints: dataPoint, values: value)
-//    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -44,7 +33,7 @@ class CustomBarChartView: BarChartView {
         barChartView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
-//
+
         barChartView.noDataText = "데이터가 없습니다."
         barChartView.noDataFont = .systemFont(ofSize: 16)
         barChartView.noDataTextColor = .lightGray
@@ -83,6 +72,5 @@ class CustomBarChartView: BarChartView {
         barChartView.data = chartData
         barChartView.data?.setValueFormatter(YAxisValueFormatter())
         barChartView.xAxis.valueFormatter = IndexAxisValueFormatter(values: dataPoints)
-
     }
 }
