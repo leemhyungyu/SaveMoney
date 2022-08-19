@@ -26,6 +26,7 @@
 		2C89546F28AD339100AF5EB7 /* HomeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C89546E28AD339100AF5EB7 /* HomeCell.swift */; };
 		2C89547128AD3A8300AF5EB7 /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C89547028AD3A8300AF5EB7 /* Home.swift */; };
 		2C89547328AD480300AF5EB7 /* MaxSaveCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C89547228AD480300AF5EB7 /* MaxSaveCell.swift */; };
+		2C89547528AE99BB00AF5EB7 /* OpenSourceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C89547428AE99BB00AF5EB7 /* OpenSourceViewController.swift */; };
 		2CA1278E28A6AA3B0058A4F5 /* UIButton++Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA1278D28A6AA3B0058A4F5 /* UIButton++Extensions.swift */; };
 		2CA1279028A7E92A0058A4F5 /* CustomBarChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA1278F28A7E92A0058A4F5 /* CustomBarChartView.swift */; };
 		2CBCF061289180310016A962 /* DayInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBCF060289180310016A962 /* DayInfo.swift */; };
@@ -92,6 +93,7 @@
 		2C89546E28AD339100AF5EB7 /* HomeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCell.swift; sourceTree = "<group>"; };
 		2C89547028AD3A8300AF5EB7 /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
 		2C89547228AD480300AF5EB7 /* MaxSaveCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaxSaveCell.swift; sourceTree = "<group>"; };
+		2C89547428AE99BB00AF5EB7 /* OpenSourceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenSourceViewController.swift; sourceTree = "<group>"; };
 		2CA1278D28A6AA3B0058A4F5 /* UIButton++Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton++Extensions.swift"; sourceTree = "<group>"; };
 		2CA1278F28A7E92A0058A4F5 /* CustomBarChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBarChartView.swift; sourceTree = "<group>"; };
 		2CBCF060289180310016A962 /* DayInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayInfo.swift; sourceTree = "<group>"; };
@@ -188,6 +190,7 @@
 			isa = PBXGroup;
 			children = (
 				2CD7F8DD285F3DFD00E5C446 /* MyPageViewController.swift */,
+				2C89547428AE99BB00AF5EB7 /* OpenSourceViewController.swift */,
 			);
 			path = MyPageTab;
 			sourceTree = "<group>";
@@ -608,6 +611,7 @@
 				2C63870428A6613A00BF8B01 /* MyPageViewModel.swift in Sources */,
 				2CD7F8E1285F574800E5C446 /* MainCell.swift in Sources */,
 				2CD7F8A8285F390300E5C446 /* SceneDelegate.swift in Sources */,
+				2C89547528AE99BB00AF5EB7 /* OpenSourceViewController.swift in Sources */,
 				2C58F31D289AD0980046676C /* AlertViewController.swift in Sources */,
 				2C63870028A6418300BF8B01 /* WarningView.swift in Sources */,
 				2CBCF06B2893A5D70016A962 /* Function.swift in Sources */,

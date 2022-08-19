@@ -28,6 +28,26 @@ class HomeCell: UITableViewCell {
         return label
     }()
     
+    
+    var arrowDownImage: UIImageView = {
+        let imageView = UIImageView()
+        
+        imageView.image = UIImage(named: "arrowDown")
+        
+        imageView.isHidden = true
+        return imageView
+    }()
+    
+    var arrowUpImage: UIImageView = {
+        let imageView = UIImageView()
+        
+        imageView.image = UIImage(named: "arrowUp")
+        
+        imageView.isHidden = false
+        return imageView
+    }()
+    
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         configureUI()
@@ -39,7 +59,7 @@ class HomeCell: UITableViewCell {
     }
     
     func configureUI() {
-        [titleLabel, moneyLabel] .forEach { addSubview($0) }
+        [titleLabel, moneyLabel, arrowUpImage, arrowDownImage] .forEach { addSubview($0) }
         
         titleLabel.snp.makeConstraints {
             $0.centerY.equalToSuperview()
@@ -48,7 +68,22 @@ class HomeCell: UITableViewCell {
         
         moneyLabel.snp.makeConstraints {
             $0.centerY.equalToSuperview()
-            $0.trailing.equalToSuperview().inset(20)
+            $0.trailing.equalToSuperview().inset(30)
         }
+        
+        arrowUpImage.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.leading.equalTo(moneyLabel.snp.trailing).offset(10)
+        }
+        
+        arrowDownImage.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.leading.equalTo(moneyLabel.snp.trailing).offset(10)
+        }
+    }
+    
+    func cellClicked(bool: Bool) {
+        arrowUpImage.isHidden = bool
+        arrowDownImage.isHidden = !bool
     }
 }

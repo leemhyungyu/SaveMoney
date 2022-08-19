@@ -285,7 +285,6 @@ extension HomeViewController: ExpyTableViewDelegate, ExpyTableViewDataSource {
         return 2
     }
     
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: MaxSaveCell.identifier, for: indexPath) as? MaxSaveCell else { return UITableViewCell() }
         
@@ -307,7 +306,14 @@ extension HomeViewController: ExpyTableViewDelegate, ExpyTableViewDataSource {
         case 0:
             return 40
         default:
-            return 130
+            return 120
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        if indexPath.row == 0 {
+            tableView.reloadData()
         }
     }
     
@@ -320,19 +326,21 @@ extension HomeViewController: ExpyTableViewDelegate, ExpyTableViewDataSource {
     }
     
     func tableView(_ tableView: ExpyTableView, expyState state: ExpyState, changeForSection section: Int) {
-        print("\(section)섹션")
-        
+
         switch state {
         case .willExpand:
+        
          print("WILL EXPAND")
-
         case .willCollapse:
+
          print("WILL COLLAPSE")
 
         case .didExpand:
+
          print("DID EXPAND")
 
         case .didCollapse:
+
          print("DID COLLAPSE")
         }
     }
@@ -342,6 +350,14 @@ extension HomeViewController: ExpyTableViewDelegate, ExpyTableViewDataSource {
         
         cell.titleLabel.text = viewModel.titleOfCell(index: section)
         cell.moneyLabel.text = viewModel.moneyOfCell(index: section)
+        
+        if tableView.expandedSections[section] == true {
+            cell.cellClicked(bool: tableView.expandedSections[section]!)
+        } else if tableView.expandedSections[section] == false {
+            cell.cellClicked(bool: tableView.expandedSections[section]!)
+        } else {
+            cell.cellClicked(bool: false)
+        }
         
         return cell
     }
