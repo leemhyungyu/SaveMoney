@@ -33,13 +33,6 @@ class HomeViewModel {
         return saveManager.EachWeekendDayAndMoney
     }
     
-    var maxThisMonthMoney: String {
-        return saveManager.maxThisMonthMoney
-    }
-    
-    var maxThisWeekendMoney: String {
-        return saveManager.maxThisWeekendMoney
-    }
     
     var maxThisMonthSave: Save {
         return saveManager.maxThisMonthSave!
@@ -49,13 +42,17 @@ class HomeViewModel {
         return saveManager.maxThisWeekendSave!
     }
     
+    var maxTotalSave: Save {
+        return saveManager.maxTotalSave!
+    }
+    
     var numOfCell: Int {
         return HomeCellData.count
     }
     
     var totalMoney: String?
     var maxSaveMoney: String?
-
+    
     var thisMonthMoney: String?
     var thisWeekendMoney: String?
     
@@ -108,16 +105,14 @@ class HomeViewModel {
         saveManager.setEachWeekendDate()
         saveManager.setThisMonthSaves()
         saveManager.setThisWeekendSaves()
+        saveManager.setMaxTotalMoney()
         
         self.thisMonthMoney = setIntForWon(Int((monthMoney[Int(getMonthToDate(date: Date()))! - 1])))
         self.thisWeekendMoney = setIntForWon(Int(eachWeekendDayAndMoney[getStringToDate(date: getSatToDate(date: Date()))]!))
         if save.count >= 1 {
-            let save = save.sorted(by: { Int($0.saveMoney)! > Int($1.saveMoney)!})
             totalMoney = setIntForWon(saveManager.totalMoney)
-            maxSaveMoney = setStringForWon(save[0].saveMoney)
         } else {
             totalMoney = "0원"
-            maxSaveMoney = "0원"
         }
     }
     

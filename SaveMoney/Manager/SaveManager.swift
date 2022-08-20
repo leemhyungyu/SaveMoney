@@ -16,15 +16,13 @@ class SaveManager {
     var saves = [Save]()
     var eventDay = [Date]()
     var saveOfDay = [Save]()
+    var maxTotalSave: Save?
     var maxThisMonthSave: Save?
     var maxThisWeekendSave: Save?
     var totalMoney: Int = 0
     var monthMoney: [Double] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     var eachDayAndMoney = [String: Double]()
     var EachWeekendDayAndMoney = [String: Double]()
-    
-    var maxThisMonthMoney: String = "0"
-    var maxThisWeekendMoney: String = "0"
     
     func createSave(day: String, planName: String, finalName: String, planMoney: String, finalMoney: String, category: String) -> Save {
         
@@ -67,6 +65,14 @@ class SaveManager {
         return saves.filter { $0.day == date }
     }
     
+    func setMaxTotalMoney() {
+        let save = saves.sorted(by: {Int($0.saveMoney)! > Int($1.saveMoney)!})
+        
+        if save.count >= 1{
+            maxTotalSave = save[0]
+        }
+    }
+    
     func setThisMonthSaves() {
         let thisMonthSaves = saves.filter { getMonthToString(date: $0.day) == getMonthToString(date: getStringToDate(date: Date()))}
         
@@ -75,7 +81,6 @@ class SaveManager {
         
         if save.count >= 1 {
             maxThisMonthSave = save[0]
-            maxThisMonthMoney = setStringForWon(save[0].saveMoney)
         }
     }
     
@@ -86,7 +91,6 @@ class SaveManager {
                 
         if save.count >= 1 {
             maxThisWeekendSave = save[0]
-            maxThisWeekendMoney = setStringForWon(save[0].saveMoney)
         }
     }
     
@@ -209,8 +213,6 @@ class SaveManager {
         totalMoney = 0
         monthMoney = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         eachDayAndMoney = [String: Double]()
-        maxThisWeekendMoney = "0"
-        maxThisMonthMoney = "0"
         UserDefaults.standard.set(try? PropertyListEncoder().encode([Save]()), forKey: "Saves")
         UserDefaults.standard.set(0, forKey: "totalMoney")
     }

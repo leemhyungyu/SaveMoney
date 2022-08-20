@@ -296,7 +296,7 @@ extension HomeViewController: ExpyTableViewDelegate, ExpyTableViewDataSource {
         
         switch indexPath.section {
         case 0:
-            cell.upDateUI(save: viewModel.maxThisMonthSave)
+            cell.upDateUI(save: viewModel.maxTotalSave)
         case 1:
             cell.upDateUI(save: viewModel.maxThisMonthSave)
         case 2:
@@ -304,6 +304,8 @@ extension HomeViewController: ExpyTableViewDelegate, ExpyTableViewDataSource {
         default:
             break
         }
+        
+        cell.selectionStyle = .none
         return cell
     }
     
