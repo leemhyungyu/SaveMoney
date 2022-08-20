@@ -351,14 +351,13 @@ extension HomeViewController: ExpyTableViewDelegate, ExpyTableViewDataSource {
         cell.titleLabel.text = viewModel.titleOfCell(index: section)
         cell.moneyLabel.text = viewModel.moneyOfCell(index: section)
         
-        if tableView.expandedSections[section] == true {
-            cell.cellClicked(bool: tableView.expandedSections[section]!)
-        } else if tableView.expandedSections[section] == false {
-            cell.cellClicked(bool: tableView.expandedSections[section]!)
-        } else {
+        guard let bool = tableView.expandedSections[section] else {
             cell.cellClicked(bool: false)
+            
+            return cell
         }
         
+        cell.cellClicked(bool: bool)
         return cell
     }
 }

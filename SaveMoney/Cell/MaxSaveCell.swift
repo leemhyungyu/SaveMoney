@@ -24,7 +24,7 @@ class MaxSaveCell: UITableViewCell {
     var infoLabel: UILabel = {
         
         let label = UILabel()
-        label.font = .systemFont(ofSize: 14)
+        label.font = .systemFont(ofSize: 16, weight: .semibold)
         label.text = "최고 절약 정보"
         
         return label
@@ -34,7 +34,7 @@ class MaxSaveCell: UITableViewCell {
         let label = UILabel()
         
         label.font = .systemFont(ofSize: 14)
-        
+        label.text = "금액: "
         return label
     }()
     
@@ -42,7 +42,7 @@ class MaxSaveCell: UITableViewCell {
         let label = UILabel()
         
         label.font = .systemFont(ofSize: 14)
-        
+        label.text = "카테고리: "
         return label
     }()
     
@@ -50,7 +50,7 @@ class MaxSaveCell: UITableViewCell {
         let label = UILabel()
         
         label.font = .systemFont(ofSize: 14)
-        
+        label.text = "물품: "
         return label
     }()
     
@@ -85,6 +85,7 @@ class MaxSaveCell: UITableViewCell {
         
         addSubview(subView)
         
+        backgroundColor = #colorLiteral(red: 0.9933428168, green: 0.9469488263, blue: 0.9725527167, alpha: 1)
         [infoLabel, moneyLabel, categoryLabel, arrowLabel, planNameLabel, finalNameLabel] .forEach { subView.addSubview($0) }
         
         
@@ -94,37 +95,41 @@ class MaxSaveCell: UITableViewCell {
         
         infoLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(10)
-            $0.leading.equalToSuperview().offset(10)
+            $0.leading.equalToSuperview().inset(10)
+        }
+        
+        moneyLabel.snp.makeConstraints {
+            $0.top.equalTo(categoryLabel.snp.bottom).offset(5)
+            $0.leading.equalToSuperview().inset(10)
         }
         
         categoryLabel.snp.makeConstraints {
-            $0.top.equalTo(infoLabel.snp.bottom).offset(10)
-            $0.leading.equalToSuperview().offset(10)        }
-        
+            $0.top.equalTo(infoLabel.snp.bottom).offset(5)
+            $0.leading.equalToSuperview().inset(10)
+        }
+    
         planNameLabel.snp.makeConstraints {
-            $0.top.equalTo(categoryLabel.snp.bottom).offset(10)
-            $0.leading.equalToSuperview().offset(10)        }
+            $0.top.equalTo(moneyLabel.snp.bottom).offset(5)
+            $0.leading.equalToSuperview().inset(10)
+        }
         
         arrowLabel.snp.makeConstraints {
-            $0.top.equalTo(planNameLabel)
-            $0.leading.equalTo(planNameLabel.snp.trailing).offset(10)
+            $0.centerY.equalTo(planNameLabel)
+            $0.leading.equalTo(planNameLabel.snp.trailing).offset(5)
         }
         
         finalNameLabel.snp.makeConstraints {
             $0.top.equalTo(planNameLabel)
-            $0.leading.equalTo(arrowLabel.snp.trailing).offset(10)
-        }
-        
-        moneyLabel.snp.makeConstraints {
-            $0.top.equalTo(planNameLabel.snp.bottom).offset(10)
-            $0.leading.equalToSuperview().offset(10)
+            $0.leading.equalTo(arrowLabel.snp.trailing).offset(5)
         }
     }
     
     func upDateUI(save: Save) {
-        categoryLabel.text = save.category
-        planNameLabel.text = save.planName
+    
+        categoryLabel.text = "카테고리: " + save.category
+        planNameLabel.text = "물품: " + save.planName
         finalNameLabel.text = save.finalName
-        moneyLabel.text = setStringForWon(save.saveMoney)
+        moneyLabel.text = "금액: " + setStringForWon(save.saveMoney)
     }
 }
+
