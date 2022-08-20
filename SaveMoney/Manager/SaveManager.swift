@@ -65,34 +65,7 @@ class SaveManager {
         return saves.filter { $0.day == date }
     }
     
-    func setMaxTotalMoney() {
-        let save = saves.sorted(by: {Int($0.saveMoney)! > Int($1.saveMoney)!})
-        
-        if save.count >= 1{
-            maxTotalSave = save[0]
-        }
-    }
     
-    func setThisMonthSaves() {
-        let thisMonthSaves = saves.filter { getMonthToString(date: $0.day) == getMonthToString(date: getStringToDate(date: Date()))}
-        
-        let save = thisMonthSaves.sorted(by: { Int($0.saveMoney)! > Int($1.saveMoney)!})
-        
-        
-        if save.count >= 1 {
-            maxThisMonthSave = save[0]
-        }
-    }
-    
-    func setThisWeekendSaves() {
-        let thisWeekendSaves = saves.filter { getSatToString(date: getDateToString(text: $0.day)!) == getSatToString(date: Date()) }
-        
-        let save = thisWeekendSaves.sorted(by: { Int($0.saveMoney)! > Int($1.saveMoney)!} )
-                
-        if save.count >= 1 {
-            maxThisWeekendSave = save[0]
-        }
-    }
     
     func saveStruct() {
         UserDefaults.standard.set(try? PropertyListEncoder().encode(saves), forKey: "Saves")

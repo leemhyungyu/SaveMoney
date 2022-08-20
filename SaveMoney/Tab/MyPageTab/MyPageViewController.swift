@@ -21,6 +21,7 @@ class MyPageViewController: UIViewController {
         tableView.layer.shadowRadius = 7
         tableView.layer.shadowOpacity = 0.4
         tableView.layer.cornerRadius = 8
+        tableView.isScrollEnabled = false
         
         return tableView
     }()

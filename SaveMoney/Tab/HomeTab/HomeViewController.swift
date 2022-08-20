@@ -212,7 +212,7 @@ class HomeViewController: UIViewController {
         mainView.snp.makeConstraints {
             $0.edges.equalTo(scrollView.contentLayoutGuide)
             $0.width.equalTo(scrollView)
-            $0.height.equalTo(900)
+            $0.height.equalTo(930)
         }
         
         subView.snp.makeConstraints {
@@ -296,16 +296,34 @@ extension HomeViewController: ExpyTableViewDelegate, ExpyTableViewDataSource {
         
         switch indexPath.section {
         case 0:
-            cell.upDateUI(save: viewModel.maxTotalSave)
+            if cell.moneyLabel.text == "0원" {
+                return UITableViewCell()
+            } else {
+                guard let save = viewModel.maxTotalSave else {
+                    cell.setUI(true)
+                    return cell
+                }
+                cell.upDateUI(save: viewModel.maxTotalSave!)
+            }
         case 1:
-            cell.upDateUI(save: viewModel.maxThisMonthSave)
+            guard let save = viewModel.maxThisMonthSave else {
+                cell.setUI(true)
+                return cell
+            }
+            cell.upDateUI(save: viewModel.maxThisMonthSave!)
         case 2:
-            cell.upDateUI(save: viewModel.maxThisWeekendSave)
+            guard let save = viewModel.maxThisWeekendSave else {
+                cell.setUI(true)
+                return cell
+            }
+            
+            cell.upDateUI(save: viewModel.maxThisWeekendSave!)
         default:
             break
         }
         
         cell.selectionStyle = .none
+        cell.setUI(false)
         return cell
     }
     
@@ -314,7 +332,7 @@ extension HomeViewController: ExpyTableViewDelegate, ExpyTableViewDataSource {
         case 0:
             return 40
         default:
-            return 120
+            return 130
         }
     }
     
@@ -325,10 +343,11 @@ extension HomeViewController: ExpyTableViewDelegate, ExpyTableViewDataSource {
             
             if viewModel.bool[indexPath.section] == false {
                 viewModel.bool[indexPath.section] = true
-                tableViewHeightConstraint.constant += 120
+                tableViewHeightConstraint.constant += 130
+
             } else {
                 viewModel.bool[indexPath.section] = false
-                tableViewHeightConstraint.constant -= 120
+                tableViewHeightConstraint.constant -= 130
             }
         }
     }

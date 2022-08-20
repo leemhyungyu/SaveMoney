@@ -33,19 +33,10 @@ class HomeViewModel {
         return saveManager.EachWeekendDayAndMoney
     }
     
-    
-    var maxThisMonthSave: Save {
-        return saveManager.maxThisMonthSave!
-    }
-    
-    var maxThisWeekendSave: Save {
-        return saveManager.maxThisWeekendSave!
-    }
-    
-    var maxTotalSave: Save {
-        return saveManager.maxTotalSave!
-    }
-    
+    var maxThisMonthSave: Save?
+    var maxThisWeekendSave: Save?
+    var maxTotalSave: Save?
+        
     var numOfCell: Int {
         return HomeCellData.count
     }
@@ -99,13 +90,48 @@ class HomeViewModel {
         }
     }
     
+    func setMaxTotalMoney() {
+        let save = save.sorted(by: {Int($0.saveMoney)! > Int($1.saveMoney)!})
+        
+        if save.count >= 1{
+            maxTotalSave = save[0]
+        } else {
+            maxTotalSave = nil
+        }
+    }
+    
+    func setThisMonthSaves() {
+        let thisMonthSaves = save.filter { getMonthToString(date: $0.day) == getMonthToString(date: getStringToDate(date: Date()))}
+        
+        let save = thisMonthSaves.sorted(by: { Int($0.saveMoney)! > Int($1.saveMoney)!})
+        
+        
+        if save.count >= 1 {
+            maxThisMonthSave = save[0]
+        } else {
+            maxThisMonthSave = nil
+        }
+    }
+    
+    func setThisWeekendSaves() {
+        let thisWeekendSaves = save.filter { getSatToString(date: getDateToString(text: $0.day)!) == getSatToString(date: Date()) }
+        
+        let save = thisWeekendSaves.sorted(by: { Int($0.saveMoney)! > Int($1.saveMoney)!} )
+                
+        if save.count >= 1 {
+            maxThisWeekendSave = save[0]
+        } else {
+            maxThisWeekendSave = nil
+        }
+    }
+    
     func setMoneyData() {
         
         saveManager.setEachDayDate()
         saveManager.setEachWeekendDate()
-        saveManager.setThisMonthSaves()
-        saveManager.setThisWeekendSaves()
-        saveManager.setMaxTotalMoney()
+        setThisMonthSaves()
+        setThisWeekendSaves()
+        setMaxTotalMoney()
         
         self.thisMonthMoney = setIntForWon(Int((monthMoney[Int(getMonthToDate(date: Date()))! - 1])))
         self.thisWeekendMoney = setIntForWon(Int(eachWeekendDayAndMoney[getStringToDate(date: getSatToDate(date: Date()))]!))

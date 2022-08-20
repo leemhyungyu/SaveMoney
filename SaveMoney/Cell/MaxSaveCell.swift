@@ -11,6 +11,25 @@ import SnapKit
 class MaxSaveCell: UITableViewCell {
     static let identifier = "MaxSaveCell"
     
+    var noDataView: UIView = {
+        let view = UIView()
+        
+        view.setShadow()
+        
+        view.backgroundColor = .white
+        
+        return view
+    }()
+    
+    var label: UILabel = {
+        let label = UILabel()
+        
+        label.text = "아직 입력된 내용이 없습니다."
+        label.font = .systemFont(ofSize: 14)
+        
+        return label
+    }()
+    
     var subView: UIView = {
         let view = UIView()
         
@@ -84,10 +103,20 @@ class MaxSaveCell: UITableViewCell {
     func configureUI() {
         
         addSubview(subView)
+        addSubview(noDataView)
         
         backgroundColor = #colorLiteral(red: 0.9933428168, green: 0.9469488263, blue: 0.9725527167, alpha: 1)
         [infoLabel, moneyLabel, categoryLabel, arrowLabel, planNameLabel, finalNameLabel] .forEach { subView.addSubview($0) }
         
+        noDataView.addSubview(label)
+        
+        noDataView.snp.makeConstraints {
+            $0.edges.equalToSuperview().inset(10)
+        }
+        
+        label.snp.makeConstraints {
+            $0.centerX.centerY.equalToSuperview()
+        }
         
         subView.snp.makeConstraints {
             $0.edges.equalToSuperview().inset(10)
@@ -125,11 +154,20 @@ class MaxSaveCell: UITableViewCell {
     }
     
     func upDateUI(save: Save) {
-    
         categoryLabel.text = "카테고리: " + save.category
         planNameLabel.text = "물품: " + save.planName
         finalNameLabel.text = save.finalName
         moneyLabel.text = "금액: " + setStringForWon(save.saveMoney)
+    }
+    
+    func setUI(_ bool: Bool) {
+        if bool == true {
+            subView.isHidden = true
+            noDataView.isHidden = false
+        } else {
+            subView.isHidden = false
+            noDataView.isHidden = true
+        }
     }
 }
 
