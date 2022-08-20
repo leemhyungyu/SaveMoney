@@ -12,7 +12,8 @@ import ExpyTableView
 class HomeViewController: UIViewController {
 
     let viewModel = HomeViewModel()
-    
+    private var tableViewHeightConstraint: NSLayoutConstraint!
+
     let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         
@@ -116,6 +117,9 @@ class HomeViewController: UIViewController {
         configureChartView()
     }
     
+//    override func viewWillLayoutSubviews() {
+//        tableView.ex
+//    }
     
     @objc func dayButtonClicked() {
         
@@ -190,6 +194,9 @@ class HomeViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         
+        tableView.invalidateIntrinsicContentSize()
+        tableViewHeightConstraint = tableView.heightAnchor.constraint(equalToConstant: 120)
+        tableViewHeightConstraint.isActive = true
         scrollView.addSubview(mainView)
         
         [subView, dayButton, weekButton, monthButton, tableView] .forEach { mainView.addSubview($0) }
@@ -244,7 +251,6 @@ class HomeViewController: UIViewController {
         tableView.snp.makeConstraints {
             $0.top.equalTo(subView.snp.bottom).offset(10)
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(400)
         }
     }
     
@@ -314,6 +320,14 @@ extension HomeViewController: ExpyTableViewDelegate, ExpyTableViewDataSource {
         
         if indexPath.row == 0 {
             tableView.reloadData()
+            
+            if viewModel.bool[indexPath.section] == false {
+                viewModel.bool[indexPath.section] = true
+                tableViewHeightConstraint.constant += 120
+            } else {
+                viewModel.bool[indexPath.section] = false
+                tableViewHeightConstraint.constant -= 120
+            }
         }
     }
     
@@ -350,14 +364,8 @@ extension HomeViewController: ExpyTableViewDelegate, ExpyTableViewDataSource {
         
         cell.titleLabel.text = viewModel.titleOfCell(index: section)
         cell.moneyLabel.text = viewModel.moneyOfCell(index: section)
-        
-        guard let bool = tableView.expandedSections[section] else {
-            cell.cellClicked(bool: false)
-            
-            return cell
-        }
-        
-        cell.cellClicked(bool: bool)
+
+        cell.cellClicked(bool: viewModel.bool[section])
         return cell
     }
 }
