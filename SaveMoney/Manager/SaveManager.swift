@@ -16,9 +16,6 @@ class SaveManager {
     var saves = [Save]()
     var eventDay = [Date]()
     var saveOfDay = [Save]()
-    var maxTotalSave: Save?
-    var maxThisMonthSave: Save?
-    var maxThisWeekendSave: Save?
     var totalMoney: Int = 0
     var monthMoney: [Double] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     var eachDayAndMoney = [String: Double]()

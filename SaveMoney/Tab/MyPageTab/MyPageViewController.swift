@@ -73,7 +73,11 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
         case 2:
             break
         case 3:
+            let LicenseVC = LicenseViewController()
+            LicenseVC.modalPresentationStyle = .fullScreen
             
+            navigationController?.pushViewController(LicenseVC, animated: true)
+//            present(LicenseVC, animated: true)
             break
         default:
             break

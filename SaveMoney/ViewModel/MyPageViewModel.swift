@@ -28,30 +28,6 @@ enum myPage: CaseIterable {
 }
 
 
-
-
-enum source: CaseIterable {
-    case FSCalendar
-    case SnapKit
-    case Charts
-    case SwiftMessages
-    case ExpyTableView
-    
-    var title: String {
-        switch self {
-        case .FSCalendar:
-            return "FSCalendar"
-        case .SnapKit:
-            return "SnapKit"
-        case .Charts:
-            return "Charts"
-        case .SwiftMessages:
-            return "SwiftMessages"
-        case .ExpyTableView:
-            return "ExpyTableView"
-        }
-    }
-}
 class MyPageViewModel {
     
     let myPages: [myPage] = [.initialization, .goal, .userInfo, .source]
