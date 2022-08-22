@@ -8,11 +8,7 @@
 import UIKit
 
 class AppTabbarController: UITabBarController {
-    
-    let homeVC = HomeViewController()
-    let calendarVC = CalendarViewController()
-    let MyPageVC = MyPageViewController()
-    
+
     let homeTab: UITabBarItem = {
         
         let tabBarItem = UITabBarItem(
@@ -50,13 +46,19 @@ class AppTabbarController: UITabBarController {
     
     func setting() {
         
+        let homeVC = UINavigationController(rootViewController: HomeViewController())
+        
+        let calendarVC = UINavigationController(rootViewController: CalendarViewController())
+        
+        let myPageVC = UINavigationController(rootViewController: MyPageViewController())
+    
         tabBar.tintColor = .systemPink
         tabBar.backgroundColor = .white
         
-        viewControllers = [homeVC, calendarVC, MyPageVC]
+        viewControllers = [homeVC, calendarVC, myPageVC]
         
         homeVC.tabBarItem = homeTab
         calendarVC.tabBarItem = calendarTab
-        MyPageVC.tabBarItem = UserTab
+        myPageVC.tabBarItem = UserTab
     }
 }

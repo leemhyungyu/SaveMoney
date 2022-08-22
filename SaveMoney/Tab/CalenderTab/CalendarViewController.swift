@@ -141,6 +141,7 @@ class CalendarViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setting()
+        setTabNavigationBar()
         viewModel.retrieve()
         setDayData(Date())
         setHeigthConstraint()

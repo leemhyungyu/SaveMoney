@@ -101,6 +101,7 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        setTabNavigationBar()
         viewModel.retrieve()
         viewModel.setMonthData()
         viewModel.setEachDayDate()
@@ -117,9 +118,8 @@ class HomeViewController: UIViewController {
         configureChartView()
     }
     
-//    override func viewWillLayoutSubviews() {
-//        tableView.ex
-//    }
+
+
     
     @objc func dayButtonClicked() {
         
