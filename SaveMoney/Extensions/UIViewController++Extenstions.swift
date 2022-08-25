@@ -29,24 +29,27 @@ extension UIViewController {
         SwiftMessages.show(config: config, view: warningView)
     }
     
-    func setTabNavigationBar() {
-        let settingButton = UIBarButtonItem(
-            image: UIImage(systemName: "gearshape"),
+    func setTabNavigationBar(_ title: String) {
+        
+        self.navigationController?.navigationBar.topItem?.title = title
+    }
+    
+    func setBackArrowNiavigationBar(_ title: String ) {
+        
+        self.navigationItem.title = title
+        self.navigationItem.hidesBackButton = true
+        
+        let config = UIImage.SymbolConfiguration(weight: .regular)
+        
+        let backButton = UIBarButtonItem(
+            image: UIImage(
+                systemName: "arrow.left",
+                withConfiguration: config)?.withTintColor(.systemPink, renderingMode: .alwaysOriginal),
             style: .done,
             target: self,
-            action: #selector(presentMypageViewController))
+            action: #selector(popNavigationController))
         
-        let AddButton = UIBarButtonItem(
-            image: UIImage(systemName: "plus.circle"),
-            style: .done,
-            target: self,
-            action: #selector(presentInputViewController))
-        
-        settingButton.tintColor = .systemPink
-        AddButton.tintColor = .systemPink
-        
-        self.navigationItem.leftBarButtonItem = settingButton
-        self.navigationItem.rightBarButtonItem = AddButton
+        self.navigationItem.leftBarButtonItem = backButton
     }
     
     @objc func presentInputViewController() {
@@ -59,5 +62,9 @@ extension UIViewController {
         let myPageVC = MyPageViewController()
         
         self.navigationController?.pushViewController(myPageVC, animated: true)
+    }
+    
+    @objc func popNavigationController() {
+        self.navigationController?.popViewController(animated: true)
     }
 }

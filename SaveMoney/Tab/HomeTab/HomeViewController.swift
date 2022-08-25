@@ -13,7 +13,8 @@ class HomeViewController: UIViewController {
 
     let viewModel = HomeViewModel()
     private var tableViewHeightConstraint: NSLayoutConstraint!
-
+    private var lastContentOffset: CGFloat = 0.0
+    
     let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         
@@ -101,11 +102,12 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        setTabNavigationBar()
+        setTabNavigationBar("홈")
         viewModel.retrieve()
         viewModel.setMonthData()
         viewModel.setEachDayDate()
         viewModel.setWeekendDayDate()
+        self.navigationController?.navigationBar.isHidden = true
         configureUI()
     }
     
@@ -193,6 +195,7 @@ class HomeViewController: UIViewController {
         
         tableView.delegate = self
         tableView.dataSource = self
+        scrollView.delegate = self
         
         tableView.invalidateIntrinsicContentSize()
         tableViewHeightConstraint = tableView.heightAnchor.constraint(equalToConstant: 120)
@@ -388,6 +391,19 @@ extension HomeViewController: ExpyTableViewDelegate, ExpyTableViewDataSource {
 
         cell.cellClicked(bool: viewModel.bool[section])
         return cell
+    }
+}
+
+extension HomeViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+
+        if (self.lastContentOffset <= 50) {
+            self.navigationController?.navigationBar.isHidden = true
+        } else {
+            self.navigationController?.navigationBar.isHidden = false
+        }
+
+        self.lastContentOffset = scrollView.contentOffset.y
     }
 }
 class YAxisValueFormatter: ValueFormatter {

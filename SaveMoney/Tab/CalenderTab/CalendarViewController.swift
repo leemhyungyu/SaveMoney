@@ -14,6 +14,7 @@ class CalendarViewController: UIViewController {
     let viewModel = CalendarViewModel()
     private var collectionViewHeightConstraint: NSLayoutConstraint!
     private var calendarViewHegihtconstraint: NSLayoutConstraint!
+    private var lastContentOffset: CGFloat = 0.0
     var layout = UICollectionViewFlowLayout()
     var events: [Date] = []
 
@@ -141,7 +142,7 @@ class CalendarViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setting()
-        setTabNavigationBar()
+        setTabNavigationBar("캘린더")
         viewModel.retrieve()
         setDayData(Date())
         setHeigthConstraint()
@@ -291,7 +292,19 @@ extension CalendarViewController: FSCalendarDelegate, FSCalendarDataSource {
         }
     }
 }
-    
+
+extension CalendarViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+
+        if (self.lastContentOffset <= 50) {
+            self.navigationController?.navigationBar.isHidden = true
+        } else {
+            self.navigationController?.navigationBar.isHidden = false
+        }
+
+        self.lastContentOffset = scrollView.contentOffset.y
+    }
+}
 
 extension CalendarViewController{
     func setting() {
@@ -301,6 +314,8 @@ extension CalendarViewController{
         
         collectionView.delegate = self
         collectionView.dataSource = self
+        
+        scrollView.delegate = self
         
         view.addSubview(scrollView)
         

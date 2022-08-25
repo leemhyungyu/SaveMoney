@@ -47,11 +47,9 @@ class AppTabbarController: UITabBarController {
     func setting() {
         
         let homeVC = UINavigationController(rootViewController: HomeViewController())
-        
         let calendarVC = UINavigationController(rootViewController: CalendarViewController())
-        
         let myPageVC = UINavigationController(rootViewController: MyPageViewController())
-    
+        
         tabBar.tintColor = .systemPink
         tabBar.backgroundColor = .white
         

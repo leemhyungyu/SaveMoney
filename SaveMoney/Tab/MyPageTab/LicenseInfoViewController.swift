@@ -26,6 +26,7 @@ class LicenseInfoViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        setBackArrowNiavigationBar("오픈소스 라이브러리")
         configureUI()
     }
     

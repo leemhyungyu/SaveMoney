@@ -25,16 +25,19 @@ class MyPageViewController: UIViewController {
         
         return tableView
     }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = #colorLiteral(red: 0.9933428168, green: 0.9469488263, blue: 0.9725527167, alpha: 1)
         configureUI()
+        setTabNavigationBar("마이페이지")
     }
     
     func configureUI() {
         
         view.addSubview(tableView)
         
+//        navigationController?.navigationBar.isHidden = true
         tableView.delegate = self
         tableView.dataSource = self
         
@@ -74,10 +77,7 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
             break
         case 3:
             let LicenseVC = LicenseViewController()
-            LicenseVC.modalPresentationStyle = .fullScreen
-            
             navigationController?.pushViewController(LicenseVC, animated: true)
-//            present(LicenseVC, animated: true)
             break
         default:
             break
