@@ -296,13 +296,11 @@ extension CalendarViewController: FSCalendarDelegate, FSCalendarDataSource {
 extension CalendarViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
 
-        if (self.lastContentOffset <= 50) {
-            self.navigationController?.navigationBar.isHidden = true
+        if scrollView.contentOffset.y <= 50 {
+            self.navigationController?.setNavigationBarHidden(true, animated: false)
         } else {
-            self.navigationController?.navigationBar.isHidden = false
+            self.navigationController?.setNavigationBarHidden(false, animated: false)
         }
-
-        self.lastContentOffset = scrollView.contentOffset.y
     }
 }
 

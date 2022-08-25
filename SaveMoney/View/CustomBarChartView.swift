@@ -46,9 +46,10 @@ class CustomBarChartView: BarChartView {
         barChartView.xAxis.labelCount = 12
         barChartView.rightAxis.enabled = false
         barChartView.leftAxis.enabled = false
-        barChartView.doubleTapToZoomEnabled = false
+        barChartView.doubleTapToZoomEnabled = true
         barChartView.legend.enabled = false
         barChartView.xAxis.drawGridLinesEnabled = false
+        barChartView.dragEnabled = false
         barChartView.animate(xAxisDuration: 2.0, yAxisDuration: 2.0)
     }
     

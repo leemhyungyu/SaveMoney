@@ -215,7 +215,7 @@ class HomeViewController: UIViewController {
         mainView.snp.makeConstraints {
             $0.edges.equalTo(scrollView.contentLayoutGuide)
             $0.width.equalTo(scrollView)
-            $0.height.equalTo(930)
+            $0.height.equalTo(1000)
         }
         
         subView.snp.makeConstraints {
@@ -397,15 +397,14 @@ extension HomeViewController: ExpyTableViewDelegate, ExpyTableViewDataSource {
 extension HomeViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
 
-        if (self.lastContentOffset <= 50) {
-            self.navigationController?.navigationBar.isHidden = true
+        if scrollView.contentOffset.y <= 50 {
+            self.navigationController?.setNavigationBarHidden(true, animated: false)
         } else {
-            self.navigationController?.navigationBar.isHidden = false
+            self.navigationController?.setNavigationBarHidden(false, animated: false)
         }
-
-        self.lastContentOffset = scrollView.contentOffset.y
     }
 }
+
 class YAxisValueFormatter: ValueFormatter {
     func stringForValue(_ value: Double, entry: ChartDataEntry, dataSetIndex: Int, viewPortHandler: ViewPortHandler?) -> String {
         
