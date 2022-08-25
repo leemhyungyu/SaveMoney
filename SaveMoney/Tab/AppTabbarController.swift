@@ -55,6 +55,7 @@ class AppTabbarController: UITabBarController {
         
         viewControllers = [homeVC, calendarVC, myPageVC]
         
+        self.selectedIndex = 1
         homeVC.tabBarItem = homeTab
         calendarVC.tabBarItem = calendarTab
         myPageVC.tabBarItem = UserTab
