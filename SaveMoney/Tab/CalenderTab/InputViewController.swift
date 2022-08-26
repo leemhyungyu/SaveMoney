@@ -98,6 +98,12 @@ class InputViewController: UIViewController {
         return label
     }()
     
+    let imaginPickerView: UIPickerView = {
+        let pickerView = UIPickerView()
+        
+        return pickerView
+    }()
+    
     let planPickerView: UIPickerView = {
         
         let pickerView = UIPickerView()
@@ -151,9 +157,11 @@ class InputViewController: UIViewController {
         [label, infoLabel, backBtn] .forEach { subView.addSubview($0) }
 
         [checkBox, checkBoxLabel] .forEach { realView.addSubview($0) }
-        planPickerView.delegate = self
         
-        imaginView.categoriTextField.inputView = planPickerView
+        planPickerView.delegate = self
+        imaginPickerView.delegate = self
+        
+        imaginView.categoriTextField.inputView = imaginPickerView
         imaginView.categoriTextField.inputAccessoryView = toolbar
         realView.categoriTextField.inputView = planPickerView
         realView.categoriTextField.inputAccessoryView = toolbar
@@ -216,6 +224,7 @@ class InputViewController: UIViewController {
 }
 
 extension InputViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+    
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
@@ -231,9 +240,11 @@ extension InputViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
 
-        imaginView.categoriTextField.text = viewModel.categories[row].title
-            
-        realView.categoriTextField.text = viewModel.categories[row].title
+        if pickerView == planPickerView {
+            realView.categoriTextField.text = viewModel.categories[row].title
+        } else if pickerView == imaginPickerView {
+            imaginView.categoriTextField.text = viewModel.categories[row].title
+        }
     }
 }
 
