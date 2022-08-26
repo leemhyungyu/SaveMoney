@@ -22,7 +22,9 @@ class MyPageViewController: UIViewController {
         tableView.layer.shadowOpacity = 0.4
         tableView.layer.cornerRadius = 8
         tableView.isScrollEnabled = false
-        
+        tableView.separatorStyle = .none
+        tableView.backgroundColor = .clear
+
         return tableView
     }()
     
@@ -37,13 +39,12 @@ class MyPageViewController: UIViewController {
         
         view.addSubview(tableView)
         
-//        navigationController?.navigationBar.isHidden = true
         tableView.delegate = self
         tableView.dataSource = self
         
         tableView.snp.makeConstraints {
             $0.top.bottom.equalTo(view.safeAreaLayoutGuide).inset(30)
-            $0.leading.trailing.equalToSuperview().inset(30)
+            $0.leading.trailing.equalToSuperview().inset(10)
         }
     }
 }
@@ -53,6 +54,7 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.numOfCell
     }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: MyPageCell.identifier, for: indexPath) as? MyPageCell else { return UITableViewCell() }
         
@@ -82,5 +84,9 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
         default:
             break
         }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 50
     }
 }

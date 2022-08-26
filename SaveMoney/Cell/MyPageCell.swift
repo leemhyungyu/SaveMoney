@@ -20,6 +20,14 @@ class MyPageCell: UITableViewCell {
         return label
     }()
     
+    var separatorView: UIView = {
+        var view = UIView()
+        
+        view.backgroundColor = .darkGray
+        
+        return view
+    }()
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         configureUI()
@@ -31,10 +39,17 @@ class MyPageCell: UITableViewCell {
     
     func configureUI() {
         addSubview(label)
-        
+        addSubview(separatorView)
+        self.backgroundColor = .clear
         label.snp.makeConstraints {
             $0.centerY.equalToSuperview()
             $0.leading.equalToSuperview().inset(20)
+        }
+        
+        separatorView.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.bottom.equalToSuperview()
+            $0.height.equalTo(1.5)
         }
     }
 }
