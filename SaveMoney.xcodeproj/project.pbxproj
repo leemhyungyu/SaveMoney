@@ -35,7 +35,6 @@
 		2CA1279028A7E92A0058A4F5 /* CustomBarChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA1278F28A7E92A0058A4F5 /* CustomBarChartView.swift */; };
 		2CBCF061289180310016A962 /* DayInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBCF060289180310016A962 /* DayInfo.swift */; };
 		2CBCF063289183CE0016A962 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBCF062289183CE0016A962 /* Date.swift */; };
-		2CBCF065289186640016A962 /* WeekendViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBCF064289186630016A962 /* WeekendViewModel.swift */; };
 		2CBCF067289187F70016A962 /* InputViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBCF066289187F70016A962 /* InputViewModel.swift */; };
 		2CBCF069289278AB0016A962 /* CategoryImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBCF068289278AB0016A962 /* CategoryImage.swift */; };
 		2CBCF06B2893A5D70016A962 /* Function.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBCF06A2893A5D70016A962 /* Function.swift */; };
@@ -50,7 +49,6 @@
 		2CD7F8DC285F3D5100E5C446 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD7F8DB285F3D5100E5C446 /* CalendarViewController.swift */; };
 		2CD7F8DE285F3DFD00E5C446 /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD7F8DD285F3DFD00E5C446 /* MyPageViewController.swift */; };
 		2CD7F8E1285F574800E5C446 /* MainCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD7F8E0285F574800E5C446 /* MainCell.swift */; };
-		2CD7F8E42860755800E5C446 /* WeekendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD7F8E32860755800E5C446 /* WeekendViewController.swift */; };
 		2CD7F8E728607A8400E5C446 /* CalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD7F8E628607A8400E5C446 /* CalendarViewModel.swift */; };
 		2CD7F8EB2861F48300E5C446 /* InputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD7F8EA2861F48300E5C446 /* InputViewController.swift */; };
 		2CD7F8F52868685C00E5C446 /* SaveCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD7F8F42868685C00E5C446 /* SaveCell.swift */; };
@@ -106,7 +104,6 @@
 		2CA1278F28A7E92A0058A4F5 /* CustomBarChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBarChartView.swift; sourceTree = "<group>"; };
 		2CBCF060289180310016A962 /* DayInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayInfo.swift; sourceTree = "<group>"; };
 		2CBCF062289183CE0016A962 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
-		2CBCF064289186630016A962 /* WeekendViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekendViewModel.swift; sourceTree = "<group>"; };
 		2CBCF066289187F70016A962 /* InputViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputViewModel.swift; sourceTree = "<group>"; };
 		2CBCF068289278AB0016A962 /* CategoryImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryImage.swift; sourceTree = "<group>"; };
 		2CBCF06A2893A5D70016A962 /* Function.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Function.swift; sourceTree = "<group>"; };
@@ -125,7 +122,6 @@
 		2CD7F8DB285F3D5100E5C446 /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
 		2CD7F8DD285F3DFD00E5C446 /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
 		2CD7F8E0285F574800E5C446 /* MainCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCell.swift; sourceTree = "<group>"; };
-		2CD7F8E32860755800E5C446 /* WeekendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekendViewController.swift; sourceTree = "<group>"; };
 		2CD7F8E628607A8400E5C446 /* CalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewModel.swift; sourceTree = "<group>"; };
 		2CD7F8EA2861F48300E5C446 /* InputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputViewController.swift; sourceTree = "<group>"; };
 		2CD7F8F42868685C00E5C446 /* SaveCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveCell.swift; sourceTree = "<group>"; };
@@ -188,7 +184,6 @@
 			isa = PBXGroup;
 			children = (
 				2CD7F8DB285F3D5100E5C446 /* CalendarViewController.swift */,
-				2CD7F8E32860755800E5C446 /* WeekendViewController.swift */,
 				2CD7F8EA2861F48300E5C446 /* InputViewController.swift */,
 			);
 			path = CalenderTab;
@@ -318,7 +313,6 @@
 			isa = PBXGroup;
 			children = (
 				2CD7F8E628607A8400E5C446 /* CalendarViewModel.swift */,
-				2CBCF064289186630016A962 /* WeekendViewModel.swift */,
 				2CBCF066289187F70016A962 /* InputViewModel.swift */,
 				2C192A3E28A5046C00199B64 /* HomeViewModel.swift */,
 				2C63870328A6613A00BF8B01 /* MyPageViewModel.swift */,
@@ -605,7 +599,6 @@
 				2C89547928B142C300AF5EB7 /* LicenseCell.swift in Sources */,
 				2CD7F8DC285F3D5100E5C446 /* CalendarViewController.swift in Sources */,
 				2C2A6D4C28917DDC000F7150 /* SaveManager.swift in Sources */,
-				2CD7F8E42860755800E5C446 /* WeekendViewController.swift in Sources */,
 				2C63870228A65ECC00BF8B01 /* MyPageCell.swift in Sources */,
 				2C2A6D4F28917E48000F7150 /* Save.swift in Sources */,
 				2C192A3F28A5046C00199B64 /* HomeViewModel.swift in Sources */,
@@ -613,7 +606,6 @@
 				2CD7F8E728607A8400E5C446 /* CalendarViewModel.swift in Sources */,
 				2CD7F8B0285F390300E5C446 /* SaveMoney.xcdatamodeld in Sources */,
 				2C63870628A6712000BF8B01 /* Warning.swift in Sources */,
-				2CBCF065289186640016A962 /* WeekendViewModel.swift in Sources */,
 				2CA1279028A7E92A0058A4F5 /* CustomBarChartView.swift in Sources */,
 				2C89547328AD480300AF5EB7 /* MaxSaveCell.swift in Sources */,
 				2C58F31F289AD1D40046676C /* Alert.swift in Sources */,

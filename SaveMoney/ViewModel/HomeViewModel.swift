@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import RealmSwift
 
 class HomeViewModel {
     
@@ -13,8 +14,8 @@ class HomeViewModel {
     
     var HomeCellData: [Home] = [.total, .month, .week]
     
-    var save: [Save] {
-        return saveManager.saves
+    var save: Results<Save> {
+        return saveManager.saves!
     }
     
     var saveOfDay: [Save] {

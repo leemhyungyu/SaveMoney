@@ -8,6 +8,7 @@
 import UIKit
 import Charts
 import ExpyTableView
+import RealmSwift
 
 class HomeViewController: UIViewController {
 
@@ -109,6 +110,7 @@ class HomeViewController: UIViewController {
         viewModel.setWeekendDayDate()
         self.navigationController?.navigationBar.isHidden = true
         configureUI()
+        print(Realm.Configuration.defaultConfiguration.fileURL!)
     }
     
     override func viewWillAppear(_ animated: Bool) {

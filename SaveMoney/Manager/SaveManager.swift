@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import RealmSwift
 
 class SaveManager {
     
@@ -13,7 +14,10 @@ class SaveManager {
     
     private init () { }
     
-    var saves = [Save]()
+    let realm = try! Realm()
+    
+    var saves: Results<Save>?
+//    var saves = [Save]()
     var eventDay = [Date]()
     var saveOfDay = [Save]()
     var totalMoney: Int = 0
@@ -25,10 +29,10 @@ class SaveManager {
         
         var nextId: Int = 0
         
-        if saves.count == 0 {
+        if saves!.count == 0 {
             nextId = nextId + 1
         } else {
-            nextId = saves[saves.index(before: saves.endIndex)].id + 1
+            nextId = saves![saves!.index(before: saves!.endIndex)].id + 1
         }
         
         let saveMoney = Int(planMoney)! - Int(finalMoney)!
@@ -37,61 +41,95 @@ class SaveManager {
     }
     
     func addSave(save: Save) {
-        saves.append(save)
+//        saves.append(save)
+        
+        try! realm.write {
+            realm.add(save)
+        }
+        
         totalMoney += Int(save.saveMoney)!
         setMonthMoneyData(save: save)
-        saveStruct()
+        UserDefaults.standard.set(totalMoney, forKey: "totalMoney")
     }
 
 
     func deleteSave(save: Save, index: Int) {
-        saves = saves.filter { $0.id != save.id}
+                
         totalMoney -= Int(saveOfDay[index].saveMoney)!
         saveOfDay.remove(at: index)
         deleteMonthMoneyData(save: save)
+
+        UserDefaults.standard.set(totalMoney, forKey: "totalMoney")
+        
+        let selectData = realm.objects(Save.self).filter(NSPredicate(format: "id == %d", save.id)).first
+        
+        do {
+            try realm.write {
+                realm.delete(selectData!)
+            }
+        } catch {
+            print(error.localizedDescription)
+        }
+        
         eventDay = setEventDay()
-        saveStruct()
     }
     
     
     func saveOfSelectedDay(date: String) {
-        self.saveOfDay = saves.filter { $0.day == date }
+        self.saveOfDay = saves!.filter { $0.day == date }
     }
     
     func returnSaveOfSelectedDay(date: String) -> [Save] {
-        return saves.filter { $0.day == date }
+        return saves!.filter { $0.day == date }
     }
-    
     
     
     func saveStruct() {
-        UserDefaults.standard.set(try? PropertyListEncoder().encode(saves), forKey: "Saves")
-        UserDefaults.standard.set(totalMoney, forKey: "totalMoney")
+//        UserDefaults.standard.set(try? PropertyListEncoder().encode(saves), forKey: "Saves")
+//        UserDefaults.standard.set(totalMoney, forKey: "totalMoney")
     }
    
     func retrieveSave() {
-        guard let data = UserDefaults.standard.data(forKey: "Saves") else { return }
-        saves = (try? PropertyListDecoder().decode([Save].self, from: data))!
+//        guard let data = UserDefaults.standard.data(forKey: "Saves") else { return }
+//        saves = (try? PropertyListDecoder().decode([Save].self, from: data))!
+        
+        do {
+            try realm.write {
+                self.saves = realm.objects(Save.self)
+            }
+        } catch {
+            print(error.localizedDescription)
+        }
+        
         totalMoney = UserDefaults.standard.integer(forKey: "totalMoney")
     }
     
     func setEventDay() -> [Date]{
+
         var result = [String]()
         eventDay = []
 
-        self.saves.map {
-            if result.contains($0.day) == false {
-                result.append($0.day)
+        if saves!.count >= 1 {
+            for i in 0...saves!.count - 1 {
+                if result.contains(saves![i].day) == false {
+                    result.append(saves![i].day)
+                }
             }
-        }
+            
+            // 2022-08-25
+            
+            for i in result {
+                if eventDay.contains(getDateToString(text: i)!) == false {
+                    self.eventDay.append(getDateToString(text: i)!)
+                }
+            }
         
-        for i in result {
-            if eventDay.contains(getDateToString(text: i)!) == false {
-                self.eventDay.append(getDateToString(text: i)!)
-            }
+            return self.eventDay
+        } else {
+            return []
         }
-    
-        return self.eventDay
+                
+        
     }
     
     func addEventDay(date: String) {
@@ -116,7 +154,6 @@ class SaveManager {
         for i in (1...7).reversed() {
             let date = Date(timeIntervalSinceNow: -Double((86400 * (i - 1))))
             
-            print(getStringToDate(date: date))
             eachDayAndMoney[getStringToDate(date: date)] = Double(totalMoneyOfDate(date: date))
         }
     }
@@ -177,13 +214,20 @@ class SaveManager {
     }
     
     func initializationAllData() {
-        saves = [Save]()
         eventDay = [Date]()
         saveOfDay = [Save]()
         totalMoney = 0
         monthMoney = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         eachDayAndMoney = [String: Double]()
-        UserDefaults.standard.set(try? PropertyListEncoder().encode([Save]()), forKey: "Saves")
         UserDefaults.standard.set(0, forKey: "totalMoney")
+        
+        do {
+            try realm.write {
+                realm.delete(realm.objects(Save.self))
+            }
+        } catch {
+            print(error.localizedDescription)
+        }
+        
     }
 }

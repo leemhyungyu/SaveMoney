@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import RealmSwift
 
 class InputViewModel {
     
@@ -20,8 +21,8 @@ class InputViewModel {
     
     var date: Date?
     
-    var saves: [Save] {
-        return saveManager.saves
+    var saves: Results<Save> {
+        return saveManager.saves!
     }
     
     var eventDay: [Date] {

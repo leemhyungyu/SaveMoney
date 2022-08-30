@@ -152,6 +152,7 @@ class CalendarViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        print("viewWillWpare호출")
         viewModel.retrieve()
         reloadMainData()
     }
@@ -421,12 +422,5 @@ extension CalendarViewController{
         
         InputVC.modalPresentationStyle = .fullScreen
         present(InputVC, animated: true, completion: nil)
-    }
-}
-
-extension CalendarViewController: SendDataDelegate {
-    func sendData(data: Date) {
-        calendar.select(data)
-        label.text = viewModel.selectedDay(data)
     }
 }

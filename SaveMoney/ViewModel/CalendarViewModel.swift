@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 class CalendarViewModel {
     let saveManager = SaveManager.shared
@@ -17,8 +18,8 @@ class CalendarViewModel {
     
     var todaySaveMoney: Int?
     
-    var save: [Save] {
-        return saveManager.saves
+    var save: Results<Save> {
+        return saveManager.saves!
     }
 
     var eventDay: [Date] {
@@ -83,6 +84,7 @@ class CalendarViewModel {
         for i in saves {
             result = result + Int(i.saveMoney)!
         }
+        
         return result
     }
 }
