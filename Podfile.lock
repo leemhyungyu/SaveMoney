@@ -5,6 +5,11 @@ PODS:
     - SwiftAlgorithms (~> 1.0)
   - ExpyTableView (1.2.1)
   - FSCalendar (2.8.4)
+  - Realm (10.28.6):
+    - Realm/Headers (= 10.28.6)
+  - Realm/Headers (10.28.6)
+  - RealmSwift (10.28.6):
+    - Realm (= 10.28.6)
   - SnapKit (5.6.0)
   - SwiftAlgorithms (1.0.0)
   - SwiftMessages (9.0.6):
@@ -15,6 +20,7 @@ DEPENDENCIES:
   - Charts
   - ExpyTableView
   - FSCalendar
+  - RealmSwift
   - SnapKit
   - SwiftMessages
 
@@ -23,6 +29,8 @@ SPEC REPOS:
     - Charts
     - ExpyTableView
     - FSCalendar
+    - Realm
+    - RealmSwift
     - SnapKit
     - SwiftAlgorithms
     - SwiftMessages
@@ -31,10 +39,12 @@ SPEC CHECKSUMS:
   Charts: d959d6723c8eedfdd0735dfc28cb0a71762ac4d9
   ExpyTableView: 19cf224c2ff04b1ec215ec52bc4ba6f81fa809ed
   FSCalendar: 2d1d0d9398f12d439f55c1fe0f01525b151b8260
+  Realm: 9b12f16a14446d7d46a9e36225d0a0332a6ec739
+  RealmSwift: 5927726fce21005f43b1fb57c832297a22031bfc
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
   SwiftAlgorithms: 38dda4731d19027fdeee1125f973111bf3386b53
   SwiftMessages: f0c7ef4705a570ad6c5e208b611f4333e660ed92
 
-PODFILE CHECKSUM: 568f208bdc32143e7c3954ad1f8653f1b37a38a9
+PODFILE CHECKSUM: 2bcd976189c0074724430a3dc4bf1fa0c097b6b7
 
 COCOAPODS: 1.11.3
