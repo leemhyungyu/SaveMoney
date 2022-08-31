@@ -154,6 +154,7 @@ class MaxSaveCell: UITableViewCell {
     }
     
     func upDateUI(save: Save) {
+        infoLabel.text = "최고 절약 정보 " + "(" + save.day + ")"
         categoryLabel.text = "카테고리: " + save.category
         planNameLabel.text = "물품: " + save.planName
         finalNameLabel.text = save.finalName

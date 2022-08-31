@@ -40,7 +40,7 @@ class CustomBarChartView: BarChartView {
         
         barChartView.backgroundColor = .white
         barChartView.xAxis.labelPosition = .bottom
-        barChartView.xAxis.labelFont = .systemFont(ofSize: 16)
+        barChartView.xAxis.labelFont = .systemFont(ofSize: 14)
         barChartView.xAxis.axisLineColor = .black
         barChartView.xAxis.granularity = 1
         barChartView.xAxis.labelCount = 12

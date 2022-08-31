@@ -242,15 +242,18 @@ class HomeViewController: UIViewController {
         }
 
         dayBarChartView.snp.makeConstraints {
-            $0.top.leading.trailing.bottom.equalToSuperview().inset(10)
+            $0.top.leading.trailing.equalToSuperview()
+            $0.bottom.equalToSuperview().inset(10)
         }
 
         weekBarChartView.snp.makeConstraints {
-            $0.top.leading.trailing.bottom.equalToSuperview().inset(10)
+            $0.top.leading.trailing.equalToSuperview()
+            $0.bottom.equalToSuperview().inset(10)
         }
         
         monthBarChartView.snp.makeConstraints {
-            $0.top.leading.trailing.bottom.equalToSuperview().inset(10)
+            $0.top.leading.trailing.equalToSuperview()
+            $0.bottom.equalToSuperview().inset(10)
         }
         
         tableView.snp.makeConstraints {

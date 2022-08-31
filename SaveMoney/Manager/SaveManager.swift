@@ -17,7 +17,6 @@ class SaveManager {
     let realm = try! Realm()
     
     var saves: Results<Save>?
-//    var saves = [Save]()
     var eventDay = [Date]()
     var saveOfDay = [Save]()
     var totalMoney: Int = 0
@@ -41,7 +40,6 @@ class SaveManager {
     }
     
     func addSave(save: Save) {
-//        saves.append(save)
         
         try! realm.write {
             realm.add(save)
@@ -85,13 +83,11 @@ class SaveManager {
     
     
     func saveStruct() {
-//        UserDefaults.standard.set(try? PropertyListEncoder().encode(saves), forKey: "Saves")
-//        UserDefaults.standard.set(totalMoney, forKey: "totalMoney")
+
     }
    
     func retrieveSave() {
-//        guard let data = UserDefaults.standard.data(forKey: "Saves") else { return }
-//        saves = (try? PropertyListDecoder().decode([Save].self, from: data))!
+
         
         do {
             try realm.write {
@@ -115,9 +111,7 @@ class SaveManager {
                     result.append(saves![i].day)
                 }
             }
-            
-            // 2022-08-25
-            
+                        
             for i in result {
                 if eventDay.contains(getDateToString(text: i)!) == false {
                     self.eventDay.append(getDateToString(text: i)!)
