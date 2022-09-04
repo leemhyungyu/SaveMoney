@@ -32,4 +32,20 @@ enum Category: CaseIterable {
         }
     }
     
+    var imageView: UIImage {
+        switch self {
+        case .food:
+            return UIImage(systemName: "fork.knife")!
+        case .transportation:
+            return UIImage(systemName: "car.fill")!
+        case .hobby:
+            return UIImage(systemName: "gamecontroller.fill")!
+        case .life:
+            return UIImage(systemName: "figure.walk")!
+        case .coffee:
+            return UIImage(systemName: "cup.and.saucer.fill")!
+        case .etc:
+            return UIImage(systemName: "car.fill")!
+        }
+    }
 }

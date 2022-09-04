@@ -119,8 +119,12 @@ class InputViewController: UIViewController {
         toolbar.sizeToFit()
         
         let doneBtn = UIBarButtonItem(title: "확인", style: .done, target: self, action: #selector(doneBtnOfToolbarClicked))
+        
         let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
         let cancleBtn = UIBarButtonItem(title: "취소", style: .done, target: self, action: #selector(cancleBtnOfToolbarClicked))
+        
+        doneBtn.tintColor = .systemPink
+        cancleBtn.tintColor = .systemPink
         
         toolbar.setItems([cancleBtn, space, doneBtn], animated: true)
         toolbar.isUserInteractionEnabled = true
@@ -143,7 +147,7 @@ class InputViewController: UIViewController {
         
         return btn
     }()
-            
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -153,19 +157,22 @@ class InputViewController: UIViewController {
     func setting() {
         view.backgroundColor = #colorLiteral(red: 0.9933428168, green: 0.9469488263, blue: 0.9725527167, alpha: 1)
         viewModel.checkBoxData = false
+        
         [subView, doneBtn, segmentedControl, imaginView, realView] .forEach { view.addSubview($0) }
         [label, infoLabel, backBtn] .forEach { subView.addSubview($0) }
-
         [checkBox, checkBoxLabel] .forEach { realView.addSubview($0) }
-        
+    
         planPickerView.delegate = self
         imaginPickerView.delegate = self
         
         imaginView.categoriTextField.inputView = imaginPickerView
         imaginView.categoriTextField.inputAccessoryView = toolbar
+        imaginPickerView.backgroundColor = .white
+        
         realView.categoriTextField.inputView = planPickerView
         realView.categoriTextField.inputAccessoryView = toolbar
-                
+        planPickerView.backgroundColor = .white
+        
         subView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.trailing.leading.equalToSuperview()
@@ -228,14 +235,24 @@ extension InputViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
+  
+    func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
+        return 45
+    }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         
         return viewModel.categories.count
     }
-    
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return viewModel.categories[row].title
+
+    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
+
+
+        let view = CustomPickerView(pickerLabel: viewModel.categories[row].title, pickerImage: viewModel.categories[row].imageView)
+
+        view.frame = CGRect(x: 0, y: 0, width: 200, height: 60)
+        
+        return view
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
