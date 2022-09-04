@@ -273,8 +273,17 @@ extension InputViewController {
     }
     
     @objc func cancleBtnOfToolbarClicked() {
-        imaginView.categoriTextField.resignFirstResponder()
-        realView.categoriTextField.resignFirstResponder()
+
+        switch segmentedControl.selectedSegmentIndex {
+        case 0: // 상상
+            imaginView.categoriTextField.resignFirstResponder()
+            imaginView.categoriTextField.text = ""
+        case 1: // 현실
+            realView.categoriTextField.resignFirstResponder()
+            realView.categoriTextField.text = ""
+        default:
+            return
+        }
     }
     
     @objc func backBtnClicked(_ sender: UITapGestureRecognizer) {
