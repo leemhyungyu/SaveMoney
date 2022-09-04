@@ -173,7 +173,7 @@ class InputViewController: UIViewController {
         }
         
         backBtn.snp.makeConstraints {
-            $0.top.equalToSuperview()
+            $0.centerY.equalTo(label)
             $0.leading.equalToSuperview().offset(5)
         }
         
