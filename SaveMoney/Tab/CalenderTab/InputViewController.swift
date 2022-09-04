@@ -139,7 +139,7 @@ class InputViewController: UIViewController {
         config.imagePadding = 10
         
         var titleAttr = AttributedString.init("완료")
-        titleAttr.font = .systemFont(ofSize: 16)
+        titleAttr.font = .systemFont(ofSize: 16, weight: .semibold)
         config.attributedTitle = titleAttr
         
         let btn = UIButton(configuration: config)
@@ -154,6 +154,16 @@ class InputViewController: UIViewController {
         setting()
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        imaginView.nameTextField.resignFirstResponder()
+        imaginView.moneyTextField.resignFirstResponder()
+        imaginView.categoriTextField.resignFirstResponder()
+        
+        realView.nameTextField.resignFirstResponder()
+        realView.moneyTextField.resignFirstResponder()
+        realView.categoriTextField.resignFirstResponder()
+    }
+    
     func setting() {
         view.backgroundColor = #colorLiteral(red: 0.9933428168, green: 0.9469488263, blue: 0.9725527167, alpha: 1)
         viewModel.checkBoxData = false
@@ -164,6 +174,10 @@ class InputViewController: UIViewController {
     
         planPickerView.delegate = self
         imaginPickerView.delegate = self
+        imaginView.moneyTextField.delegate = self
+        imaginView.nameTextField.delegate = self
+        realView.moneyTextField.delegate = self
+        realView.nameTextField.delegate = self
         
         imaginView.categoriTextField.inputView = imaginPickerView
         imaginView.categoriTextField.inputAccessoryView = toolbar
@@ -356,5 +370,14 @@ extension InputViewController {
         viewModel.addSave(save: save)
         viewModel.addEventDay(save: save)
         viewModel.addSelectedDay(save: save)
+    }
+}
+
+extension InputViewController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        print("클릭")
+        textField.resignFirstResponder()
+        return true
     }
 }
