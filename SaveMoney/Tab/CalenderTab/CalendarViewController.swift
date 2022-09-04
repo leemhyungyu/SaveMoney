@@ -154,6 +154,8 @@ class CalendarViewController: UIViewController {
         super.viewWillAppear(true)
         viewModel.retrieve()
         reloadMainData()
+        self.tabBarController?.tabBar.isHidden = false
+
     }
         
     override func viewWillLayoutSubviews() {
@@ -212,6 +214,7 @@ class CalendarViewController: UIViewController {
     }
     
     func reloadMainData() {
+        
         collectionView.reloadData()
         calendar.reloadData()
         totalSaveMoney.text = "절약한 돈: " + viewModel.calTodaySaveMoney()
@@ -419,7 +422,8 @@ extension CalendarViewController{
         viewModel.inputViewModel.date = viewModel.date
         InputVC.label.text = getMonthAndDayForString(date: viewModel.date!)
         
-//        InputVC.modalPresentationStyle = .
-        present(InputVC, animated: true, completion: nil)
+        self.navigationController?.pushViewController(InputVC, animated: true)
+//        InputVC.modalPresentationStyle = .fullScreen
+//        present(InputVC, animated: true, completion: nil)
     }
 }

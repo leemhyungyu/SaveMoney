@@ -29,11 +29,6 @@ extension UIViewController {
         SwiftMessages.show(config: config, view: warningView)
     }
     
-    func setTabNavigationBar(_ title: String) {
-        
-        self.navigationController?.navigationBar.topItem?.title = title
-    }
-    
     func setBackArrowNiavigationBar(_ title: String ) {
         
         self.navigationItem.title = title
@@ -66,5 +61,13 @@ extension UIViewController {
     
     @objc func popNavigationController() {
         self.navigationController?.popViewController(animated: true)
+    }
+}
+
+extension UIViewController: UIGestureRecognizerDelegate {
+    func setTabNavigationBar(_ title: String) {
+        
+        self.navigationController?.navigationBar.topItem?.title = title
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
     }
 }

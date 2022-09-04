@@ -64,19 +64,6 @@ class InputViewController: UIViewController {
         return control
     }()
     
-    lazy var backBtn: UIButton = {
-        var config = UIButton.Configuration.plain()
-        config.baseForegroundColor = .systemPink
-        config.image = UIImage(systemName: "arrow.left")
-        config.imagePadding = 10
-        
-        let btn = UIButton(configuration: config)
-        btn.addTarget(self, action: #selector(backBtnClicked(_:)), for: .touchUpInside)
-        
-        return btn
-    }()
-    
-    
     lazy var label: UILabel = {
        
         let label = UILabel()
@@ -167,9 +154,11 @@ class InputViewController: UIViewController {
     func setting() {
         view.backgroundColor = #colorLiteral(red: 0.9933428168, green: 0.9469488263, blue: 0.9725527167, alpha: 1)
         viewModel.checkBoxData = false
-        
+        self.tabBarController?.tabBar.isHidden = true
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
+        setBackArrowNiavigationBar("절약하기")
         [subView, doneBtn, segmentedControl, imaginView, realView] .forEach { view.addSubview($0) }
-        [label, infoLabel, backBtn] .forEach { subView.addSubview($0) }
+        [label, infoLabel] .forEach { subView.addSubview($0) }
         [checkBox, checkBoxLabel] .forEach { realView.addSubview($0) }
     
         planPickerView.delegate = self
@@ -192,12 +181,7 @@ class InputViewController: UIViewController {
             $0.trailing.leading.equalToSuperview()
             $0.height.equalTo(100)
         }
-        
-        backBtn.snp.makeConstraints {
-            $0.centerY.equalTo(label)
-            $0.leading.equalToSuperview().offset(5)
-        }
-        
+
         label.snp.makeConstraints {
             $0.top.equalToSuperview().inset(20)
             $0.centerX.equalToSuperview()
@@ -300,10 +284,6 @@ extension InputViewController {
         }
     }
     
-    @objc func backBtnClicked(_ sender: UITapGestureRecognizer) {
-        dismiss(animated: true)
-    }
-    
     @objc func doneBtnClicked(_ sender: UITapGestureRecognizer) {
 
         guard let planName = imaginView.nameTextField.text, let planMoney = imaginView.moneyTextField.text, let category = imaginView.categoriTextField.text, let finalName = realView.nameTextField.text, let finalMoney = realView.moneyTextField.text else { return }
@@ -345,6 +325,10 @@ extension InputViewController {
         
         if checkBox.isSelected == true {
             viewModel.checkBoxData = true
+            
+            realView.categoriTextField.text = ""
+            realView.moneyTextField.text = ""
+            realView.nameTextField.text = ""
             realView.categoriTextField.backgroundColor = .systemGray5
             realView.moneyTextField.backgroundColor = .systemGray5
             realView.nameTextField.backgroundColor = .systemGray5
