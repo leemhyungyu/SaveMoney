@@ -5,6 +5,7 @@
 //  Created by 임현규 on 2022/07/29.
 //
 import Foundation
+import UIKit
 
 // 문자열을 입력받아 천단위로 ','넣고 '원' 붙혀주는 함수
 func setStringForWon(_ text: String) -> String {
@@ -45,4 +46,26 @@ func setInForCommaMinus(_ text: Int) -> String {
     return "-" + result
 }
 
-// 동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라 만세 무궁화 
+func setCategoryImage(_ save: Save) -> UIImage {
+    if save.category == "교통비" {
+        return UIImage(systemName: "car.fill")!
+    } else if save.category == "음식" {
+        return UIImage(systemName: "fork.knife")!
+    } else if save.category == "취미" {
+        return UIImage(systemName: "gamecontroller.fill")!
+    } else if save.category == "커피" {
+        return UIImage(systemName: "cup.and.saucer.fill")!
+    } else if save.category == "생활" {
+        return UIImage(systemName: "figure.walk")!
+    } else if save.category == "기타" {
+        return UIImage(systemName: "wrench.and.screwdriver.fill")!
+    } else if save.category == "의류" {
+        return UIImage(systemName: "tshrit.fill")!
+    } else if save.category == "교육" {
+        return UIImage(systemName: "book.fill")!
+    } else if save.category == "저축" {
+        return UIImage(systemName: "banknote.fill")!
+    } else {
+        return UIImage()
+    }
+}

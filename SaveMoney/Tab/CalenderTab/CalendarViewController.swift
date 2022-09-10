@@ -253,7 +253,14 @@ extension CalendarViewController: UICollectionViewDelegate, UICollectionViewData
             }
             return cell
         }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let DetailVC = DetailViewController()
         
+        DetailVC.detailView.setView(save: viewModel.saveOfDay[indexPath.row])
+        
+        self.navigationController?.pushViewController(DetailVC, animated: true)
     }
 }
 

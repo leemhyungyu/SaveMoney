@@ -131,35 +131,12 @@ class MainCell: UICollectionViewCell {
     }
     
     func updateUI(save: Save) {
-        categoryimage.image = setCategoryImage(title: save.category)
+        categoryimage.image = setCategoryImage(save)
         planNameLabel.text = save.planName
         finalNameLabel.text = save.finalName
         saveMoneyLabel.text = setStringForWon(save.saveMoney)
     }
-    
-    func setCategoryImage(title: String) -> UIImage {
-        if title == "교통" {
-            return UIImage(systemName: "car.fill")!
-        } else if title == "음식" {
-            return UIImage(systemName: "fork.knife")!
-        } else if title == "취미" {
-            return UIImage(systemName: "gamecontroller.fill")!
-        } else if title == "커피" {
-            return UIImage(systemName: "cup.and.saucer.fill")!
-        } else if title == "생활" {
-            return UIImage(systemName: "figure.walk")!
-        } else if title == "기타" {
-            return UIImage(systemName: "wrench.and.screwdriver.fill")!
-        } else if title == "의류" {
-            return UIImage(systemName: "tshrit.fill")!
-        } else if title == "교육" {
-            return UIImage(systemName: "book.fill")!
-        } else if title == "저축" {
-            return UIImage(systemName: "banknote.fill")!
-        } else {
-            return UIImage()
-        }
-    }
+
     
     @objc func cancleBtnClicked() {
         if let cancleButtonClosure = cancleButtonClosure {
