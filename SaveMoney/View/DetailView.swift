@@ -32,6 +32,8 @@ class DetailView: UIView {
         let button = UIButton(configuration: configure)
         button.tintColor = .systemPink
         
+        button.addTarget(self, action: #selector(deleteButtonClicked), for: .touchUpInside)
+        
         return button
     }()
     
@@ -42,6 +44,7 @@ class DetailView: UIView {
         let button = UIButton(configuration: configure)
         button.tintColor = .systemPink
         
+        button.addTarget(self, action: #selector(changeButtonClicked), for: .touchUpInside)
         return button
     }()
     
@@ -54,95 +57,35 @@ class DetailView: UIView {
         return label
     }()
     
-    var realNameTitleLabel: UILabel = {
-        var label = UILabel()
+    var imaginNameLabelView: DetailLabelView = {
+        var view = DetailLabelView()
         
-        label.text = "실제 구매 물품"
-        label.font = .systemFont(ofSize: 18)
-        label.textColor = .systemGray2
-
-        return label
+        return view
     }()
     
-    var realNameLabel: UILabel = {
-        var label = UILabel()
+    var imaginMoneyLabelVIew: DetailLabelView = {
+        var view = DetailLabelView()
         
-        label.font = .systemFont(ofSize: 18)
-        
-        return label
+        return view
     }()
     
-    var imaginNameTitleLabel: UILabel = {
-        var label = UILabel()
+    var realNameLabelView: DetailLabelView = {
+        var view = DetailLabelView()
         
-        label.text = "상상 구매 물품"
-        label.font = .systemFont(ofSize: 18)
-        label.textColor = .systemGray2
-        
-        return label
+        return view
     }()
     
-    var imaginNameLabel: UILabel = {
-        var label = UILabel()
+    var realMoneyLabelView: DetailLabelView = {
+        var view = DetailLabelView()
         
-        label.font = .systemFont(ofSize: 18)
-        
-        return label
+        return view
     }()
     
-    var imaginMoneyTitleLabel: UILabel = {
-        var label = UILabel()
+    var SaveMoneyLabelView: DetailLabelView = {
+        var view = DetailLabelView()
         
-        label.text = "상상 구매 가격"
-        label.font = .systemFont(ofSize: 18)
-        label.textColor = .systemGray2
-        
-        return label
+        return view
     }()
-    
-    var imaginMoneyLabel: UILabel = {
-        var label = UILabel()
-        
-        label.font = .systemFont(ofSize: 18)
-        
-        return label
-    }()
-    
-    var realMoneyTitleLabel: UILabel = {
-        var label = UILabel()
-        
-        label.text = "실제 구매 가격"
-        label.font = .systemFont(ofSize: 18)
-        label.textColor = .systemGray2
-        
-        return label
-    }()
-    
-    var realMoneyLabel: UILabel = {
-        var label = UILabel()
-        
-        label.font = .systemFont(ofSize: 18)
-        
-        return label
-    }()
-    var saveTitleLabel: UILabel = {
-        var label = UILabel()
-        
-        label.text = "절약한 금액"
-        label.font = .systemFont(ofSize: 18)
-        label.textColor = .systemGray2
-        
-        return label
-    }()
-    
-    var saveMoneyLabel: UILabel = {
-        var label = UILabel()
-        
-        label.font = .systemFont(ofSize: 18)
-        
-        return label
-    }()
-    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -156,8 +99,8 @@ class DetailView: UIView {
     func configureUI() {
         
         backgroundColor = .white
-        
-        [categoryImage, categoryLabel, deleteButton, changeButton, dayLabel, imaginNameTitleLabel, imaginNameLabel, realNameTitleLabel, realNameLabel, imaginMoneyTitleLabel, imaginMoneyLabel, realMoneyTitleLabel, realMoneyLabel, saveTitleLabel, saveMoneyLabel] .forEach { addSubview($0) }
+
+        [categoryImage, categoryLabel, deleteButton, changeButton, dayLabel, imaginNameLabelView, imaginMoneyLabelVIew, realNameLabelView, realMoneyLabelView, SaveMoneyLabelView] .forEach { addSubview($0) }
         
         categoryImage.snp.makeConstraints {
             $0.centerX.equalToSuperview()
@@ -185,55 +128,35 @@ class DetailView: UIView {
             $0.top.equalTo(deleteButton)
             $0.leading.equalToSuperview().inset(10)
         }
-        
-        imaginNameTitleLabel.snp.makeConstraints {
+
+        imaginNameLabelView.snp.makeConstraints {
             $0.top.equalTo(categoryLabel.snp.bottom).offset(30)
-            $0.leading.equalToSuperview().inset(10)
+            $0.leading.trailing.equalToSuperview().inset(50)
+            $0.height.equalTo(20)
         }
         
-        imaginNameLabel.snp.makeConstraints {
-            $0.top.equalTo(categoryLabel.snp.bottom).offset(30)
-            $0.leading.equalTo(imaginNameTitleLabel.snp.trailing).offset(20)
+        imaginMoneyLabelVIew.snp.makeConstraints {
+            $0.top.equalTo(imaginNameLabelView.snp.bottom).offset(10)
+            $0.leading.trailing.equalToSuperview().inset(50)
+            $0.height.equalTo(20)
         }
         
-        imaginMoneyTitleLabel.snp.makeConstraints {
-            $0.top.equalTo(imaginNameTitleLabel.snp.bottom).offset(10)
-            $0.leading.equalToSuperview().inset(10)
+        realNameLabelView.snp.makeConstraints {
+            $0.top.equalTo(imaginMoneyLabelVIew.snp.bottom).offset(10)
+            $0.leading.trailing.equalToSuperview().inset(50)
+            $0.height.equalTo(20)
         }
         
-        imaginMoneyLabel.snp.makeConstraints {
-            $0.top.equalTo(imaginNameTitleLabel.snp.bottom).offset(10)
-            $0.leading.equalTo(realNameTitleLabel.snp.trailing).offset(20)
+        realMoneyLabelView.snp.makeConstraints {
+            $0.top.equalTo(realNameLabelView.snp.bottom).offset(10)
+            $0.leading.trailing.equalToSuperview().inset(50)
+            $0.height.equalTo(20)
         }
         
-        realNameTitleLabel.snp.makeConstraints {
-            $0.top.equalTo(imaginMoneyTitleLabel.snp.bottom).offset(10)
-            $0.leading.equalToSuperview().inset(10)
-        }
-        
-        realNameLabel.snp.makeConstraints {
-            $0.top.equalTo(imaginMoneyTitleLabel.snp.bottom).offset(10)
-            $0.leading.equalTo(realNameTitleLabel.snp.trailing).offset(20)
-        }
-        
-        realMoneyTitleLabel.snp.makeConstraints {
-            $0.top.equalTo(realNameTitleLabel.snp.bottom).offset(10)
-            $0.leading.equalToSuperview().inset(10)
-        }
-        
-        realMoneyLabel.snp.makeConstraints {
-            $0.top.equalTo(realNameTitleLabel.snp.bottom).offset(10)
-            $0.leading.equalTo(realMoneyTitleLabel.snp.trailing).offset(20)
-        }
-        
-        saveTitleLabel.snp.makeConstraints {
-            $0.top.equalTo(realMoneyTitleLabel.snp.bottom).offset(10)
-            $0.leading.equalToSuperview().inset(10)
-        }
-        
-        saveMoneyLabel.snp.makeConstraints {
-            $0.top.equalTo(realMoneyTitleLabel.snp.bottom).offset(10)
-            $0.leading.equalTo(realMoneyLabel)
+        SaveMoneyLabelView.snp.makeConstraints {
+            $0.top.equalTo(realMoneyLabelView.snp.bottom).offset(10)
+            $0.leading.trailing.equalToSuperview().inset(50)
+            $0.height.equalTo(20)
         }
     }
     
@@ -242,10 +165,20 @@ class DetailView: UIView {
         dayLabel.text = save.day
         categoryImage.image = setCategoryImage(save)
         categoryLabel.text = save.category
-        imaginNameLabel.text = save.planName
-        imaginMoneyLabel.text = setStringForWon(save.planMoney)
-        realMoneyLabel.text = setStringForWon(save.finalMoney)
-        saveMoneyLabel.text = setStringForWon(save.saveMoney)
-        realNameLabel.text = save.finalName
+
+        imaginNameLabelView.setLabelView(title: "상상 구매 물품", content: save.planName)
+        imaginMoneyLabelVIew.setLabelView(title: "상상 구매 가격", content: setStringForWon(save.planMoney))
+        realNameLabelView.setLabelView(title: "실제 구매 물품", content: save.finalName)
+        realMoneyLabelView.setLabelView(title: "실제 구매 가격", content: setStringForWon(save.finalMoney))
+        SaveMoneyLabelView.setLabelView(title: "절약한 금액", content: setStringForWon(save.saveMoney))
+        
+    }
+
+    @objc func deleteButtonClicked() {
+        print("DetailView - deleteButtonCiliced()")
+    }
+    
+    @objc func changeButtonClicked() {
+        print("DetailView - changeButtonClicked()")
     }
 }

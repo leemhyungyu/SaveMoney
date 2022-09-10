@@ -55,6 +55,7 @@
 		2CE563C328C4D25E00C2D80E /* CustomPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE563C228C4D25E00C2D80E /* CustomPickerView.swift */; };
 		2CF9EA4A28CCCD9D00F0FA63 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF9EA4928CCCD9D00F0FA63 /* DetailViewController.swift */; };
 		2CF9EA4C28CCCE5C00F0FA63 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF9EA4B28CCCE5B00F0FA63 /* DetailView.swift */; };
+		2CF9EA4E28CCDF9F00F0FA63 /* DetailLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF9EA4D28CCDF9F00F0FA63 /* DetailLabelView.swift */; };
 		A96DF00AE88B3A40D7608808 /* Pods_SaveMoney.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF6C2E5AE8B3A5229826B305 /* Pods_SaveMoney.framework */; };
 		F390271C837C201A4EB2B0C8 /* Pods_SaveMoney_SaveMoneyUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D9CD49891492A60C269A65C /* Pods_SaveMoney_SaveMoneyUITests.framework */; };
 /* End PBXBuildFile section */
@@ -131,6 +132,7 @@
 		2CE563C228C4D25E00C2D80E /* CustomPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPickerView.swift; sourceTree = "<group>"; };
 		2CF9EA4928CCCD9D00F0FA63 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		2CF9EA4B28CCCE5B00F0FA63 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
+		2CF9EA4D28CCDF9F00F0FA63 /* DetailLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailLabelView.swift; sourceTree = "<group>"; };
 		3347665C7F7CBE3B377280A4 /* Pods-SaveMoney-SaveMoneyUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SaveMoney-SaveMoneyUITests.release.xcconfig"; path = "Target Support Files/Pods-SaveMoney-SaveMoneyUITests/Pods-SaveMoney-SaveMoneyUITests.release.xcconfig"; sourceTree = "<group>"; };
 		350F3F2E11BC18B0BA512F3E /* Pods_SaveMoneyTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SaveMoneyTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		44B5769053197B5999C16641 /* Pods-SaveMoneyTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SaveMoneyTests.release.xcconfig"; path = "Target Support Files/Pods-SaveMoneyTests/Pods-SaveMoneyTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -251,6 +253,7 @@
 				2CA1278F28A7E92A0058A4F5 /* CustomBarChartView.swift */,
 				2CE563C228C4D25E00C2D80E /* CustomPickerView.swift */,
 				2CF9EA4B28CCCE5B00F0FA63 /* DetailView.swift */,
+				2CF9EA4D28CCDF9F00F0FA63 /* DetailLabelView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -623,6 +626,7 @@
 				2CD7F8D9285F395100E5C446 /* AppTabbarController.swift in Sources */,
 				2C58F321289AD4710046676C /* UIViewController++Extenstions.swift in Sources */,
 				2C89547128AD3A8300AF5EB7 /* Home.swift in Sources */,
+				2CF9EA4E28CCDF9F00F0FA63 /* DetailLabelView.swift in Sources */,
 				2C89547F28B1442600AF5EB7 /* LicenseInfoViewController.swift in Sources */,
 				2CD7F8A6285F390300E5C446 /* AppDelegate.swift in Sources */,
 				2CBCF067289187F70016A962 /* InputViewModel.swift in Sources */,
