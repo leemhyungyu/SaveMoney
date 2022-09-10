@@ -81,14 +81,8 @@ class SaveManager {
         return saves!.filter { $0.day == date }
     }
     
-    
-    func saveStruct() {
-
-    }
    
     func retrieveSave() {
-
-        
         do {
             try realm.write {
                 self.saves = realm.objects(Save.self)
@@ -142,6 +136,13 @@ class SaveManager {
         let month = getMonthToString(date: save.day)
         
         monthMoney[month - 1] += Double(Int(save.saveMoney)!)
+    }
+    
+    func calculateEachMoneyMoney() {
+        
+        for i in saves! {
+            monthMoney[getMonthToString(date: i.day)] += Double(Int(i.saveMoney)!)
+        }
     }
     
     func setEachDayDate() {

@@ -147,6 +147,7 @@ class CalendarViewController: UIViewController {
         setDayData(Date())
         setHeigthConstraint()
         viewModel.eventInCalendar()
+        viewModel.setMonthData()
         view.backgroundColor = #colorLiteral(red: 0.9933428168, green: 0.9469488263, blue: 0.9725527167, alpha: 1)
     }
     
@@ -209,9 +210,6 @@ class CalendarViewController: UIViewController {
         calendarViewHegihtconstraint.isActive = true
     }
     
-    func initializationData() {
-        viewModel.saveManager.saveStruct()
-    }
     
     func reloadMainData() {
         

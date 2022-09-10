@@ -85,12 +85,6 @@ class HomeViewModel {
         saveManager.saveOfSelectedDay(date: date)
     }
     
-    func setMonthData() {
-        for i in save {
-            saveManager.setMonthMoneyData(save: i)
-        }
-    }
-    
     func setMaxTotalMoney() {
         let save = save.sorted(by: {Int($0.saveMoney)! > Int($1.saveMoney)!})
         
@@ -128,6 +122,7 @@ class HomeViewModel {
     
     func setMoneyData() {
         
+//        saveManager.calculateEachMoneyMoney()
         saveManager.setEachDayDate()
         saveManager.setEachWeekendDate()
         setThisMonthSaves()

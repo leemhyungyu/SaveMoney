@@ -105,7 +105,6 @@ class HomeViewController: UIViewController {
         view.backgroundColor = .white
         setTabNavigationBar("홈")
         viewModel.retrieve()
-        viewModel.setMonthData()
         viewModel.setEachDayDate()
         viewModel.setWeekendDayDate()
         self.navigationController?.navigationBar.isHidden = true
