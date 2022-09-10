@@ -15,7 +15,7 @@ class InputViewModel {
 
     let saveManager = SaveManager.shared
 
-    let categories: [Category] = [.food, .transportation, .hobby, .life, .coffee, .etc]
+    let categories: [Category] = [.food, .transportation, .hobby, .life, .coffee, .dress, .study, .save, .etc]
 
     var checkBoxData: Bool?
     

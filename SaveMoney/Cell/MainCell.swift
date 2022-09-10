@@ -150,6 +150,12 @@ class MainCell: UICollectionViewCell {
             return UIImage(systemName: "figure.walk")!
         } else if title == "기타" {
             return UIImage(systemName: "wrench.and.screwdriver.fill")!
+        } else if title == "의류" {
+            return UIImage(systemName: "tshrit.fill")!
+        } else if title == "교육" {
+            return UIImage(systemName: "book.fill")!
+        } else if title == "저축" {
+            return UIImage(systemName: "banknote.fill")!
         } else {
             return UIImage()
         }

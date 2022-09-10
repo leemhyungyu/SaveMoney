@@ -293,7 +293,7 @@ extension InputViewController {
                 presentWarningView(.input)
             } else {
                 addSaveData(date: viewModel.date!, planName: planName, finalName: "구매 X", planMoney: planMoney, finalMoney:  "0", category: category)
-                dismiss(animated: true)
+                self.navigationController?.popViewController(animated: true)
             }
         } else {
             if imaginView.nameTextField.text?.count == 0 || imaginView.moneyTextField.text?.count == 0 || imaginView.categoriTextField.text?.count == 0 || realView.nameTextField.text?.count == 0 || realView.moneyTextField.text?.count == 0 {
@@ -301,7 +301,7 @@ extension InputViewController {
                 presentWarningView(.input)
             } else {
                 addSaveData(date: viewModel.date!, planName: planName, finalName: finalName, planMoney: planMoney, finalMoney: finalMoney, category: category)
-                dismiss(animated: true)
+                self.navigationController?.popViewController(animated: true)
             }
         }
     }
@@ -354,6 +354,10 @@ extension InputViewController {
         viewModel.addSave(save: save)
         viewModel.addEventDay(save: save)
         viewModel.addSelectedDay(save: save)
+    }
+    
+    func setInputVCData() {
+        
     }
 }
 

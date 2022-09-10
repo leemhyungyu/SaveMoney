@@ -14,7 +14,6 @@ class CalendarViewModel {
     
     var day: String?
     var date: Date?
-//    var saveOfDay: [Save] = []
     
     var todaySaveMoney: Int?
     
