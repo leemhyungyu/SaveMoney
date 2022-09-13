@@ -18,8 +18,8 @@
 		2C58F321289AD4710046676C /* UIViewController++Extenstions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C58F320289AD4700046676C /* UIViewController++Extenstions.swift */; };
 		2C5920422897F41C00D54523 /* HomeSubHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5920412897F41C00D54523 /* HomeSubHeaderView.swift */; };
 		2C63870028A6418300BF8B01 /* WarningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6386FF28A6418300BF8B01 /* WarningView.swift */; };
-		2C63870228A65ECC00BF8B01 /* MyPageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C63870128A65ECC00BF8B01 /* MyPageCell.swift */; };
-		2C63870428A6613A00BF8B01 /* MyPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C63870328A6613A00BF8B01 /* MyPageViewModel.swift */; };
+		2C63870228A65ECC00BF8B01 /* SettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C63870128A65ECC00BF8B01 /* SettingCell.swift */; };
+		2C63870428A6613A00BF8B01 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C63870328A6613A00BF8B01 /* SettingViewModel.swift */; };
 		2C63870628A6712000BF8B01 /* Warning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C63870528A6712000BF8B01 /* Warning.swift */; };
 		2C6CD3C928A1078A001ADB26 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C6CD3C828A1078A001ADB26 /* LaunchScreen.storyboard */; };
 		2C78921228A3FA000069326E /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C78921128A3FA000069326E /* InputView.swift */; };
@@ -47,7 +47,7 @@
 		2CD7F8B2285F390500E5C446 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2CD7F8B1285F390500E5C446 /* Assets.xcassets */; };
 		2CD7F8D9285F395100E5C446 /* AppTabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD7F8D8285F395100E5C446 /* AppTabbarController.swift */; };
 		2CD7F8DC285F3D5100E5C446 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD7F8DB285F3D5100E5C446 /* CalendarViewController.swift */; };
-		2CD7F8DE285F3DFD00E5C446 /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD7F8DD285F3DFD00E5C446 /* MyPageViewController.swift */; };
+		2CD7F8DE285F3DFD00E5C446 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD7F8DD285F3DFD00E5C446 /* SettingViewController.swift */; };
 		2CD7F8E1285F574800E5C446 /* MainCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD7F8E0285F574800E5C446 /* MainCell.swift */; };
 		2CD7F8E728607A8400E5C446 /* CalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD7F8E628607A8400E5C446 /* CalendarViewModel.swift */; };
 		2CD7F8EB2861F48300E5C446 /* InputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD7F8EA2861F48300E5C446 /* InputViewController.swift */; };
@@ -91,8 +91,8 @@
 		2C58F320289AD4700046676C /* UIViewController++Extenstions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController++Extenstions.swift"; sourceTree = "<group>"; };
 		2C5920412897F41C00D54523 /* HomeSubHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSubHeaderView.swift; sourceTree = "<group>"; };
 		2C6386FF28A6418300BF8B01 /* WarningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarningView.swift; sourceTree = "<group>"; };
-		2C63870128A65ECC00BF8B01 /* MyPageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageCell.swift; sourceTree = "<group>"; };
-		2C63870328A6613A00BF8B01 /* MyPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewModel.swift; sourceTree = "<group>"; };
+		2C63870128A65ECC00BF8B01 /* SettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCell.swift; sourceTree = "<group>"; };
+		2C63870328A6613A00BF8B01 /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
 		2C63870528A6712000BF8B01 /* Warning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Warning.swift; sourceTree = "<group>"; };
 		2C6CD3C828A1078A001ADB26 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2C78921128A3FA000069326E /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
@@ -124,7 +124,7 @@
 		2CD7F8C5285F390500E5C446 /* SaveMoneyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SaveMoneyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CD7F8D8285F395100E5C446 /* AppTabbarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTabbarController.swift; sourceTree = "<group>"; };
 		2CD7F8DB285F3D5100E5C446 /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
-		2CD7F8DD285F3DFD00E5C446 /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
+		2CD7F8DD285F3DFD00E5C446 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		2CD7F8E0285F574800E5C446 /* MainCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCell.swift; sourceTree = "<group>"; };
 		2CD7F8E628607A8400E5C446 /* CalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewModel.swift; sourceTree = "<group>"; };
 		2CD7F8EA2861F48300E5C446 /* InputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputViewController.swift; sourceTree = "<group>"; };
@@ -173,7 +173,6 @@
 			isa = PBXGroup;
 			children = (
 				2CD7F8D8285F395100E5C446 /* AppTabbarController.swift */,
-				2C2A6D492891754C000F7150 /* MyPageTab */,
 				2C2A6D4828917544000F7150 /* CalenderTab */,
 				2C2A6D472891753A000F7150 /* HomeTab */,
 			);
@@ -196,16 +195,6 @@
 				2CF9EA4928CCCD9D00F0FA63 /* DetailViewController.swift */,
 			);
 			path = CalenderTab;
-			sourceTree = "<group>";
-		};
-		2C2A6D492891754C000F7150 /* MyPageTab */ = {
-			isa = PBXGroup;
-			children = (
-				2CD7F8DD285F3DFD00E5C446 /* MyPageViewController.swift */,
-				2C89547428AE99BB00AF5EB7 /* LicenseViewController.swift */,
-				2C89547E28B1442600AF5EB7 /* LicenseInfoViewController.swift */,
-			);
-			path = MyPageTab;
 			sourceTree = "<group>";
 		};
 		2C2A6D4A28917DCE000F7150 /* Manager */ = {
@@ -302,6 +291,9 @@
 		2CD7F8DA285F395600E5C446 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				2CD7F8DD285F3DFD00E5C446 /* SettingViewController.swift */,
+				2C89547428AE99BB00AF5EB7 /* LicenseViewController.swift */,
+				2C89547E28B1442600AF5EB7 /* LicenseInfoViewController.swift */,
 				2C58F31C289AD0980046676C /* AlertViewController.swift */,
 			);
 			path = ViewController;
@@ -313,7 +305,7 @@
 				2CD7F8E0285F574800E5C446 /* MainCell.swift */,
 				2CD7F8F42868685C00E5C446 /* SaveCell.swift */,
 				2C192A4028A559CA00199B64 /* EmptyCell.swift */,
-				2C63870128A65ECC00BF8B01 /* MyPageCell.swift */,
+				2C63870128A65ECC00BF8B01 /* SettingCell.swift */,
 				2C89546E28AD339100AF5EB7 /* HomeCell.swift */,
 				2C89547228AD480300AF5EB7 /* MaxSaveCell.swift */,
 				2C89547828B142C300AF5EB7 /* LicenseCell.swift */,
@@ -327,7 +319,7 @@
 				2CD7F8E628607A8400E5C446 /* CalendarViewModel.swift */,
 				2CBCF066289187F70016A962 /* InputViewModel.swift */,
 				2C192A3E28A5046C00199B64 /* HomeViewModel.swift */,
-				2C63870328A6613A00BF8B01 /* MyPageViewModel.swift */,
+				2C63870328A6613A00BF8B01 /* SettingViewModel.swift */,
 				2C89547A28B142DD00AF5EB7 /* LicenseViewModel.swift */,
 			);
 			path = ViewModel;
@@ -600,7 +592,7 @@
 				2C5920422897F41C00D54523 /* HomeSubHeaderView.swift in Sources */,
 				2CD7F8EB2861F48300E5C446 /* InputViewController.swift in Sources */,
 				2CBCF06D28956EBA0016A962 /* UIView++Extenstions.swift in Sources */,
-				2CD7F8DE285F3DFD00E5C446 /* MyPageViewController.swift in Sources */,
+				2CD7F8DE285F3DFD00E5C446 /* SettingViewController.swift in Sources */,
 				2C58F31B289ACFC70046676C /* AlertView.swift in Sources */,
 				2CBCF063289183CE0016A962 /* Date.swift in Sources */,
 				2C89547D28B1432C00AF5EB7 /* License.swift in Sources */,
@@ -612,7 +604,7 @@
 				2C89547928B142C300AF5EB7 /* LicenseCell.swift in Sources */,
 				2CD7F8DC285F3D5100E5C446 /* CalendarViewController.swift in Sources */,
 				2C2A6D4C28917DDC000F7150 /* SaveManager.swift in Sources */,
-				2C63870228A65ECC00BF8B01 /* MyPageCell.swift in Sources */,
+				2C63870228A65ECC00BF8B01 /* SettingCell.swift in Sources */,
 				2C2A6D4F28917E48000F7150 /* Save.swift in Sources */,
 				2C192A3F28A5046C00199B64 /* HomeViewModel.swift in Sources */,
 				2CD7F8AA285F390300E5C446 /* HomeViewController.swift in Sources */,
@@ -630,7 +622,7 @@
 				2C89547F28B1442600AF5EB7 /* LicenseInfoViewController.swift in Sources */,
 				2CD7F8A6285F390300E5C446 /* AppDelegate.swift in Sources */,
 				2CBCF067289187F70016A962 /* InputViewModel.swift in Sources */,
-				2C63870428A6613A00BF8B01 /* MyPageViewModel.swift in Sources */,
+				2C63870428A6613A00BF8B01 /* SettingViewModel.swift in Sources */,
 				2CE563C328C4D25E00C2D80E /* CustomPickerView.swift in Sources */,
 				2CD7F8E1285F574800E5C446 /* MainCell.swift in Sources */,
 				2CD7F8A8285F390300E5C446 /* SceneDelegate.swift in Sources */,

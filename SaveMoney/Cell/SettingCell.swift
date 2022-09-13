@@ -8,15 +8,14 @@
 import UIKit
 import SnapKit
 
-class MyPageCell: UITableViewCell {
+class SettingCell: UITableViewCell {
     
-    static let identifier = "MyPageCell"
+    static let identifier = "SettingCell"
     
     var label: UILabel = {
         var label = UILabel()
         
         label.font = .systemFont(ofSize: 16)
-        label.text = "테스트"
         return label
     }()
     

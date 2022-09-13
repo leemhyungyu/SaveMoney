@@ -100,6 +100,15 @@ class HomeViewController: UIViewController {
         return button
     }()
     
+    lazy var settingButton: UIButton = {
+        let button = UIButton()
+        
+        button.setSettingVCButton()
+        button.addTarget(self, action: #selector(presentSettingViewController), for: .touchUpInside)
+        
+        return button
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -203,7 +212,7 @@ class HomeViewController: UIViewController {
         tableViewHeightConstraint.isActive = true
         scrollView.addSubview(mainView)
         
-        [subView, dayButton, weekButton, monthButton, tableView] .forEach { mainView.addSubview($0) }
+        [subView, dayButton, weekButton, monthButton, settingButton, tableView] .forEach { mainView.addSubview($0) }
 
         [dayBarChartView, weekBarChartView, monthBarChartView] .forEach { subView.addSubview($0) }
                 
@@ -238,6 +247,10 @@ class HomeViewController: UIViewController {
         monthButton.snp.makeConstraints {
             $0.top.equalToSuperview().inset(10)
             $0.leading.equalTo(weekButton.snp.trailing).offset(5)
+        }
+        
+        settingButton.snp.makeConstraints {
+            $0.top.trailing.equalToSuperview().inset(10)
         }
 
         dayBarChartView.snp.makeConstraints {

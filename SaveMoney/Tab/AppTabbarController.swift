@@ -28,16 +28,6 @@ class AppTabbarController: UITabBarController {
         
         return tabBarItem
     }()
-
-    let UserTab: UITabBarItem = {
-        
-        let tabBarItem = UITabBarItem(
-            title: "마이페이지",
-            image: UIImage(systemName: "person"),
-            selectedImage: UIImage(systemName: "person.fill"))
-        
-        return tabBarItem
-    }()
     
     override func viewDidLoad() {
            super.viewDidLoad()
@@ -48,16 +38,14 @@ class AppTabbarController: UITabBarController {
         
         let homeVC = UINavigationController(rootViewController: HomeViewController())
         let calendarVC = UINavigationController(rootViewController: CalendarViewController())
-        let myPageVC = UINavigationController(rootViewController: MyPageViewController())
         
         tabBar.tintColor = .systemPink
         tabBar.backgroundColor = .white
         
-        viewControllers = [homeVC, calendarVC, myPageVC]
+        viewControllers = [homeVC, calendarVC]
         
         self.selectedIndex = 1
         homeVC.tabBarItem = homeTab
         calendarVC.tabBarItem = calendarTab
-        myPageVC.tabBarItem = UserTab
     }
 }

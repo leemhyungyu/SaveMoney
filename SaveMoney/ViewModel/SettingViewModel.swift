@@ -7,20 +7,14 @@
 
 import Foundation
 
-enum myPage: CaseIterable {
+enum settingList: CaseIterable {
     case initialization
-    case goal
-    case userInfo
     case source
     
     var title: String {
         switch self {
         case .initialization:
             return "모든 데이터 초기화"
-        case .goal:
-            return "목표 금액 수정하기"
-        case .userInfo:
-            return "개인 정보 수정하기"
         case .source:
             return "오픈 소스 라이브러리"
         }
@@ -28,18 +22,18 @@ enum myPage: CaseIterable {
 }
 
 
-class MyPageViewModel {
+class SettingViewModel {
     
-    let myPages: [myPage] = [.initialization, .goal, .userInfo, .source]
+    let list: [settingList] = [.initialization, .source]
     
     let saveManager = SaveManager.shared
     
     var numOfCell: Int {
-        return myPages.count
+        return list.count
     }
     
     func titleOfcell(index: Int) -> String {
-        return myPages[index].title
+        return list[index].title
     }
     
     func initializationData() {

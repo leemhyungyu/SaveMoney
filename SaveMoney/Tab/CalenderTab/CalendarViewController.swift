@@ -138,7 +138,17 @@ class CalendarViewController: UIViewController {
         btn.addTarget(self, action: #selector(addBtnClicked), for: .touchUpInside)
         return btn
     }()
-
+    
+    lazy var settingButton: UIButton = {
+        
+        var button = UIButton()
+        
+        button.setSettingVCButton()
+        
+        button.addTarget(self, action: #selector(presentSettingViewController), for: .touchUpInside)
+        return button
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setting()
@@ -325,16 +335,20 @@ extension CalendarViewController{
         
         view.addSubview(scrollView)
         
-        scrollView.addSubview(monthButton)
-        scrollView.addSubview(weekendButton)
-        scrollView.addSubview(calendar)
-        scrollView.addSubview(collectionView)
-        scrollView.addSubview(subView)
-        scrollView.addSubview(todayBtn)
-        scrollView.addSubview(addBtn)
         
-        subView.addSubview(label)
-        subView.addSubview(totalSaveMoney)
+        [
+            monthButton,
+            weekendButton,
+            calendar,
+            collectionView,
+            subView,
+            todayBtn,
+            addBtn,
+            settingButton
+        ] .forEach { scrollView.addSubview($0) }
+
+        [ label,
+          totalSaveMoney] .forEach { subView.addSubview($0) }
         
         view.backgroundColor = .white
         calendar.backgroundColor = .white
@@ -372,6 +386,11 @@ extension CalendarViewController{
         weekendButton.snp.makeConstraints {
             $0.top.equalToSuperview().inset(10)
             $0.leading.equalTo(monthButton.snp.trailing).offset(10)
+        }
+        
+        settingButton.snp.makeConstraints {
+            $0.top.trailing.equalToSuperview().inset(10)
+            
         }
         
         calendar.snp.makeConstraints {

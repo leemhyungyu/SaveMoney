@@ -53,14 +53,14 @@ extension UIViewController {
         self.navigationController?.pushViewController(inputVC, animated: true)
     }
     
-    @objc func presentMypageViewController() {
-        let myPageVC = MyPageViewController()
-        
-        self.navigationController?.pushViewController(myPageVC, animated: true)
-    }
-    
     @objc func popNavigationController() {
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    @objc func presentSettingViewController() {
+        let settingVC = SettingViewController()
+        
+        self.navigationController?.pushViewController(settingVC, animated: true)
     }
 }
 

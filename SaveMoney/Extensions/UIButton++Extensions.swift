@@ -16,4 +16,13 @@ extension UIButton {
         self.setTitleColor(UIColor.lightGray, for: .normal)
         self.setTitleColor(UIColor.systemPink, for: .selected)
     }
+    
+    func setSettingVCButton() {
+        var config = UIButton.Configuration.plain()
+        config.image = UIImage(systemName: "gearshape.fill")
+        
+        self.configuration = config
+        self.tintColor = .systemPink
+    }
 }
+

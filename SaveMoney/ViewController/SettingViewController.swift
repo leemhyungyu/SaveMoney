@@ -7,14 +7,14 @@
 
 import UIKit
 
-class MyPageViewController: UIViewController {
+class SettingViewController: UIViewController {
 
-    let viewModel = MyPageViewModel()
+    let viewModel = SettingViewModel()
     
     var tableView: UITableView = {
         let tableView = UITableView(frame: .zero)
         
-        tableView.register(MyPageCell.self, forCellReuseIdentifier: MyPageCell.identifier)
+        tableView.register(SettingCell.self, forCellReuseIdentifier: SettingCell.identifier)
         
         tableView.layer.shadowColor = UIColor.systemGray.cgColor
         tableView.layer.masksToBounds = false
@@ -32,11 +32,12 @@ class MyPageViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = #colorLiteral(red: 0.9933428168, green: 0.9469488263, blue: 0.9725527167, alpha: 1)
         configureUI()
-        setTabNavigationBar("마이페이지")
+        setBackArrowNiavigationBar("설정")
     }
     
     func configureUI() {
         
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
         view.addSubview(tableView)
         
         tableView.delegate = self
@@ -49,14 +50,14 @@ class MyPageViewController: UIViewController {
     }
 }
 
-extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
+extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.numOfCell
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: MyPageCell.identifier, for: indexPath) as? MyPageCell else { return UITableViewCell() }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: SettingCell.identifier, for: indexPath) as? SettingCell else { return UITableViewCell() }
         
         cell.label.text = viewModel.titleOfcell(index: indexPath.row)
         return cell
