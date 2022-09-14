@@ -31,9 +31,7 @@ class DetailView: UIView {
         
         let button = UIButton(configuration: configure)
         button.tintColor = .systemPink
-        
-        button.addTarget(self, action: #selector(deleteButtonClicked), for: .touchUpInside)
-        
+                
         return button
     }()
     
@@ -44,7 +42,6 @@ class DetailView: UIView {
         let button = UIButton(configuration: configure)
         button.tintColor = .systemPink
         
-        button.addTarget(self, action: #selector(changeButtonClicked), for: .touchUpInside)
         return button
     }()
     
@@ -174,11 +171,4 @@ class DetailView: UIView {
         
     }
 
-    @objc func deleteButtonClicked() {
-        print("DetailView - deleteButtonCiliced()")
-    }
-    
-    @objc func changeButtonClicked() {
-        print("DetailView - changeButtonClicked()")
-    }
 }

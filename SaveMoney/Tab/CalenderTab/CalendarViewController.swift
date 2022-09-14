@@ -270,6 +270,8 @@ extension CalendarViewController: UICollectionViewDelegate, UICollectionViewData
         
         DetailVC.detailView.setView(save: viewModel.saveOfDay[indexPath.row])
         
+        viewModel.setIndexOfSelectedSave(indexPath.row)
+        
         self.navigationController?.pushViewController(DetailVC, animated: true)
     }
 }

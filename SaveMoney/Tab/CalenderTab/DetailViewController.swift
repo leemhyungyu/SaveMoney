@@ -10,10 +10,16 @@ import SnapKit
 
 class DetailViewController: UIViewController {
     
+    let viewModel = DetailViewModel()
+    
     var detailView: DetailView = {
         let view = DetailView()
         
         view.setShadow()
+        
+        view.changeButton.addTarget(self, action: #selector(changeButtonClikced), for: .touchUpInside)
+        view.deleteButton.addTarget(self, action: #selector(deleteButtonClicked), for: .touchUpInside)
+        
         return view
         
     }()
@@ -22,6 +28,21 @@ class DetailViewController: UIViewController {
         super.viewDidLoad()
         configureUI()
         setBackArrowNiavigationBar("상세보기")
+    }
+    
+    @objc func changeButtonClikced() {
+        
+    }
+    
+    @objc func deleteButtonClicked() {
+        let alertView = presentAlertView(.delete)
+        
+        present(alertView, animated: true)
+        
+        alertView.doneButtonClosure = {
+            self.viewModel.deleteSave()
+            self.navigationController?.popViewController(animated: true)
+        }
     }
     
     func configureUI() {

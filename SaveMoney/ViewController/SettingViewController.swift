@@ -75,13 +75,10 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
             }
             
         case 1:
-            break
-        case 2:
-            break
-        case 3:
             let LicenseVC = LicenseViewController()
             navigationController?.pushViewController(LicenseVC, animated: true)
             break
+
         default:
             break
         }

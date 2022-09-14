@@ -19,6 +19,8 @@ class SaveManager {
     var saves: Results<Save>?
     var eventDay = [Date]()
     var saveOfDay = [Save]()
+    var indexOfSelectedSave: Int?
+    var selectedSave: Save?
     var totalMoney: Int = 0
     var monthMoney: [Double] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     var eachDayAndMoney = [String: Double]()
@@ -70,6 +72,25 @@ class SaveManager {
         }
         
         eventDay = setEventDay()
+    }
+    
+    func deleteSelectedSave(save: Save) {
+        totalMoney -= Int(save.saveMoney)!
+        
+        UserDefaults.standard.set(totalMoney, forKey: "totalMoney")
+        
+        let selectData = realm.objects(Save.self).filter(NSPredicate(format: "id == %d", save.id)).first
+        
+        do {
+            try realm.write {
+                realm.delete(selectData!)
+            }
+        } catch {
+            print("삭제 실패")
+        }
+        
+        eventDay = setEventDay()
+        
     }
     
     
@@ -206,6 +227,10 @@ class SaveManager {
         }
         
         return result
+    }
+    
+    func setIndexOfSelectedSave(_ index: Int) {
+        self.indexOfSelectedSave = index
     }
     
     func initializationAllData() {

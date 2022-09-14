@@ -29,6 +29,10 @@ class CalendarViewModel {
         return saveManager.saveOfDay
     }
     
+    var selectedSave: Save {
+        return saveManager.selectedSave!
+    }
+    
     var numOfCell: Int {
         return saveOfDay.count
     }
@@ -91,5 +95,9 @@ class CalendarViewModel {
         for i in save {
             saveManager.setMonthMoneyData(save: i)
         }
+    }
+    
+    func setIndexOfSelectedSave(_ index: Int) {
+        saveManager.setIndexOfSelectedSave(index)
     }
 }
