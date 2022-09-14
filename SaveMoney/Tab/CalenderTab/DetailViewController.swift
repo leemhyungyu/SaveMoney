@@ -31,7 +31,11 @@ class DetailViewController: UIViewController {
     }
     
     @objc func changeButtonClikced() {
+        let InputVC = InputViewController()
         
+        InputVC.setInputVCData(save: viewModel.saveData())
+        
+        self.navigationController?.pushViewController(InputVC, animated: true)
     }
     
     @objc func deleteButtonClicked() {

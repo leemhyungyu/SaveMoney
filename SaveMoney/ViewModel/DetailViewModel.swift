@@ -18,11 +18,19 @@ class DetailViewModel {
     var index: Int {
         return saveManager.indexOfSelectedSave!
     }
+        
+    func saveData() -> Save {
+        return saveOfDay[index]
+    }
     
     func deleteSave() {
         saveManager.deleteSave(save: saveOfDay[index], index: index)
     }
     
     func changeSave() {
+        
     }
+
 }
+
+

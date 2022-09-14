@@ -449,7 +449,5 @@ extension CalendarViewController{
         InputVC.label.text = getMonthAndDayForString(date: viewModel.date!)
         
         self.navigationController?.pushViewController(InputVC, animated: true)
-//        InputVC.modalPresentationStyle = .fullScreen
-//        present(InputVC, animated: true, completion: nil)
     }
 }

@@ -29,9 +29,10 @@ class InputViewModel {
         return saveManager.eventDay
     }
     
-    func createSave(date: Date, planName: String, finalName: String, planMoney: String, finalMoney: String, category: String) -> Save {
-        return saveManager.createSave(day: getStringToDate(date: date), planName: planName, finalName: finalName, planMoney: planMoney, finalMoney: finalMoney, category: category)
+    func createSave(date: Date, planName: String, finalName: String, planMoney: String, finalMoney: String, category: String, check: Bool) -> Save {
+        return saveManager.createSave(day: getStringToDate(date: date), planName: planName, finalName: finalName, planMoney: planMoney, finalMoney: finalMoney, category: category, check: check)
     }
+    
     func addSave(save: Save) {
         saveManager.addSave(save: save)
         print(saveManager.saves)

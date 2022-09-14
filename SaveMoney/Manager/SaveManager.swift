@@ -20,13 +20,12 @@ class SaveManager {
     var eventDay = [Date]()
     var saveOfDay = [Save]()
     var indexOfSelectedSave: Int?
-    var selectedSave: Save?
     var totalMoney: Int = 0
     var monthMoney: [Double] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     var eachDayAndMoney = [String: Double]()
     var EachWeekendDayAndMoney = [String: Double]()
     
-    func createSave(day: String, planName: String, finalName: String, planMoney: String, finalMoney: String, category: String) -> Save {
+    func createSave(day: String, planName: String, finalName: String, planMoney: String, finalMoney: String, category: String, check: Bool) -> Save {
         
         var nextId: Int = 0
         
@@ -38,7 +37,7 @@ class SaveManager {
         
         let saveMoney = Int(planMoney)! - Int(finalMoney)!
         
-        return Save(id: nextId, day: day, planName: planName, planMoney: planMoney, finalName: finalName, finalMoney: finalMoney, saveMoney: String(saveMoney), category: category)
+        return Save(id: nextId, day: day, planName: planName, planMoney: planMoney, finalName: finalName, finalMoney: finalMoney, saveMoney: String(saveMoney), category: category, check: check)
     }
     
     func addSave(save: Save) {

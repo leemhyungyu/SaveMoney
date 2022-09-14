@@ -38,8 +38,9 @@ class Save: Object {
     @Persisted var finalMoney: String
     @Persisted var saveMoney: String
     @Persisted var category: String
-
-    convenience init(id: Int, day: String, planName: String, planMoney: String, finalName: String, finalMoney: String, saveMoney: String, category: String) {
+    @Persisted var check: Bool
+    
+    convenience init(id: Int, day: String, planName: String, planMoney: String, finalName: String, finalMoney: String, saveMoney: String, category: String, check: Bool) {
 
         self.init()
         self.id = id
@@ -50,5 +51,6 @@ class Save: Object {
         self.finalMoney = finalMoney
         self.saveMoney = saveMoney
         self.category = category
+        self.check = check
     }
 }

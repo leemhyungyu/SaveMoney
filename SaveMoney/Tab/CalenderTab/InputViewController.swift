@@ -292,7 +292,7 @@ extension InputViewController {
             if imaginView.nameTextField.text?.count == 0 || imaginView.moneyTextField.text?.count == 0 || imaginView.categoriTextField.text?.count == 0 {
                 presentWarningView(.input)
             } else {
-                addSaveData(date: viewModel.date!, planName: planName, finalName: "구매 X", planMoney: planMoney, finalMoney:  "0", category: category)
+                addSaveData(date: viewModel.date!, planName: planName, finalName: "구매 X", planMoney: planMoney, finalMoney:  "0", category: category, check: true)
                 self.navigationController?.popViewController(animated: true)
             }
         } else {
@@ -300,7 +300,7 @@ extension InputViewController {
                 
                 presentWarningView(.input)
             } else {
-                addSaveData(date: viewModel.date!, planName: planName, finalName: finalName, planMoney: planMoney, finalMoney: finalMoney, category: category)
+                addSaveData(date: viewModel.date!, planName: planName, finalName: finalName, planMoney: planMoney, finalMoney: finalMoney, category: category, check: false)
                 self.navigationController?.popViewController(animated: true)
             }
         }
@@ -323,7 +323,12 @@ extension InputViewController {
         
         checkBox.isSelected = !checkBox.isSelected
         
-        if checkBox.isSelected == true {
+        setCheckBoxUI(checkBox.isSelected)
+    }
+    
+    func setCheckBoxUI(_  bool: Bool) {
+        
+        if bool == true {
             viewModel.checkBoxData = true
             
             realView.categoriTextField.text = ""
@@ -348,16 +353,30 @@ extension InputViewController {
         }
     }
     
-    func addSaveData(date: Date, planName: String, finalName: String, planMoney: String, finalMoney: String, category: String) {
-        let save = viewModel.createSave(date: viewModel.date!, planName: planName, finalName: finalName, planMoney: planMoney, finalMoney: finalMoney, category: category)
+    func addSaveData(date: Date, planName: String, finalName: String, planMoney: String, finalMoney: String, category: String, check: Bool) {
+        let save = viewModel.createSave(date: viewModel.date!, planName: planName, finalName: finalName, planMoney: planMoney, finalMoney: finalMoney, category: category, check: check)
         
         viewModel.addSave(save: save)
         viewModel.addEventDay(save: save)
         viewModel.addSelectedDay(save: save)
     }
     
-    func setInputVCData() {
+    func setInputVCData(save: Save) {
         
+        self.label.text = getMonthAndDayForString(date: save.day)
+        self.imaginView.categoriTextField.text = save.category
+        self.imaginView.nameTextField.text = save.planName
+        self.imaginView.moneyTextField.text = save.planMoney
+        
+        // 구매하지 않았을 경우
+        if save.check == true  {
+            self.checkBox.isSelected = true
+            setCheckBoxUI(save.check)
+        } else {
+            self.realView.categoriTextField.text =  save.category
+            self.realView.nameTextField.text = save.finalName
+            self.realView.moneyTextField.text = save.finalMoney
+        }
     }
 }
 

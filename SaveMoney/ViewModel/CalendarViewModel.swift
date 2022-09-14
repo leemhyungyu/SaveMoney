@@ -29,10 +29,6 @@ class CalendarViewModel {
         return saveManager.saveOfDay
     }
     
-    var selectedSave: Save {
-        return saveManager.selectedSave!
-    }
-    
     var numOfCell: Int {
         return saveOfDay.count
     }
