@@ -135,6 +135,24 @@ class InputViewController: UIViewController {
         return btn
     }()
     
+    lazy var updateButton: UIButton = {
+        
+        var config = UIButton.Configuration.filled()
+        config.baseBackgroundColor = .systemPink
+        config.imagePadding = 10
+        
+        var titleAttr = AttributedString.init("수정하기")
+        titleAttr.font = .systemFont(ofSize: 16, weight: .semibold)
+        config.attributedTitle = titleAttr
+        
+        let btn = UIButton(configuration: config)
+        btn.addTarget(self, action: #selector(updateButtonClicked(_:)), for: .touchUpInside)
+        
+        btn.isHidden = true
+        
+        return btn
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -157,7 +175,7 @@ class InputViewController: UIViewController {
         self.tabBarController?.tabBar.isHidden = true
         self.navigationController?.setNavigationBarHidden(false, animated: false)
         setBackArrowNiavigationBar("절약하기")
-        [subView, doneBtn, segmentedControl, imaginView, realView] .forEach { view.addSubview($0) }
+        [subView, doneBtn, updateButton, segmentedControl, imaginView, realView] .forEach { view.addSubview($0) }
         [label, infoLabel] .forEach { subView.addSubview($0) }
         [checkBox, checkBoxLabel] .forEach { realView.addSubview($0) }
     
@@ -210,6 +228,13 @@ class InputViewController: UIViewController {
         }
         
         doneBtn.snp.makeConstraints {
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).offset(-30)
+            $0.centerX.equalToSuperview()
+            $0.width.equalTo(200)
+            $0.height.equalTo(40)
+        }
+        
+        updateButton.snp.makeConstraints {
             $0.bottom.equalTo(view.safeAreaLayoutGuide).offset(-30)
             $0.centerX.equalToSuperview()
             $0.width.equalTo(200)
@@ -292,7 +317,7 @@ extension InputViewController {
             if imaginView.nameTextField.text?.count == 0 || imaginView.moneyTextField.text?.count == 0 || imaginView.categoriTextField.text?.count == 0 {
                 presentWarningView(.input)
             } else {
-                addSaveData(date: viewModel.date!, planName: planName, finalName: "구매 X", planMoney: planMoney, finalMoney:  "0", category: category, check: true)
+                addSaveData(date: viewModel.date, planName: planName, finalName: "구매 X", planMoney: planMoney, finalMoney:  "0", category: category, check: true)
                 self.navigationController?.popViewController(animated: true)
             }
         } else {
@@ -300,7 +325,40 @@ extension InputViewController {
                 
                 presentWarningView(.input)
             } else {
-                addSaveData(date: viewModel.date!, planName: planName, finalName: finalName, planMoney: planMoney, finalMoney: finalMoney, category: category, check: false)
+                addSaveData(date: viewModel.date, planName: planName, finalName: finalName, planMoney: planMoney, finalMoney: finalMoney, category: category, check: false)
+                self.navigationController?.popViewController(animated: true)
+            }
+        }
+    }
+    
+    @objc func updateButtonClicked(_ sender: UITapGestureRecognizer) {
+        
+        guard let planName = imaginView.nameTextField.text, let planMoney = imaginView.moneyTextField.text, let category = imaginView.categoriTextField.text, let finalName = realView.nameTextField.text, let finalMoney = realView.moneyTextField.text else { return }
+        
+        if viewModel.checkBoxData == true {
+            if imaginView.nameTextField.text?.count == 0 || imaginView.moneyTextField.text?.count == 0 || imaginView.categoriTextField.text?.count == 0 {
+                presentWarningView(.input)
+            } else {
+
+                
+                let save = viewModel.setUpdateSave(planName: planName, finalName: "구매 X", planMoney: planMoney, finalMoney: "0", category: category, check: true)
+                
+                viewModel.updateSave(save: save)
+                viewModel.updateSelectedSave()
+                
+                self.navigationController?.popViewController(animated: true)
+            }
+        } else {
+            if imaginView.nameTextField.text?.count == 0 || imaginView.moneyTextField.text?.count == 0 || imaginView.categoriTextField.text?.count == 0 || realView.nameTextField.text?.count == 0 || realView.moneyTextField.text?.count == 0 {
+                
+                presentWarningView(.input)
+            } else {
+                
+                let save = viewModel.setUpdateSave(planName: planName, finalName: finalName, planMoney: planMoney, finalMoney: finalMoney, category: category, check: false)
+                
+                viewModel.updateSave(save: save)
+                viewModel.updateSelectedSave()
+
                 self.navigationController?.popViewController(animated: true)
             }
         }
@@ -354,14 +412,18 @@ extension InputViewController {
     }
     
     func addSaveData(date: Date, planName: String, finalName: String, planMoney: String, finalMoney: String, category: String, check: Bool) {
-        let save = viewModel.createSave(date: viewModel.date!, planName: planName, finalName: finalName, planMoney: planMoney, finalMoney: finalMoney, category: category, check: check)
+        let save = viewModel.createSave(date: viewModel.date, planName: planName, finalName: finalName, planMoney: planMoney, finalMoney: finalMoney, category: category, check: check)
         
         viewModel.addSave(save: save)
         viewModel.addEventDay(save: save)
         viewModel.addSelectedDay(save: save)
+        
     }
     
     func setInputVCData(save: Save) {
+        
+        doneBtn.isHidden = true
+        updateButton.isHidden = false
         
         self.label.text = getMonthAndDayForString(date: save.day)
         self.imaginView.categoriTextField.text = save.category
@@ -383,7 +445,6 @@ extension InputViewController {
 extension InputViewController: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        print("클릭")
         textField.resignFirstResponder()
         return true
     }

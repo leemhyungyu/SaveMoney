@@ -15,6 +15,14 @@ class DetailViewModel {
         return saveManager.saveOfDay
     }
     
+    var selectedSave: Save {
+        return saveManager.selectedSave!
+    }
+    
+    var updateSave: Save {
+        return saveManager.updateSave!
+    }
+    
     var index: Int {
         return saveManager.indexOfSelectedSave!
     }
@@ -31,6 +39,9 @@ class DetailViewModel {
         
     }
 
+    func setSelctedSave() {
+        saveManager.setSelctedSave(saveOfDay[index])
+    }
 }
 
 

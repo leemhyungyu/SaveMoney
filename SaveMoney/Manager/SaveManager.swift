@@ -19,6 +19,10 @@ class SaveManager {
     var saves: Results<Save>?
     var eventDay = [Date]()
     var saveOfDay = [Save]()
+    var selectedSave: Save?
+    var selectedDate: Date?
+    var updateSave: Save?
+
     var indexOfSelectedSave: Int?
     var totalMoney: Int = 0
     var monthMoney: [Double] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
@@ -73,25 +77,31 @@ class SaveManager {
         eventDay = setEventDay()
     }
     
-    func deleteSelectedSave(save: Save) {
-        totalMoney -= Int(save.saveMoney)!
-        
-        UserDefaults.standard.set(totalMoney, forKey: "totalMoney")
-        
-        let selectData = realm.objects(Save.self).filter(NSPredicate(format: "id == %d", save.id)).first
-        
-        do {
-            try realm.write {
-                realm.delete(selectData!)
-            }
-        } catch {
-            print("삭제 실패")
-        }
-        
-        eventDay = setEventDay()
-        
+    func setSelctedSave(_ save: Save) {
+        self.selectedSave = save
     }
     
+    func setSelectedDate(_ date: Date) {
+        self.selectedDate = date
+    }
+    
+    func updateSave(updateSave: Save, previousSave: Save) {
+        
+        self.updateSave = updateSave
+        if let update = realm.objects(Save.self).filter(NSPredicate(format: "id = %d", previousSave.id)).first {
+            try! realm.write {
+                update.category = updateSave.category
+                update.planName = updateSave.planName
+                update.planMoney = updateSave.planMoney
+                update.finalName = updateSave.finalName
+                update.finalMoney = updateSave.finalMoney
+                update.check = updateSave.check
+                print("업데이트 성공")
+            }
+        } else {
+            print("업데이트 실패")
+        }
+    }
     
     func saveOfSelectedDay(date: String) {
         self.saveOfDay = saves!.filter { $0.day == date }

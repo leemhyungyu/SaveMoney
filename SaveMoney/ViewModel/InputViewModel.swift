@@ -19,7 +19,9 @@ class InputViewModel {
 
     var checkBoxData: Bool?
     
-    var date: Date?
+    var date: Date {
+        return saveManager.selectedDate!
+    }
     
     var saves: Results<Save> {
         return saveManager.saves!
@@ -27,6 +29,14 @@ class InputViewModel {
     
     var eventDay: [Date] {
         return saveManager.eventDay
+    }
+    
+    var selectedSave: Save {
+        return saveManager.selectedSave!
+    }
+    
+    var updateSave: Save {
+        return saveManager.updateSave!
     }
     
     func createSave(date: Date, planName: String, finalName: String, planMoney: String, finalMoney: String, category: String, check: Bool) -> Save {
@@ -44,5 +54,21 @@ class InputViewModel {
     
     func addSelectedDay(save: Save) {
         saveManager.addSelectedDay(save: save)
+    }
+    
+    func updateSave(save: Save) {
+        saveManager.updateSave(updateSave: save, previousSave: selectedSave)
+    }
+    
+    func updateSelectedSave() {
+        saveManager.setSelctedSave(self.updateSave)
+    }
+    
+    func setUpdateSave(planName: String, finalName: String, planMoney: String, finalMoney: String, category: String, check: Bool) -> Save {
+        
+        let saveMoney = Int(planMoney)! - Int(finalMoney)!
+        
+        return Save(id: selectedSave.id, day: getStringToDate(date: self.date), planName: planName, planMoney: planMoney, finalName: finalName, finalMoney: finalMoney, saveMoney: String(saveMoney), category: category, check: check)
+        
     }
 }

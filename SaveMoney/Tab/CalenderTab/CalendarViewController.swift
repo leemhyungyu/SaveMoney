@@ -270,8 +270,10 @@ extension CalendarViewController: UICollectionViewDelegate, UICollectionViewData
         
         DetailVC.detailView.setView(save: viewModel.saveOfDay[indexPath.row])
         
-        viewModel.setIndexOfSelectedSave(indexPath.row)
+        viewModel.setSelectedSave(viewModel.saveOfDay[indexPath.row])
         
+        viewModel.setIndexOfSelectedSave(indexPath.row)
+        viewModel.setSelectedDate()
         self.navigationController?.pushViewController(DetailVC, animated: true)
     }
 }
@@ -445,7 +447,7 @@ extension CalendarViewController{
     
     @objc func addBtnClicked() {
         let InputVC = InputViewController()
-        viewModel.inputViewModel.date = viewModel.date
+        viewModel.setSelectedDate()
         InputVC.label.text = getMonthAndDayForString(date: viewModel.date!)
         
         self.navigationController?.pushViewController(InputVC, animated: true)

@@ -10,10 +10,13 @@ import RealmSwift
 
 class CalendarViewModel {
     let saveManager = SaveManager.shared
-    let inputViewModel = InputViewModel.shared
     
     var day: String?
     var date: Date?
+    
+    var selectedSave: Save {
+        return saveManager.selectedSave!
+    }
     
     var todaySaveMoney: Int?
     
@@ -95,5 +98,13 @@ class CalendarViewModel {
     
     func setIndexOfSelectedSave(_ index: Int) {
         saveManager.setIndexOfSelectedSave(index)
+    }
+    
+    func setSelectedDate() {
+        saveManager.setSelectedDate(date!)
+    }
+    
+    func setSelectedSave(_ save: Save) {
+        saveManager.setSelctedSave(save)
     }
 }
