@@ -51,7 +51,6 @@ class SaveManager {
         }
         
         totalMoney += Int(save.saveMoney)!
-        setMonthMoneyData(save: save)
         UserDefaults.standard.set(totalMoney, forKey: "totalMoney")
     }
 
@@ -60,7 +59,6 @@ class SaveManager {
                 
         totalMoney -= Int(saveOfDay[index].saveMoney)!
         saveOfDay.remove(at: index)
-        deleteMonthMoneyData(save: save)
 
         UserDefaults.standard.set(totalMoney, forKey: "totalMoney")
         
@@ -88,6 +86,9 @@ class SaveManager {
     func updateSave(updateSave: Save, previousSave: Save) {
         
         self.updateSave = updateSave
+        
+        let previousSaveMoney = previousSave.saveMoney
+        
         if let update = realm.objects(Save.self).filter(NSPredicate(format: "id = %d", previousSave.id)).first {
             try! realm.write {
                 update.category = updateSave.category
@@ -97,6 +98,7 @@ class SaveManager {
                 update.finalMoney = updateSave.finalMoney
                 update.saveMoney = String(Int(updateSave.planMoney)! - Int(updateSave.finalMoney)!)
                 update.check = updateSave.check
+                self.updateTotalMoney(updateSaveMoney: update.saveMoney, previousSaveMoney: previousSaveMoney)
                 print("업데이트 성공")
             }
         } else {
@@ -104,6 +106,14 @@ class SaveManager {
         }
     }
     
+    func updateTotalMoney(updateSaveMoney: String, previousSaveMoney: String) {
+        
+        let differenceMoney = Int(updateSaveMoney)! - Int(previousSaveMoney)!
+    
+        totalMoney += differenceMoney
+        
+        UserDefaults.standard.set(totalMoney, forKey: "totalMoney")
+    }
     func saveOfSelectedDay(date: String) {
         self.saveOfDay = saves!.filter { $0.day == date }
     }
@@ -163,19 +173,6 @@ class SaveManager {
         saveOfDay.append(save)
     }
     
-    func setMonthMoneyData(save: Save) {
-        let month = getMonthToString(date: save.day)
-        
-        monthMoney[month - 1] += Double(Int(save.saveMoney)!)
-    }
-    
-    func calculateEachMoneyMoney() {
-        
-        for i in saves! {
-            monthMoney[getMonthToString(date: i.day)] += Double(Int(i.saveMoney)!)
-        }
-    }
-    
     func setEachDayDate() {
         for i in (1...7).reversed() {
             let date = Date(timeIntervalSinceNow: -Double((86400 * (i - 1))))
@@ -183,11 +180,15 @@ class SaveManager {
             eachDayAndMoney[getStringToDate(date: date)] = Double(totalMoneyOfDate(date: date))
         }
     }
-    
-    func deleteMonthMoneyData(save: Save) {
-        let month = getMonthToString(date: save.day)
-        
-        monthMoney[month - 1] -= Double(Int(save.saveMoney)!)
+
+    func setEachMonthDate() {
+        monthMoney = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+
+        for i in saves! {
+            let day = getMonthToString(date: i.day)
+            
+            monthMoney[day - 1] += Double(Int(i.saveMoney)!)
+        }
     }
     
     func setEachWeekendDate() {

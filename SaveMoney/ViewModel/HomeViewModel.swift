@@ -125,6 +125,7 @@ class HomeViewModel {
 //        saveManager.calculateEachMoneyMoney()
         saveManager.setEachDayDate()
         saveManager.setEachWeekendDate()
+        saveManager.setEachMonthDate()
         setThisMonthSaves()
         setThisWeekendSaves()
         setMaxTotalMoney()
