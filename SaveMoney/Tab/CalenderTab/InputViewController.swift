@@ -171,7 +171,6 @@ class InputViewController: UIViewController {
     
     func setting() {
         view.backgroundColor = #colorLiteral(red: 0.9933428168, green: 0.9469488263, blue: 0.9725527167, alpha: 1)
-        viewModel.checkBoxData = false
         self.tabBarController?.tabBar.isHidden = true
         self.navigationController?.setNavigationBarHidden(false, animated: false)
         setBackArrowNiavigationBar("절약하기")
@@ -422,6 +421,7 @@ extension InputViewController {
     
     func setInputVCData(save: Save) {
         
+        viewModel.checkBoxData = save.check
         doneBtn.isHidden = true
         updateButton.isHidden = false
         
