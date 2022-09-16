@@ -316,7 +316,7 @@ extension HomeViewController: ExpyTableViewDelegate, ExpyTableViewDataSource {
         
         switch indexPath.section {
         case 0:
-            if cell.moneyLabel.text == "0원" {
+            if cell.moneyLabelView.contentLabel.text == "0원" {
                 return UITableViewCell()
             } else {
                 guard let save = viewModel.maxTotalSave else {
