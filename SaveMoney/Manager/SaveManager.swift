@@ -95,6 +95,7 @@ class SaveManager {
                 update.planMoney = updateSave.planMoney
                 update.finalName = updateSave.finalName
                 update.finalMoney = updateSave.finalMoney
+                update.saveMoney = String(Int(updateSave.planMoney)! - Int(updateSave.finalMoney)!)
                 update.check = updateSave.check
                 print("업데이트 성공")
             }
