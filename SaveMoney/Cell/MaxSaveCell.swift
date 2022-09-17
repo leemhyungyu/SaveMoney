@@ -142,7 +142,7 @@ class MaxSaveCell: UITableViewCell {
 
         dayLabel.text = save.day
         categoryLabelView.setLabelView(title: "카테고리", content: save.category)
-        moneyLabelView.setLabelView(title: "금액", content: save.saveMoney)
+        moneyLabelView.setLabelView(title: "금액", content: setStringForWon(save.saveMoney))
         nameLabelView.setLabelView(title: "물품", content: nameContentLabel)
     }
     

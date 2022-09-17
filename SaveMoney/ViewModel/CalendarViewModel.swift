@@ -90,12 +90,6 @@ class CalendarViewModel {
         return result
     }
     
-    func setMonthData() {
-        for i in save {
-            saveManager.setMonthMoneyData(save: i)
-        }
-    }
-    
     func setIndexOfSelectedSave(_ index: Int) {
         saveManager.setIndexOfSelectedSave(index)
     }
