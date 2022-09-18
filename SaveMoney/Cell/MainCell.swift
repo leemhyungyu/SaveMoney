@@ -8,10 +8,14 @@ import UIKit
 import SnapKit
 
 class MainCell: UICollectionViewCell {
- 
-    var cancleButtonClosure: (() -> Void)?
+
+    // MARK: - Identifier
     
     static let identifier = "MainCell"
+
+    // MARK: - Properties
+    
+    var cancleButtonClosure: (() -> Void)?
     
     var subView: UIView = {
         let view = UIView()
@@ -72,6 +76,8 @@ class MainCell: UICollectionViewCell {
         return btn
     }()
     
+    // MARK: - init
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setUp()
@@ -81,6 +87,18 @@ class MainCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Actions
+    
+    @objc func cancleBtnClicked() {
+        if let cancleButtonClosure = cancleButtonClosure {
+            cancleButtonClosure()
+        }
+    }
+}
+
+// MARK: - Functions
+
+extension MainCell {
     func setUp() {
         
         addSubview(subView)
@@ -135,12 +153,5 @@ class MainCell: UICollectionViewCell {
         planNameLabel.text = save.planName
         finalNameLabel.text = save.finalName
         saveMoneyLabel.text = setStringForWon(save.saveMoney)
-    }
-
-    
-    @objc func cancleBtnClicked() {
-        if let cancleButtonClosure = cancleButtonClosure {
-            cancleButtonClosure()
-        }
     }
 }

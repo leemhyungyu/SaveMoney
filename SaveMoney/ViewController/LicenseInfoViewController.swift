@@ -9,6 +9,8 @@ import SnapKit
 
 class LicenseInfoViewController: UIViewController {
     
+    // MARK: - Properties
+
     var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         
@@ -23,13 +25,19 @@ class LicenseInfoViewController: UIViewController {
         return label
     }()
     
+    // MARK: - UIViewController - Lifecycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         setBackArrowNiavigationBar("오픈소스 라이브러리")
         configureUI()
     }
-    
+}
+
+// MARK: - Functions
+
+extension LicenseInfoViewController {
     func configureUI() {
         view.addSubview(scrollView)
         scrollView.addSubview(bodyLabel)

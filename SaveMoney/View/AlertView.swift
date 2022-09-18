@@ -9,7 +9,9 @@ import UIKit
 import SnapKit
 
 final class AlertView: UIView {
-        
+    
+    // MARK: - Properties
+
     lazy var backgroundView : UIView = {
         let view = UIView()
         view.backgroundColor = .black
@@ -80,6 +82,8 @@ final class AlertView: UIView {
     
     let recognizeTapBackground = UITapGestureRecognizer()
 
+    // MARK: - init
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
@@ -88,6 +92,12 @@ final class AlertView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+}
+
+
+// MARK: - Functions
+
+extension AlertView {
     
     func configureUI() {
         [backgroundView, alertView]

@@ -9,6 +9,8 @@ import UIKit
 
 class AppTabbarController: UITabBarController {
 
+    // MARK: - Properties
+    
     let homeTab: UITabBarItem = {
         
         let tabBarItem = UITabBarItem(
@@ -29,13 +31,18 @@ class AppTabbarController: UITabBarController {
         return tabBarItem
     }()
     
+    // MARK: - UITabBarController - Lifecycle
+    
     override func viewDidLoad() {
            super.viewDidLoad()
            setting()
        }
-    
+}
+
+// MARK: - Functions
+
+extension AppTabbarController {
     func setting() {
-        
         let homeVC = UINavigationController(rootViewController: HomeViewController())
         let calendarVC = UINavigationController(rootViewController: CalendarViewController())
         

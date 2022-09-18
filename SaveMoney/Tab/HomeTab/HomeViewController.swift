@@ -12,10 +12,15 @@ import RealmSwift
 
 class HomeViewController: UIViewController {
 
-    let viewModel = HomeViewModel()
-    private var tableViewHeightConstraint: NSLayoutConstraint!
-    private var lastContentOffset: CGFloat = 0.0
+    // MARK: - ViewModel
     
+    let viewModel = HomeViewModel()
+    
+    // MARK: - Properties
+
+    /// tableView의 높이  값
+    private var tableViewHeightConstraint: NSLayoutConstraint!
+        
     let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         
@@ -109,6 +114,9 @@ class HomeViewController: UIViewController {
         return button
     }()
     
+    
+    // MARK: UIViewController - Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -130,8 +138,7 @@ class HomeViewController: UIViewController {
         configureChartView()
     }
     
-
-
+    // MARK: - Actions
     
     @objc func dayButtonClicked() {
         
@@ -198,7 +205,142 @@ class HomeViewController: UIViewController {
             weekButton.isSelected = !monthButton.isSelected
         }
     }
+}
 
+// MARK: - ExpyTableViewDelegate
+
+extension HomeViewController: ExpyTableViewDelegate {
+    func tableView(_ tableView: ExpyTableView, expyState state: ExpyState, changeForSection section: Int) {
+//        switch state {
+//        case .willExpand:
+//
+//        case .willCollapse:
+//
+//         print("WILL COLLAPSE")
+//
+//        case .didExpand:
+//
+//         print("DID EXPAND")
+//
+//        case .didCollapse:
+//
+//         print("DID COLLAPSE")
+//        }
+    }
+}
+
+// MARK: - ExpyTableViewDataSource
+
+extension HomeViewController: ExpyTableViewDataSource {
+    func tableView(_ tableView: ExpyTableView, canExpandSection section: Int) -> Bool {
+        true
+    }
+    
+
+    func tableView(_ tableView: ExpyTableView, expandableCellForSection section: Int) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: HomeCell.identifier) as? HomeCell else { return UITableViewCell() }
+
+        cell.titleLabel.text = viewModel.titleOfCell(index: section)
+        cell.moneyLabel.text = viewModel.moneyOfCell(index: section)
+
+        cell.cellClicked(bool: viewModel.bool[section])
+        return cell
+    }
+}
+
+// MARK: - UITableViewDelegate
+extension HomeViewController: UITableViewDelegate {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return viewModel.numOfCell
+    }
+}
+
+// MARK: - UITableViewDataSource
+
+extension HomeViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 2
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: MaxSaveCell.identifier, for: indexPath) as? MaxSaveCell else { return UITableViewCell() }
+
+        switch indexPath.section {
+        case 0:
+            if cell.moneyLabelView.contentLabel.text == "0원" {
+                return UITableViewCell()
+            } else {
+                guard let save = viewModel.maxTotalSave else {
+                    cell.setUI(true)
+                    return cell
+                }
+                cell.upDateUI(save: viewModel.maxTotalSave!)
+            }
+        case 1:
+            guard let save = viewModel.maxThisMonthSave else {
+                cell.setUI(true)
+                return cell
+            }
+            cell.upDateUI(save: viewModel.maxThisMonthSave!)
+        case 2:
+            guard let save = viewModel.maxThisWeekendSave else {
+                cell.setUI(true)
+                return cell
+            }
+
+            cell.upDateUI(save: viewModel.maxThisWeekendSave!)
+        default:
+            break
+        }
+
+        cell.selectionStyle = .none
+        cell.setUI(false)
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+
+        if indexPath.row == 0 {
+            tableView.reloadData()
+
+            if viewModel.bool[indexPath.section] == false {
+                viewModel.bool[indexPath.section] = true
+                tableViewHeightConstraint.constant += 130
+
+            } else {
+                viewModel.bool[indexPath.section] = false
+                tableViewHeightConstraint.constant -= 130
+            }
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        switch indexPath.row {
+        case 0:
+            return 40
+        default:
+            return 130
+        }
+    }
+}
+
+// MARK: - UIScrollViewDelegate
+
+extension HomeViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+
+        if scrollView.contentOffset.y <= 50 {
+            self.navigationController?.setNavigationBarHidden(true, animated: false)
+        } else {
+            self.navigationController?.setNavigationBarHidden(false, animated: false)
+        }
+    }
+}
+
+// MARK: - Functions
+
+extension HomeViewController {
+    
     func configureUI() {
         view.backgroundColor = #colorLiteral(red: 0.9933428168, green: 0.9469488263, blue: 0.9725527167, alpha: 1)
         view.addSubview(scrollView)
@@ -273,7 +415,7 @@ class HomeViewController: UIViewController {
             $0.leading.trailing.equalToSuperview()
         }
     }
-    
+        
     func configureChartView() {
         
         dayBarChartView.setChart(dataPoints: viewModel.EachDayDate, values: viewModel.EachDayMoney)
@@ -305,122 +447,7 @@ class HomeViewController: UIViewController {
     }
 }
 
-extension HomeViewController: ExpyTableViewDelegate, ExpyTableViewDataSource {
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: MaxSaveCell.identifier, for: indexPath) as? MaxSaveCell else { return UITableViewCell() }
-        
-        switch indexPath.section {
-        case 0:
-            if cell.moneyLabelView.contentLabel.text == "0원" {
-                return UITableViewCell()
-            } else {
-                guard let save = viewModel.maxTotalSave else {
-                    cell.setUI(true)
-                    return cell
-                }
-                cell.upDateUI(save: viewModel.maxTotalSave!)
-            }
-        case 1:
-            guard let save = viewModel.maxThisMonthSave else {
-                cell.setUI(true)
-                return cell
-            }
-            cell.upDateUI(save: viewModel.maxThisMonthSave!)
-        case 2:
-            guard let save = viewModel.maxThisWeekendSave else {
-                cell.setUI(true)
-                return cell
-            }
-            
-            cell.upDateUI(save: viewModel.maxThisWeekendSave!)
-        default:
-            break
-        }
-        
-        cell.selectionStyle = .none
-        cell.setUI(false)
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        switch indexPath.row {
-        case 0:
-            return 40
-        default:
-            return 130
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        if indexPath.row == 0 {
-            tableView.reloadData()
-            
-            if viewModel.bool[indexPath.section] == false {
-                viewModel.bool[indexPath.section] = true
-                tableViewHeightConstraint.constant += 130
-
-            } else {
-                viewModel.bool[indexPath.section] = false
-                tableViewHeightConstraint.constant -= 130
-            }
-        }
-    }
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return viewModel.numOfCell
-    }
-    
-    func tableView(_ tableView: ExpyTableView, canExpandSection section: Int) -> Bool {
-        true
-    }
-    
-    func tableView(_ tableView: ExpyTableView, expyState state: ExpyState, changeForSection section: Int) {
-
-        switch state {
-        case .willExpand:
-        
-         print("WILL EXPAND")
-        case .willCollapse:
-
-         print("WILL COLLAPSE")
-
-        case .didExpand:
-
-         print("DID EXPAND")
-
-        case .didCollapse:
-
-         print("DID COLLAPSE")
-        }
-    }
-    
-    func tableView(_ tableView: ExpyTableView, expandableCellForSection section: Int) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: HomeCell.identifier) as? HomeCell else { return UITableViewCell() }
-        
-        cell.titleLabel.text = viewModel.titleOfCell(index: section)
-        cell.moneyLabel.text = viewModel.moneyOfCell(index: section)
-
-        cell.cellClicked(bool: viewModel.bool[section])
-        return cell
-    }
-}
-
-extension HomeViewController: UIScrollViewDelegate {
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-
-        if scrollView.contentOffset.y <= 50 {
-            self.navigationController?.setNavigationBarHidden(true, animated: false)
-        } else {
-            self.navigationController?.setNavigationBarHidden(false, animated: false)
-        }
-    }
-}
+// MARK: - YAxisValueFormatter
 
 class YAxisValueFormatter: ValueFormatter {
     func stringForValue(_ value: Double, entry: ChartDataEntry, dataSetIndex: Int, viewPortHandler: ViewPortHandler?) -> String {
@@ -430,3 +457,4 @@ class YAxisValueFormatter: ValueFormatter {
         return String(result)
     }
 }
+

@@ -10,7 +10,7 @@ import UIKit
 
 class LicenseViewModel {
     
-    // MARK: - Proerties
+    // MARK: - Properties
 
     let Licenses: [License] = [.SnapKit, .FSCalender, .SwiftMessages, .Charts, .ExpyTableView]
     

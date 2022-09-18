@@ -10,7 +10,11 @@ import SnapKit
 
 class DetailViewController: UIViewController {
     
+    // MARK: - ViewModel
+    
     let viewModel = DetailViewModel()
+    
+    // MARK: - Properties
     
     var detailView: DetailView = {
         let view = DetailView()
@@ -24,6 +28,8 @@ class DetailViewController: UIViewController {
         
     }()
     
+    // MARK: - UIViewController - Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
@@ -34,6 +40,8 @@ class DetailViewController: UIViewController {
         super.viewWillAppear(true)
         detailView.setView(save: viewModel.selectedSave)
     }
+    
+    // MARK: Actions
     
     @objc func changeButtonClikced() {
         let InputVC = InputViewController()
@@ -53,7 +61,11 @@ class DetailViewController: UIViewController {
             self.navigationController?.popViewController(animated: true)
         }
     }
-    
+}
+
+// MARK: - Functions
+
+extension DetailViewController {
     func configureUI() {
         view.backgroundColor = #colorLiteral(red: 0.9933428168, green: 0.9469488263, blue: 0.9725527167, alpha: 1)
         self.navigationController?.setNavigationBarHidden(false, animated: true)

@@ -11,12 +11,20 @@ import SwiftMessages
 
 class CalendarViewController: UIViewController {
     
+    // MARK: - ViewModel
+    
     let viewModel = CalendarViewModel()
+    
+    // MARK: - Properties
+    
+    // collectionView의 높이 값
     private var collectionViewHeightConstraint: NSLayoutConstraint!
+    
+    // calendarView의 높이 값
     private var calendarViewHegihtconstraint: NSLayoutConstraint!
-    private var lastContentOffset: CGFloat = 0.0
+
+    // CollectionView의 flowLayout
     var layout = UICollectionViewFlowLayout()
-    var events: [Date] = []
 
     lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
@@ -149,15 +157,16 @@ class CalendarViewController: UIViewController {
         return button
     }()
     
+    // MARK: UIViewController - Lifecycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        setting()
+        configureUI()
         setTabNavigationBar("캘린더")
         viewModel.retrieve()
         setDayData(Date())
         setHeigthConstraint()
         viewModel.setEventDay()
-//        viewModel.setMonthData()
         view.backgroundColor = #colorLiteral(red: 0.9933428168, green: 0.9469488263, blue: 0.9725527167, alpha: 1)
     }
     
@@ -169,15 +178,7 @@ class CalendarViewController: UIViewController {
 
     }
         
-    override func viewWillLayoutSubviews() {
-        
-        if view.frame.size.height < calendarViewHegihtconstraint.constant + subView.frame.size.height + layout.collectionViewContentSize.height {
-            
-            collectionViewHeightConstraint.constant = layout.collectionViewContentSize.height + CGFloat(collectionView.numberOfItems(inSection: 0) * 10)
-        } else {
-            collectionViewHeightConstraint.constant = view.frame.size.height - calendarViewHegihtconstraint.constant - subView.frame.size.height
-        }
-     }
+    // MARK: - Actioncs
     
     @objc func todayBtnClicked() {
         calendar.select(Date())
@@ -207,30 +208,31 @@ class CalendarViewController: UIViewController {
         }
         
         calendar.scope = .month
-
     }
     
-    func setHeigthConstraint() {
-        collectionView.invalidateIntrinsicContentSize()
-        collectionViewHeightConstraint = collectionView.heightAnchor.constraint(equalToConstant: 50)
-        collectionViewHeightConstraint.isActive = true
+    @objc func addBtnClicked() {
+        let InputVC = InputViewController()
+        InputVC.label.text = getMonthAndDayForString(date: viewModel.selectedDate)
         
-        calendar.invalidateIntrinsicContentSize()
-        calendarViewHegihtconstraint = calendar.heightAnchor.constraint(equalToConstant: 350)
-        calendarViewHegihtconstraint.isActive = true
+        self.navigationController?.pushViewController(InputVC, animated: true)
     }
     
+    // MARK: - Layout
     
-    func reloadMainData() {
+    override func viewWillLayoutSubviews() {
         
-        collectionView.reloadData()
-        calendar.reloadData()
-        totalSaveMoney.text = "절약한 돈: " + viewModel.setSaveMoneyOfDay()
-    }
+        if view.frame.size.height < calendarViewHegihtconstraint.constant + subView.frame.size.height + layout.collectionViewContentSize.height {
+            
+            collectionViewHeightConstraint.constant = layout.collectionViewContentSize.height + CGFloat(collectionView.numberOfItems(inSection: 0) * 10)
+        } else {
+            collectionViewHeightConstraint.constant = view.frame.size.height - calendarViewHegihtconstraint.constant - subView.frame.size.height
+        }
+     }
 }
 
-extension CalendarViewController: UICollectionViewDelegate, UICollectionViewDataSource {
-    
+// MARK: - UICollectionViewDelegate
+
+extension CalendarViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         if viewModel.numOfCell == 0 {
@@ -239,7 +241,11 @@ extension CalendarViewController: UICollectionViewDelegate, UICollectionViewData
             return viewModel.numOfCell
         }
     }
-    
+}
+
+// MARK: - UICollectionViewDataSource
+
+extension CalendarViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainCell.identifier, for: indexPath) as? MainCell else { return UICollectionViewCell() }
         
@@ -277,6 +283,9 @@ extension CalendarViewController: UICollectionViewDelegate, UICollectionViewData
     }
 }
 
+
+// MARK: - UICollectionViewDelegateFlowLayout
+
 extension CalendarViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -289,8 +298,15 @@ extension CalendarViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
-extension CalendarViewController: FSCalendarDelegate, FSCalendarDataSource {
+// MARK: - FSCalendarDeleagte
+
+extension CalendarViewController: FSCalendarDelegate {
     
+}
+
+// MARK: - FSCalendarDataSource
+
+extension CalendarViewController: FSCalendarDataSource {
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         setDayData(date)
     }
@@ -314,6 +330,10 @@ extension CalendarViewController: FSCalendarDelegate, FSCalendarDataSource {
     }
 }
 
+
+
+// MARK: - UIScrollViewDelegate
+
 extension CalendarViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
 
@@ -325,8 +345,11 @@ extension CalendarViewController: UIScrollViewDelegate {
     }
 }
 
-extension CalendarViewController{
-    func setting() {
+// MARK: - functions
+
+extension CalendarViewController {
+    
+    func configureUI() {
  
         calendar.delegate = self
         calendar.dataSource = self
@@ -443,11 +466,21 @@ extension CalendarViewController{
         totalSaveMoney.text = "절약한 돈: " + viewModel.setSaveMoneyOfDay()
         collectionView.reloadData()
     }
-    
-    @objc func addBtnClicked() {
-        let InputVC = InputViewController()
-        InputVC.label.text = getMonthAndDayForString(date: viewModel.selectedDate)
+ 
+    func setHeigthConstraint() {
+        collectionView.invalidateIntrinsicContentSize()
+        collectionViewHeightConstraint = collectionView.heightAnchor.constraint(equalToConstant: 50)
+        collectionViewHeightConstraint.isActive = true
         
-        self.navigationController?.pushViewController(InputVC, animated: true)
+        calendar.invalidateIntrinsicContentSize()
+        calendarViewHegihtconstraint = calendar.heightAnchor.constraint(equalToConstant: 350)
+        calendarViewHegihtconstraint.isActive = true
+    }
+    
+    func reloadMainData() {
+        
+        collectionView.reloadData()
+        calendar.reloadData()
+        totalSaveMoney.text = "절약한 돈: " + viewModel.setSaveMoneyOfDay()
     }
 }

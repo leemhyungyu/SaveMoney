@@ -10,6 +10,8 @@ import SnapKit
 
 class DetailLabelView: UIView {
     
+    // MARK: - Properties
+
     var titleLabel: UILabel = {
         var label = UILabel()
         
@@ -27,6 +29,8 @@ class DetailLabelView: UIView {
         return label
     }()
     
+    // MARK: - init
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
@@ -35,7 +39,11 @@ class DetailLabelView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+}
+
+// MARK: - Functions
+
+extension DetailLabelView {
     func configureUI() {
         
         [titleLabel, contentLabel] .forEach { addSubview($0) }

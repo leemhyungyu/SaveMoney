@@ -9,7 +9,11 @@ import SnapKit
 
 class LicenseCell: UITableViewCell {
     
+    // MARK: - Identifier
+
     static let identifier = "LicenseCell"
+    
+    // MARK: - Properties
     
     lazy var label: UILabel = {
         var label = UILabel()
@@ -19,6 +23,8 @@ class LicenseCell: UITableViewCell {
         return label
     }()
     
+    // MARK: - init
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         configureUI()
@@ -27,7 +33,11 @@ class LicenseCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+}
+
+// MARK: - Functions
+
+extension LicenseCell {
     func configureUI() {
         addSubview(label)
         

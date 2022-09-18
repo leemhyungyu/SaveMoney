@@ -27,7 +27,7 @@ class SettingViewModel {
 
     let saveManager = SaveManager.shared
 
-    // MARK: - Proerties
+    // MARK: - Properties
     
     let list: [settingList] = [.initialization, .source]
         

@@ -15,7 +15,7 @@ class InputViewModel {
 
     let saveManager = SaveManager.shared
 
-    // MARK: - Proerties
+    // MARK: - Properties
 
     let categories: [Category] = [.food, .transportation, .hobby, .life, .coffee, .dress, .study, .save, .etc]
 
@@ -60,7 +60,7 @@ class InputViewModel {
     }
     
     /// 저장할 때 이벤트를 추가해주는 함수
-    func addEventDay(save: Save) {
+    func addSaveAndEvent(save: Save) {
         // realm에 save객체를 추가해주는 함수
         saveManager.addSave(save: save)
         // 이벤트를 추가해주는 함수

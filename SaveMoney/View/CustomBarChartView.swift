@@ -10,6 +10,8 @@ import SnapKit
 import Charts
 
 class CustomBarChartView: BarChartView {
+    
+    // MARK: - Properties
 
     let barChartView: BarChartView = {
         
@@ -18,6 +20,8 @@ class CustomBarChartView: BarChartView {
         return charVIew
     }()
     
+    // MARK: - init
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
@@ -26,7 +30,11 @@ class CustomBarChartView: BarChartView {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+}
+
+// MARK: - Functions
+
+extension CustomBarChartView {
     func configureUI() {
         
         addSubview(barChartView)

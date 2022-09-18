@@ -9,7 +9,9 @@ import UIKit
 import SnapKit
 
 class WarningView: UIView {
-        
+    
+    // MARK: - Properties
+
     var subView: UIView = {
         let view = UIView()
         
@@ -29,6 +31,8 @@ class WarningView: UIView {
         return label
     }()
     
+    // MARK: - init
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
@@ -37,7 +41,11 @@ class WarningView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+}
+
+// MARK: - Functions
+
+extension WarningView {
     func configureUI() {
         addSubview(subView)
         subView.addSubview(warningLabel)

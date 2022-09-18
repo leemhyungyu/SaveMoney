@@ -10,10 +10,14 @@ import SnapKit
 
 class AlertViewCotroller: UIViewController {
     
+    // MARK: - Properties
+
     let alertView = AlertView()
     var alert: Alert?
     var doneButtonClosure: (() -> Void)?
     
+    // MARK: - UIViewController - Lifecycle
+
     override func loadView() {
         view = alertView
     }
@@ -23,6 +27,23 @@ class AlertViewCotroller: UIViewController {
         setViewController()
     }
     
+    // MARK: - Actions
+    
+    @objc func dismissViewController(_ sender: Any) {
+        dismiss(animated: true)
+    }
+    
+    @objc func doneButtonClicked() {
+        print("doneButtonClicked() - called")
+        if let doneButtonClosure = doneButtonClosure {
+            doneButtonClosure()
+            self.dismiss(animated: true)
+        }
+    }
+}
+
+// MARK: - Functions
+extension AlertViewCotroller {
     func setViewController() {
         alertView.titleLabel.text = alert?.title
         alertView.bodyLabel.text = alert?.body
@@ -40,17 +61,5 @@ class AlertViewCotroller: UIViewController {
             self,
             action: #selector(doneButtonClicked),
             for: .touchUpInside)
-    }
-    
-    @objc func dismissViewController(_ sender: Any) {
-        dismiss(animated: true)
-    }
-    
-    @objc func doneButtonClicked() {
-        print("doneButtonClicked() - called")
-        if let doneButtonClosure = doneButtonClosure {
-            doneButtonClosure()
-            self.dismiss(animated: true)
-        }
     }
 }

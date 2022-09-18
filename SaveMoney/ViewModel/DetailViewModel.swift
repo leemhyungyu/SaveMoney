@@ -13,7 +13,7 @@ class DetailViewModel {
 
     let saveManager = SaveManager.shared
     
-    // MARK: - Proerties
+    // MARK: - Properties
 
     /// view에서 선택된 날짜의 save객체들의 배열
     var saveOfDay: [Save] {

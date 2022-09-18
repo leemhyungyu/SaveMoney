@@ -9,7 +9,11 @@ import UIKit
 
 class SettingViewController: UIViewController {
 
+    // MARK: - ViewModel
+    
     let viewModel = SettingViewModel()
+    
+    // MARK: - Properties
     
     var tableView: UITableView = {
         let tableView = UITableView(frame: .zero)
@@ -28,34 +32,27 @@ class SettingViewController: UIViewController {
         return tableView
     }()
     
+    // MARK: - UIViewController - Lifecycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = #colorLiteral(red: 0.9933428168, green: 0.9469488263, blue: 0.9725527167, alpha: 1)
         configureUI()
         setBackArrowNiavigationBar("설정")
     }
-    
-    func configureUI() {
-        
-        self.navigationController?.setNavigationBarHidden(false, animated: false)
-        view.addSubview(tableView)
-        
-        tableView.delegate = self
-        tableView.dataSource = self
-        
-        tableView.snp.makeConstraints {
-            $0.top.bottom.equalTo(view.safeAreaLayoutGuide).inset(30)
-            $0.leading.trailing.equalToSuperview().inset(10)
-        }
-    }
 }
 
-extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
-    
+// MARK: - UITableViewDelegate
+
+extension SettingViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.numOfCell
     }
-    
+}
+
+// MARK: - UITableViewDataSource
+
+extension SettingViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: SettingCell.identifier, for: indexPath) as? SettingCell else { return UITableViewCell() }
         
@@ -88,3 +85,22 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
         return 50
     }
 }
+
+// MARK: - Functions
+
+extension SettingViewController {
+    func configureUI() {
+        
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
+        view.addSubview(tableView)
+        
+        tableView.delegate = self
+        tableView.dataSource = self
+        
+        tableView.snp.makeConstraints {
+            $0.top.bottom.equalTo(view.safeAreaLayoutGuide).inset(30)
+            $0.leading.trailing.equalToSuperview().inset(10)
+        }
+    }
+}
+

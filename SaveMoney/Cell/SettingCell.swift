@@ -10,8 +10,12 @@ import SnapKit
 
 class SettingCell: UITableViewCell {
     
+    // MARK: - Identifier
+
     static let identifier = "SettingCell"
     
+    // MARK: - Properties
+
     var label: UILabel = {
         var label = UILabel()
         
@@ -27,6 +31,8 @@ class SettingCell: UITableViewCell {
         return view
     }()
     
+    // MARK: - init
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         configureUI()
@@ -35,6 +41,11 @@ class SettingCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+}
+
+// MARK: - Functions
+
+extension SettingCell {
     
     func configureUI() {
         addSubview(label)

@@ -10,8 +10,12 @@ import SnapKit
 
 class SaveCell: UITableViewCell {
     
+    // MARK: - Identifier
+
     static let identifier = "SaveCell"
     
+    // MARK: - Properties
+
     var planName: UILabel = {
         let label = UILabel()
         
@@ -36,8 +40,8 @@ class SaveCell: UITableViewCell {
         return label
     }()
     
-    
-    
+    // MARK: - init
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -47,6 +51,11 @@ class SaveCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("")
     }
+}
+
+// MARK: - Functions
+
+extension SaveCell {
     
     func setting() {
         addSubview(planName)

@@ -10,8 +10,12 @@ import SnapKit
 
 class EmptyCell: UICollectionViewCell {
     
+    // MARK: - Identifier
+
     static let identifier = "EmptyCell"
     
+    // MARK: - Properties
+
     let subView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
@@ -39,6 +43,8 @@ class EmptyCell: UICollectionViewCell {
         return imageView
     }()
     
+    // MARK: - init
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
@@ -47,6 +53,11 @@ class EmptyCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+}
+
+// MARK: - Functions
+
+extension EmptyCell {
     
     func configureUI() {
         addSubview(subView)

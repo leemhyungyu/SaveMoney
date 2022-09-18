@@ -10,6 +10,7 @@ import SnapKit
 
 class DetailView: UIView {
     
+    // MARK: - Properties
 
     var categoryImage: UIImageView = {
         let imageView = UIImageView()
@@ -84,6 +85,8 @@ class DetailView: UIView {
         return view
     }()
     
+    // MARK: - init
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
@@ -92,6 +95,11 @@ class DetailView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+}
+
+// MARK: - Functions
+
+extension DetailView {
     
     func configureUI() {
         
@@ -170,5 +178,4 @@ class DetailView: UIView {
         SaveMoneyLabelView.setLabelView(title: "절약한 금액", content: setStringForWon(save.saveMoney))
         
     }
-
 }

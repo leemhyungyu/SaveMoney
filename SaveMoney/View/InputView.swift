@@ -10,6 +10,8 @@ import SnapKit
 
 class InputView: UIView {
     
+    // MARK: - Properties
+
     let subView: UIView = {
         
         let view = UIView()
@@ -73,6 +75,8 @@ class InputView: UIView {
         return textField
     }()
     
+    // MARK: - init
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
@@ -81,9 +85,14 @@ class InputView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+}
+
+
+// MARK: - Functions
+
+extension InputView {
     
     func configureUI() {
-        
         
         addSubview(subView)
         
@@ -127,7 +136,5 @@ class InputView: UIView {
             $0.width.equalTo(140)
             $0.height.equalTo(30)
         }
-        
     }
-    
 }

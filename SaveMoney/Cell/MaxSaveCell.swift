@@ -9,8 +9,13 @@ import UIKit
 import SnapKit
 
 class MaxSaveCell: UITableViewCell {
+    
+    // MARK: - Identifier
+
     static let identifier = "MaxSaveCell"
     
+    // MARK: - Properties
+
     var noDataView: UIView = {
         let view = UIView()
         
@@ -75,6 +80,8 @@ class MaxSaveCell: UITableViewCell {
         return label
     }()
     
+    // MARK: - init
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         configureUI()
@@ -83,6 +90,11 @@ class MaxSaveCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+}
+
+// MARK: - Functions
+
+extension MaxSaveCell {
     
     func configureUI() {
         
@@ -156,4 +168,3 @@ class MaxSaveCell: UITableViewCell {
         }
     }
 }
-

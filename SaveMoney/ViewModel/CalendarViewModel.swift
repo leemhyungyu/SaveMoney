@@ -14,7 +14,7 @@ class CalendarViewModel {
     
     let saveManager = SaveManager.shared
     
-    // MARK: - Proerties
+    // MARK: - Properties
         
     var selectedDate: Date {
         return saveManager.selectedDate!

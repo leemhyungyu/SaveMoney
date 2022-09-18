@@ -14,7 +14,7 @@ class HomeViewModel {
     
     let saveManager = SaveManager.shared
     
-    // MARK: - Proerties
+    // MARK: - Properties
     
     var HomeCellData: [Home] = [.total, .month, .week]
     

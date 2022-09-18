@@ -14,7 +14,7 @@ class SaveManager {
     
     private init () { }
     
-    // MARK: - Proerties
+    // MARK: - Properties
 
     let realm = try! Realm()
     

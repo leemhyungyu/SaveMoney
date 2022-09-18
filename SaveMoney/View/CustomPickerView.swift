@@ -10,6 +10,8 @@ import SnapKit
 
 class CustomPickerView: UIView {
     
+    // MARK: - Properties
+
     var pickerLabel: String?
     var pickerImage: UIImage?
     
@@ -29,16 +31,23 @@ class CustomPickerView: UIView {
         return imageView
     }()
     
+    // MARK: - init
+
     init(pickerLabel: String, pickerImage: UIImage) {
         self.label.text = pickerLabel
         self.imageView.image = pickerImage
         super.init(frame: .zero)
         configureUI()
     }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+}
+
+// MARK: - Functions
+
+extension CustomPickerView {
     func configureUI() {
         
         [label, imageView] .forEach { addSubview($0) }

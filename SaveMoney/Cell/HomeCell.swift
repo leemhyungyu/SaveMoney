@@ -10,8 +10,12 @@ import SnapKit
 
 class HomeCell: UITableViewCell {
     
+    // MARK: - Identifier
+
     static let identifier = "HomeCell"
     
+    // MARK: - Properties
+
     var titleLabel: UILabel = {
         var label =  UILabel()
         
@@ -47,7 +51,8 @@ class HomeCell: UITableViewCell {
         return imageView
     }()
     
-    
+    // MARK: - init
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         configureUI()
@@ -57,6 +62,11 @@ class HomeCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+}
+
+// MARK: - Functions
+
+extension HomeCell {
     
     func configureUI() {
         [titleLabel, moneyLabel, arrowUpImage, arrowDownImage] .forEach { addSubview($0) }
