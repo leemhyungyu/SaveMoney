@@ -9,58 +9,72 @@ import UIKit
 import RealmSwift
 
 class CalendarViewModel {
+    
+    // MARK: - ViewManager
+    
     let saveManager = SaveManager.shared
     
-    var day: String?
-    var date: Date?
+    // MARK: - Proerties
+        
+    var selectedDate: Date {
+        return saveManager.selectedDate!
+    }
     
+    // 선택된 Save 객체
     var selectedSave: Save {
         return saveManager.selectedSave!
     }
     
-    var todaySaveMoney: Int?
-    
+    /// 전체 Save 객체
     var save: Results<Save> {
         return saveManager.saves!
     }
 
+    /// 이벤트 날짜들의 객체
     var eventDay: [Date] {
         return saveManager.eventDay
     }
     
+    /// 선택된 날짜의 Save 배열
     var saveOfDay: [Save] {
         return saveManager.saveOfDay
     }
     
+    /// cell의 갯수
     var numOfCell: Int {
         return saveOfDay.count
     }
     
+    
+    // MARK: - Function
+    
+    /// Date를 받아와  날짜를 String으로 리턴해주는 함수 (M/D)
     func selectedDay(_ date: Date) -> String {
-        self.day = getMonthAndDayForString(date: date)
-        
-        return self.day!
+        return getMonthAndDayForString(date: date)
     }
     
+    /// 오늘의 날짜를 String으로 리턴해주는 함수 (M/D)
     func selectedToday() -> String {
-        self.day = getMonthAndDayForString(date: Date())
-
-        return self.day!
+        return getMonthAndDayForString(date: Date())
     }
     
+    /// 저장된 Save객체들과 총 저축 금액을 가져오는 함수
     func retrieve() {
         saveManager.retrieveSave()
     }
     
+    /// 달력에서 선택한 날짜의 Save객체의 배열들을 저장하는 함수
     func saveOfSelectedDay(date: String) {
         saveManager.saveOfSelectedDay(date: date)
     }
     
+    /// 삭제하는 Save객체와 해당 index를 받아와 삭제하는 함수
     func deleteOfSelectedDay(save: Save, index: Int) {
         saveManager.deleteSave(save: save, index: index)
     }
     
-    func calTodaySaveMoney() -> String {
+    /// 달력에서 선택한 날짜의 절약 금액을 리턴해주는 함수
+    func setSaveMoneyOfDay() -> String {
         
         var money: Int = 0
         
@@ -73,11 +87,13 @@ class CalendarViewModel {
         return result
     }
     
-    func eventInCalendar() {
+    /// 달력의 이벤트를 표시할 날짜를 설정해주는 함수
+    func setEventDay() {
         saveManager.setEventDay()
     }
     
-    func setCalendarSubtitleData(date: Date) -> Int {
+    /// 이벤트에 표시될 Subtitle을 리턴해주는 함수
+    func setCalendarSubtitleData(date: Date) -> String {
         
         let saves = saveManager.returnSaveOfSelectedDay(date: getStringToDate(date: date))
         
@@ -87,18 +103,16 @@ class CalendarViewModel {
             result = result + Int(i.saveMoney)!
         }
         
-        return result
+        return setIntForCommaPlus(result)
     }
     
-    func setIndexOfSelectedSave(_ index: Int) {
-        saveManager.setIndexOfSelectedSave(index)
+    /// CollectionView에서 선택된 Save객체와 index정보를 저장하는 함수
+    func setSelectedSave(save: Save, index: Int) {
+        saveManager.setSelectedSave(save: save, index: index)
     }
     
-    func setSelectedDate() {
-        saveManager.setSelectedDate(date!)
-    }
-    
-    func setSelectedSave(_ save: Save) {
-        saveManager.setSelctedSave(save)
+    /// 달력에서 선택한 날짜를 저장하는 함수
+    func setSelectedDate(_ date: Date) {
+        saveManager.setSelectedDate(date)
     }
 }

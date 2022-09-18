@@ -156,7 +156,7 @@ class CalendarViewController: UIViewController {
         viewModel.retrieve()
         setDayData(Date())
         setHeigthConstraint()
-        viewModel.eventInCalendar()
+        viewModel.setEventDay()
 //        viewModel.setMonthData()
         view.backgroundColor = #colorLiteral(red: 0.9933428168, green: 0.9469488263, blue: 0.9725527167, alpha: 1)
     }
@@ -187,7 +187,7 @@ class CalendarViewController: UIViewController {
         let day = getStringToDate(date: Date())
         viewModel.saveOfSelectedDay(date: day)
         
-        totalSaveMoney.text = "절약한 돈: " + viewModel.calTodaySaveMoney()
+        totalSaveMoney.text = "절약한 돈: " + viewModel.setSaveMoneyOfDay()
     }
     
     @objc func weekendButtonClicked() {
@@ -225,7 +225,7 @@ class CalendarViewController: UIViewController {
         
         collectionView.reloadData()
         calendar.reloadData()
-        totalSaveMoney.text = "절약한 돈: " + viewModel.calTodaySaveMoney()
+        totalSaveMoney.text = "절약한 돈: " + viewModel.setSaveMoneyOfDay()
     }
 }
 
@@ -266,14 +266,13 @@ extension CalendarViewController: UICollectionViewDelegate, UICollectionViewData
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        viewModel.setSelectedSave(save: viewModel.saveOfDay[indexPath.row], index: indexPath.row)
+        
         let DetailVC = DetailViewController()
         
-        DetailVC.detailView.setView(save: viewModel.saveOfDay[indexPath.row])
-        
-        viewModel.setSelectedSave(viewModel.saveOfDay[indexPath.row])
-        
-        viewModel.setIndexOfSelectedSave(indexPath.row)
-        viewModel.setSelectedDate()
+        DetailVC.detailView.setView(save: viewModel.selectedSave)
+
         self.navigationController?.pushViewController(DetailVC, animated: true)
     }
 }
@@ -299,7 +298,7 @@ extension CalendarViewController: FSCalendarDelegate, FSCalendarDataSource {
     
     func calendar(_ calendar: FSCalendar, subtitleFor date: Date) -> String? {
         if viewModel.eventDay.contains(date) {
-            return setIntForCommaPlus(viewModel.setCalendarSubtitleData(date: date))
+            return viewModel.setCalendarSubtitleData(date: date)
         } else {
             return nil
         }
@@ -437,18 +436,17 @@ extension CalendarViewController{
     }
     
     func setDayData(_ date: Date) {
-        viewModel.date = date
+        viewModel.setSelectedDate(date)
         label.text = viewModel.selectedDay(date)
         
         viewModel.saveOfSelectedDay(date: getStringToDate(date: date))
-        totalSaveMoney.text = "절약한 돈: " + viewModel.calTodaySaveMoney()
+        totalSaveMoney.text = "절약한 돈: " + viewModel.setSaveMoneyOfDay()
         collectionView.reloadData()
     }
     
     @objc func addBtnClicked() {
         let InputVC = InputViewController()
-        viewModel.setSelectedDate()
-        InputVC.label.text = getMonthAndDayForString(date: viewModel.date!)
+        InputVC.label.text = getMonthAndDayForString(date: viewModel.selectedDate)
         
         self.navigationController?.pushViewController(InputVC, animated: true)
     }

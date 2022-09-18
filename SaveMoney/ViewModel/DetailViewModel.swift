@@ -35,12 +35,8 @@ class DetailViewModel {
         saveManager.deleteSave(save: saveOfDay[index], index: index)
     }
     
-    func changeSave() {
-        
-    }
-
     func setSelctedSave() {
-        saveManager.setSelctedSave(saveOfDay[index])
+        saveManager.setSelectedSave(save: saveOfDay[index], index: index)
     }
 }
 

@@ -14,21 +14,36 @@ class SaveManager {
     
     private init () { }
     
+    // MARK: - Proerties
+
     let realm = try! Realm()
     
+    /// 전체 Save객체
     var saves: Results<Save>?
+    /// 이벤트 날짜들의 객체
     var eventDay = [Date]()
+    /// view에서 선택된 날짜의 save객체들의 배열
     var saveOfDay = [Save]()
+    /// view에서 선택된 Save 객체
     var selectedSave: Save?
+    /// view에서 선택된 Save 객체의 날짜 -> 이건 없앨 수 있지 않을까
     var selectedDate: Date?
+    /// 업데이트하고 난 뒤 save객체
     var updateSave: Save?
-
+    /// 선택된 Save객체의 인덱스 값
     var indexOfSelectedSave: Int?
+    /// 총 저축 금액
     var totalMoney: Int = 0
+    /// 달 별 저축 금액
     var monthMoney: [Double] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    /// 일주일간의 날짜와 저축 금액 딕셔너리 객체
     var eachDayAndMoney = [String: Double]()
+    /// 주간 날짜와 저축 금액 딕셔너리 객체
     var EachWeekendDayAndMoney = [String: Double]()
     
+    // MARK: - Function
+
+    /// Save객체를 만들어서 리턴해주는 함수
     func createSave(day: String, planName: String, finalName: String, planMoney: String, finalMoney: String, category: String, check: Bool) -> Save {
         
         var nextId: Int = 0
@@ -44,28 +59,34 @@ class SaveManager {
         return Save(id: nextId, day: day, planName: planName, planMoney: planMoney, finalName: finalName, finalMoney: finalMoney, saveMoney: String(saveMoney), category: category, check: check)
     }
     
+    /// realm에 save객체를 추가해주는  함수
     func addSave(save: Save) {
         
+        // realm을 읽어와서 받아온 save객체를 realm에 추가해줌
         try! realm.write {
             realm.add(save)
         }
         
+        // 총 저축 금액을 더해주고 저장함
         totalMoney += Int(save.saveMoney)!
         UserDefaults.standard.set(totalMoney, forKey: "totalMoney")
     }
 
-
+    
+    /// 받아온 save객체를 realm에서 삭제해주는 함수
     func deleteSave(save: Save, index: Int) {
                 
         totalMoney -= Int(saveOfDay[index].saveMoney)!
+        UserDefaults.standard.set(totalMoney, forKey: "totalMoney")
+
         saveOfDay.remove(at: index)
 
-        UserDefaults.standard.set(totalMoney, forKey: "totalMoney")
-        
+        // 받아온 save객체의 id와 같은 realm객체를 찾음
         let selectData = realm.objects(Save.self).filter(NSPredicate(format: "id == %d", save.id)).first
         
         do {
             try realm.write {
+                // realm에서 삭제
                 realm.delete(selectData!)
             }
         } catch {
@@ -75,14 +96,18 @@ class SaveManager {
         eventDay = setEventDay()
     }
     
-    func setSelctedSave(_ save: Save) {
+    /// CalendarVC - CollectionView에서 선택한 Save객체의 정보를 저장하는 함수
+    func setSelectedSave(save: Save, index: Int) {
+        self.indexOfSelectedSave = index
         self.selectedSave = save
     }
-    
+
+    /// 달력에서 선택한 날짜를 저장하는 함수
     func setSelectedDate(_ date: Date) {
         self.selectedDate = date
     }
     
+    /// 선택한 Save객체의 정보를 수정해주는 함수
     func updateSave(updateSave: Save, previousSave: Save) {
         
         self.updateSave = updateSave
@@ -106,6 +131,7 @@ class SaveManager {
         }
     }
     
+    /// Save객체 업데이트 시 총 저축 금액을 업데이트해주는 함수
     func updateTotalMoney(updateSaveMoney: String, previousSaveMoney: String) {
         
         let differenceMoney = Int(updateSaveMoney)! - Int(previousSaveMoney)!
@@ -114,15 +140,18 @@ class SaveManager {
         
         UserDefaults.standard.set(totalMoney, forKey: "totalMoney")
     }
+    
+    /// 달력에서 선택한 날짜의 Save객체의 배열들을 저장하는 함수
     func saveOfSelectedDay(date: String) {
         self.saveOfDay = saves!.filter { $0.day == date }
     }
     
+    /// 달력에서 선택한 날짜의 Save객체의 배열들을 리턴해주는 함수
     func returnSaveOfSelectedDay(date: String) -> [Save] {
         return saves!.filter { $0.day == date }
     }
     
-   
+    /// 저장된 Save객체들과 총 저축 금액을 가져오는 함수
     func retrieveSave() {
         do {
             try realm.write {
@@ -135,6 +164,7 @@ class SaveManager {
         totalMoney = UserDefaults.standard.integer(forKey: "totalMoney")
     }
     
+    /// 달력의 이벤트를 표시할 날짜를 리턴해주는 함수
     func setEventDay() -> [Date]{
 
         var result = [String]()
@@ -161,6 +191,7 @@ class SaveManager {
         
     }
     
+    /// 저장할 때 이벤트를 추가해주는 함수
     func addEventDay(date: String) {
         let date = getDateToString(text: date)
         
@@ -169,10 +200,12 @@ class SaveManager {
         }
     }
     
+    /// 저장할 때 이벤트를 추가해주는 함수 - 이거랑 위에 함수 없앨 수 있는지 확인해보자.. 아니면 합치거나
     func addSelectedDay(save: Save) {
         saveOfDay.append(save)
     }
     
+    /// 오늘을 기점으로 일주일 전까지의 날짜와 저축 금액을 저장하는 함수
     func setEachDayDate() {
         for i in (1...7).reversed() {
             let date = Date(timeIntervalSinceNow: -Double((86400 * (i - 1))))
@@ -181,6 +214,7 @@ class SaveManager {
         }
     }
 
+    /// 달별로 저축 금액을 저장하는 함수
     func setEachMonthDate() {
         monthMoney = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
@@ -191,6 +225,7 @@ class SaveManager {
         }
     }
     
+    /// 주별로 날짜와 저축 금액을 저장하는 함수
     func setEachWeekendDate() {
         
         let interval = getDateForInt(date: Date())
@@ -213,6 +248,7 @@ class SaveManager {
         }
     }
     
+    /// 입력받은 날짜를 기점으로 일주일전까지의 저축 금액을 더해서 리턴해주는 함수
     func setWeekendMoney(date: Date) -> Double {
         
         let interval = getDateForInt(date: date)
@@ -227,6 +263,7 @@ class SaveManager {
         return result
     }
     
+    /// 입력받은 날짜의 저축 금액을 반환하는 함수
     func totalMoneyOfDate(date: Date) -> Int {
         
         let saves = self.returnSaveOfSelectedDay(date: getStringToDate(date: date))
@@ -240,10 +277,7 @@ class SaveManager {
         return result
     }
     
-    func setIndexOfSelectedSave(_ index: Int) {
-        self.indexOfSelectedSave = index
-    }
-    
+    /// 데이터를 초기화해주는 함수
     func initializationAllData() {
         eventDay = [Date]()
         saveOfDay = [Save]()
