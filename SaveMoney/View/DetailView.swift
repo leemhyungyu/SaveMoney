@@ -25,7 +25,7 @@ class DetailView: UIView {
         return label
     }()
         
-    var deleteButton: UIButton = {
+    lazy var deleteButton: UIButton = {
         var configure = UIButton.Configuration.plain()
         configure.image = UIImage(systemName: "multiply")
         
@@ -35,7 +35,7 @@ class DetailView: UIView {
         return button
     }()
     
-    var changeButton: UIButton = {
+    lazy var changeButton: UIButton = {
         var configure = UIButton.Configuration.plain()
         configure.image = UIImage(systemName: "pencil")
         

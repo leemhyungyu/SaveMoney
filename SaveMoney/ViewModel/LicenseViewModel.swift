@@ -10,20 +10,27 @@ import UIKit
 
 class LicenseViewModel {
     
+    // MARK: - Proerties
+
     let Licenses: [License] = [.SnapKit, .FSCalender, .SwiftMessages, .Charts, .ExpyTableView]
     
     var numOfCell: Int {
         return Licenses.count
     }
     
+    // MARK: - Functions
+
+    /// tableView Cell의 title을 반환하는 함수
     func titleOfCell(_ index: Int) -> String {
         return Licenses[index].title
     }
     
+    /// tableView Cell의 내용을 반환하는 함수
     func bodyOfCell(_ index: Int) -> String {
         return Licenses[index].body
     }
     
+    /// tableView Cell의 사이즈를 반환하는 함수
     func sizeOfCell(index: Int, width: CGFloat) -> CGFloat {
 
         let titleLabel = UILabel()

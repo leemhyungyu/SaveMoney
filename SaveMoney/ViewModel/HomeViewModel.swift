@@ -10,7 +10,11 @@ import RealmSwift
 
 class HomeViewModel {
     
+    // MARK: - ViewManager
+    
     let saveManager = SaveManager.shared
+    
+    // MARK: - Proerties
     
     var HomeCellData: [Home] = [.total, .month, .week]
     
@@ -34,36 +38,51 @@ class HomeViewModel {
         return saveManager.EachWeekendDayAndMoney
     }
     
-    var maxThisMonthSave: Save?
-    var maxThisWeekendSave: Save?
+    /// 총 저축 금액 중 가장 큰 Save객체
     var maxTotalSave: Save?
-        
+    /// 이번 달 저축 금액 중 가장 큰 Save 객체
+    var maxThisMonthSave: Save?
+    /// 이번 주 저축 금액 중 가장 큰 Save 객체
+    var maxThisWeekendSave: Save?
+    
+    /// Cell의 개수
     var numOfCell: Int {
         return HomeCellData.count
     }
     
+    /// 총 저축 금액 (원 단위)
     var totalMoney: String?
-    var maxSaveMoney: String?
-    
+    /// 이번 달 저축 금액 (원 단위)
     var thisMonthMoney: String?
+    /// 이번 주 저축 금액 (원 단위)
     var thisWeekendMoney: String?
     
-    var day = [String]()
+    /// 일주일 간의 날짜를 순서대로 저장하는 객체
+    /// eachDayAndMoney는 순서가 랜덤임
     var EachDayDate = [String]()
+    /// 일주일 간의 저축 금액을 순서대로 저장하는 객체
+    /// eachDayAndMoney는 순서가 랜덤임
     var EachDayMoney = [Double]()
     
-    var EachWeekend = [String]()
+    /// 주간 날짜를 순서대로 저장하는 객체
     var EachWeekendDate = [String]()
+    /// 주간 저축 금액을 순서대로 저장하는 객체
     var EachWeekendMoney = [Double]()
     
+    /// 일간, 주간, 월간 그래프를 표시하기 위한 Bool값
     var bool = [false, false, false]
     
     let month = ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"]
         
+    
+    // MARK: - Functions
+    
+    /// TableView의 Cell에 표시될 title을 리턴해주는 함수
     func titleOfCell(index: Int) -> String {
         return HomeCellData[index].title
     }
     
+    /// TableView의 Cell에 표시될 금액을 리턴해주는 함수
     func moneyOfCell(index: Int) -> String {
         switch index {
         case 0:
@@ -85,6 +104,7 @@ class HomeViewModel {
         saveManager.saveOfSelectedDay(date: date)
     }
     
+    /// 총 저축 금액 중 가장 큰 금액의 Save를 가져오는 함수
     func setMaxTotalMoney() {
         let save = save.sorted(by: {Int($0.saveMoney)! > Int($1.saveMoney)!})
         
@@ -95,6 +115,7 @@ class HomeViewModel {
         }
     }
     
+    /// 이번 달 저축 금액 중 가장 큰 금액의 Save를 가져오는 함수
     func setThisMonthSaves() {
         let thisMonthSaves = save.filter { getMonthToString(date: $0.day) == getMonthToString(date: getStringToDate(date: Date()))}
         
@@ -108,6 +129,7 @@ class HomeViewModel {
         }
     }
     
+    /// 이번 주 저축 금액 중 가장 큰 금액의 Save를 가져오는 함수
     func setThisWeekendSaves() {
         let thisWeekendSaves = save.filter { getSatToString(date: getDateToString(text: $0.day)!) == getSatToString(date: Date()) }
         
@@ -122,10 +144,10 @@ class HomeViewModel {
     
     func setMoneyData() {
         
-//        saveManager.calculateEachMoneyMoney()
         saveManager.setEachDayDate()
         saveManager.setEachWeekendDate()
         saveManager.setEachMonthDate()
+        
         setThisMonthSaves()
         setThisWeekendSaves()
         setMaxTotalMoney()
@@ -139,26 +161,27 @@ class HomeViewModel {
         }
     }
     
+    /// 일주일간의 날짜와 저축 금액을  저장하는 함수
     func setEachDayDate() {
         
         EachDayDate = [String]()
         EachDayMoney = [Double]()
         
-        self.day = Array(eachDayAndMoney.keys).sorted(by: <)
+        let day = Array(eachDayAndMoney.keys).sorted(by: <)
         
-        self.day.map { self.EachDayDate.append(getMonthAndDayForString(date: $0))
+        day.map { self.EachDayDate.append(getMonthAndDayForString(date: $0))
             self.EachDayMoney.append(eachDayAndMoney[$0]!)
         }
     }
-    
 
+    /// 주간 날짜와 저축 금액을 저장하는 함수
     func setWeekendDayDate() {
         EachWeekendDate = [String]()
         EachWeekendMoney = [Double]()
         
-        self.EachWeekend = Array(eachWeekendDayAndMoney.keys).sorted(by: <)
+        let eachWeekend = Array(eachWeekendDayAndMoney.keys).sorted(by: <)
         
-        self.EachWeekend.map {
+        eachWeekend.map {
             self.EachWeekendDate.append(getWaveMonthDayForString(date: getDateToString(text: $0)!))
             
             self.EachWeekendMoney.append(eachWeekendDayAndMoney[$0]!)

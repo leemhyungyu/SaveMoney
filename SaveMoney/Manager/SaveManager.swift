@@ -26,7 +26,7 @@ class SaveManager {
     var saveOfDay = [Save]()
     /// view에서 선택된 Save 객체
     var selectedSave: Save?
-    /// view에서 선택된 Save 객체의 날짜 -> 이건 없앨 수 있지 않을까
+    /// view에서 선택된 Save 객체의 날짜
     var selectedDate: Date?
     /// 업데이트하고 난 뒤 save객체
     var updateSave: Save?
@@ -187,8 +187,6 @@ class SaveManager {
         } else {
             return []
         }
-                
-        
     }
     
     /// 저장할 때 이벤트를 추가해주는 함수
@@ -200,7 +198,7 @@ class SaveManager {
         }
     }
     
-    /// 저장할 때 이벤트를 추가해주는 함수 - 이거랑 위에 함수 없앨 수 있는지 확인해보자.. 아니면 합치거나
+    /// 저장할 때 saveOfDay 배열에 Save를 추가하는 함수
     func addSelectedDay(save: Save) {
         saveOfDay.append(save)
     }

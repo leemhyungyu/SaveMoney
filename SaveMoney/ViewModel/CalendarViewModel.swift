@@ -46,7 +46,7 @@ class CalendarViewModel {
     }
     
     
-    // MARK: - Function
+    // MARK: - Functions
     
     /// Date를 받아와  날짜를 String으로 리턴해주는 함수 (M/D)
     func selectedDay(_ date: Date) -> String {

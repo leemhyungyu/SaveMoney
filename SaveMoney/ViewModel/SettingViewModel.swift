@@ -21,21 +21,28 @@ enum settingList: CaseIterable {
     }
 }
 
-
 class SettingViewModel {
     
-    let list: [settingList] = [.initialization, .source]
-    
+    // MARK: - ViewManager
+
     let saveManager = SaveManager.shared
+
+    // MARK: - Proerties
     
+    let list: [settingList] = [.initialization, .source]
+        
     var numOfCell: Int {
         return list.count
     }
     
+    // MARK: - Functions
+
+    /// TableView의 title을 반환하는 함수
     func titleOfcell(index: Int) -> String {
         return list[index].title
     }
     
+    /// 데이터를 초기화 하는 함수
     func initializationData() {
         print("initializationData - called")
         saveManager.initializationAllData()
