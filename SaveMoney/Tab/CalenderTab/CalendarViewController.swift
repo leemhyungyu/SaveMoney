@@ -92,34 +92,11 @@ class CalendarViewController: UIViewController {
         return calendar
     }()
     
-    let subView: UIView = {
-        let subView = UIView()
-
-        subView.backgroundColor = .white
-        
-        return subView
-    }()
-
-    let label: UILabel = {
-        let label = UILabel()
-        
-        label.font = .systemFont(ofSize: 20)
-        
-        return label
-    }()
-    
-    let totalSaveMoney: UILabel = {
-        let label = UILabel()
-        
-        label.text = "오늘 절약한 돈: "
-        label.font = .systemFont(ofSize: 20)
-        
-        return label
-    }()
-    
     lazy var todayBtn: UIButton = {
-        var config = UIButton.Configuration.plain()
-        config.baseForegroundColor = .systemPink
+        var config = UIButton.Configuration.filled()
+        config.baseForegroundColor = .white
+        config.baseBackgroundColor = .systemPink
+        config.buttonSize = .mini
         
         var titleArr = AttributedString.init("Today")
         titleArr.font = .systemFont(ofSize: 16)
@@ -133,8 +110,10 @@ class CalendarViewController: UIViewController {
     }()
     
     lazy var addBtn: UIButton = {
-        var config = UIButton.Configuration.plain()
-        config.baseForegroundColor = .systemPink
+        var config = UIButton.Configuration.filled()
+        config.baseForegroundColor = .white
+        config.baseBackgroundColor = .systemPink
+        config.buttonSize = .mini
         
         var titleArr = AttributedString.init("절약하기")
         titleArr.font = .systemFont(ofSize: 16)
@@ -182,13 +161,10 @@ class CalendarViewController: UIViewController {
     
     @objc func todayBtnClicked() {
         calendar.select(Date())
-        label.text = viewModel.selectedDay(Date())
         collectionView.reloadData()
         
         let day = getStringToDate(date: Date())
         viewModel.saveOfSelectedDay(date: day)
-        
-        totalSaveMoney.text = "절약한 돈: " + viewModel.setSaveMoneyOfDay()
     }
     
     @objc func weekendButtonClicked() {
@@ -221,11 +197,11 @@ class CalendarViewController: UIViewController {
     
     override func viewWillLayoutSubviews() {
         
-        if view.frame.size.height < calendarViewHegihtconstraint.constant + subView.frame.size.height + layout.collectionViewContentSize.height {
+        if view.frame.size.height < calendarViewHegihtconstraint.constant + layout.collectionViewContentSize.height {
             
             collectionViewHeightConstraint.constant = layout.collectionViewContentSize.height + CGFloat(collectionView.numberOfItems(inSection: 0) * 10)
         } else {
-            collectionViewHeightConstraint.constant = view.frame.size.height - calendarViewHegihtconstraint.constant - subView.frame.size.height
+            collectionViewHeightConstraint.constant = view.frame.size.height - calendarViewHegihtconstraint.constant
         }
      }
 }
@@ -367,14 +343,10 @@ extension CalendarViewController {
             weekendButton,
             calendar,
             collectionView,
-            subView,
             todayBtn,
             addBtn,
             settingButton
         ] .forEach { scrollView.addSubview($0) }
-
-        [ label,
-          totalSaveMoney] .forEach { subView.addSubview($0) }
         
         view.backgroundColor = .white
         calendar.backgroundColor = .white
@@ -428,30 +400,14 @@ extension CalendarViewController {
             $0.centerY.equalTo(calendar.calendarHeaderView.snp.centerY)
             $0.leading.equalToSuperview().inset(10)
         }
-        
-        subView.snp.makeConstraints {
-            $0.top.equalTo(calendar.snp.bottom)
-            $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(50)
-        }
-        
-        label.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
-            $0.leading.equalTo(subView).inset(20)
-        }
-        
-        totalSaveMoney.snp.makeConstraints {
-            $0.top.equalTo(label)
-            $0.trailing.equalToSuperview().inset(20)
-        }
-        
+
         addBtn.snp.makeConstraints {
             $0.centerY.equalTo(calendar.calendarHeaderView.snp.centerY)
             $0.trailing.equalToSuperview().inset(20)
         }
         
         collectionView.snp.makeConstraints {
-            $0.top.equalTo(subView.snp.bottom).inset(-10)
+            $0.top.equalTo(calendar.snp.bottom).inset(-10)
             $0.leading.trailing.equalToSuperview()
             $0.bottom.equalToSuperview().offset(-30)
             $0.width.equalTo(scrollView)
@@ -460,10 +416,7 @@ extension CalendarViewController {
     
     func setDayData(_ date: Date) {
         viewModel.setSelectedDate(date)
-        label.text = viewModel.selectedDay(date)
-        
         viewModel.saveOfSelectedDay(date: getStringToDate(date: date))
-        totalSaveMoney.text = "절약한 돈: " + viewModel.setSaveMoneyOfDay()
         collectionView.reloadData()
     }
  
@@ -481,6 +434,5 @@ extension CalendarViewController {
         
         collectionView.reloadData()
         calendar.reloadData()
-        totalSaveMoney.text = "절약한 돈: " + viewModel.setSaveMoneyOfDay()
     }
 }
