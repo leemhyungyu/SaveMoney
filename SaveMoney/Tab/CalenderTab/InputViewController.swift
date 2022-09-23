@@ -101,15 +101,14 @@ class InputViewController: UIViewController {
     }()
     
     lazy var toolbar: UIToolbar = {
-        let toolbar = UIToolbar()
-        
-        toolbar.barStyle = .default
-        toolbar.isTranslucent = true
-        toolbar.sizeToFit()
-        
+        let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 35))
+
+        toolbar.translatesAutoresizingMaskIntoConstraints = false
+
         let doneBtn = UIBarButtonItem(title: "확인", style: .done, target: self, action: #selector(doneBtnOfToolbarClicked))
         
         let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
+        
         let cancleBtn = UIBarButtonItem(title: "취소", style: .done, target: self, action: #selector(cancleBtnOfToolbarClicked))
         
         doneBtn.tintColor = .systemPink
@@ -117,7 +116,7 @@ class InputViewController: UIViewController {
         
         toolbar.setItems([cancleBtn, space, doneBtn], animated: true)
         toolbar.isUserInteractionEnabled = true
-        
+            
         return toolbar
     }()
     
