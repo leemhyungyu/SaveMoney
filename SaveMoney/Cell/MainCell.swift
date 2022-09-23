@@ -149,9 +149,17 @@ extension MainCell {
     }
     
     func updateUI(save: Save) {
-        categoryimage.image = setCategoryImage(save)
+        
+        if save.category == "저축" {
+            arrowLabel.isHidden = true
+            finalNameLabel.isHidden = true
+
+        } else {
+            finalNameLabel.text = save.finalName
+        }
+        
         planNameLabel.text = save.planName
-        finalNameLabel.text = save.finalName
+        categoryimage.image = setCategoryImage(save)
         saveMoneyLabel.text = setStringForWon(save.saveMoney)
     }
 }
