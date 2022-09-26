@@ -16,7 +16,9 @@ class InputViewController: UIViewController {
     // MARK: - Properties
 
     var updateBtnClosure: (() -> Void)?
-        
+    
+    /// 해당 ViewController가 수정하기 화면인지 절약하기 화면인지 구분해주는 Bool값
+    var bool = true
     let subView: UIView = {
         let view = UIView()
         
@@ -325,7 +327,6 @@ extension InputViewController {
         view.backgroundColor = #colorLiteral(red: 0.9933428168, green: 0.9469488263, blue: 0.9725527167, alpha: 1)
         self.tabBarController?.tabBar.isHidden = true
         self.navigationController?.setNavigationBarHidden(false, animated: false)
-        setBackArrowNiavigationBar("절약하기")
         [subView, doneBtn, updateButton, segmentedControl, imaginView, realView] .forEach { view.addSubview($0) }
         [label, infoLabel] .forEach { subView.addSubview($0) }
         [checkBox, checkBoxLabel] .forEach { realView.addSubview($0) }
@@ -344,6 +345,13 @@ extension InputViewController {
         realView.categoriTextField.inputView = planPickerView
         realView.categoriTextField.inputAccessoryView = toolbar
         planPickerView.backgroundColor = .white
+        
+        // 절약하기 화면인 경우
+        if bool == true {
+            setBackArrowNiavigationBar("절약하기")
+        } else { // 수정하기 화면일 경우
+            setBackArrowNiavigationBar("수정하기")
+        }
         
         subView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
@@ -436,9 +444,14 @@ extension InputViewController {
         viewModel.addSaveAndEvent(save: save)
     }
     
+    // 수정버튼을 눌러서 InputViewController로 화면 이동했을 때 데이터 설정하는 함수
     func setInputVCData(save: Save) {
         
+        
+        self.infoLabel.text = "수정하실 정보를 입력해주세요!"
+        self.bool = false
         viewModel.checkBoxData = save.check
+        
         doneBtn.isHidden = true
         updateButton.isHidden = false
         
@@ -452,7 +465,7 @@ extension InputViewController {
             self.checkBox.isSelected = true
             setCheckBoxUI(save.check)
         } else {
-            self.realView.categoriTextField.text =  save.category
+            self.realView.categoriTextField.text = save.category
             self.realView.nameTextField.text = save.finalName
             self.realView.moneyTextField.text = save.finalMoney
         }
