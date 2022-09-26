@@ -17,6 +17,8 @@ target 'SaveMoney' do
   pod 'SwiftMessages'
   pod 'ExpyTableView'
   pod 'RealmSwift'
+  pod "Toast-Swift"
+
   target 'SaveMoneyUITests' do
     # Pods for testing
   end
