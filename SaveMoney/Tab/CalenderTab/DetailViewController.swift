@@ -16,6 +16,8 @@ class DetailViewController: UIViewController {
     
     // MARK: - Properties
     
+    var updateButtonClosure: (() -> Void)?
+    
     var detailView: DetailView = {
         let view = DetailView()
         
@@ -44,11 +46,15 @@ class DetailViewController: UIViewController {
     // MARK: Actions
     
     @objc func changeButtonClikced() {
-        let InputVC = InputViewController()
+        let inputVC = InputViewController()
         
-        InputVC.setInputVCData(save: viewModel.selectedSave)
+        inputVC.setInputVCData(save: viewModel.selectedSave)
     
-        self.navigationController?.pushViewController(InputVC, animated: true)
+        self.navigationController?.pushViewController(inputVC, animated: true)
+        
+        inputVC.updateBtnClosure = {
+            self.presentWarningView(.change)
+        }
     }
     
     @objc func deleteButtonClicked() {

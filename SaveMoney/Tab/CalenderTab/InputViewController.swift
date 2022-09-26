@@ -15,7 +15,7 @@ class InputViewController: UIViewController {
 
     // MARK: - Properties
 
-    var doneBtnClosure: (() -> Void)?
+    var updateBtnClosure: (() -> Void)?
         
     let subView: UIView = {
         let view = UIView()
@@ -205,35 +205,32 @@ class InputViewController: UIViewController {
     }
     
     @objc func updateButtonClicked(_ sender: UITapGestureRecognizer) {
-        
+       
         guard let planName = imaginView.nameTextField.text, let planMoney = imaginView.moneyTextField.text, let category = imaginView.categoriTextField.text, let finalName = realView.nameTextField.text, let finalMoney = realView.moneyTextField.text else { return }
         
         if viewModel.checkBoxData == true {
             if imaginView.nameTextField.text?.count == 0 || imaginView.moneyTextField.text?.count == 0 || imaginView.categoriTextField.text?.count == 0 {
                 presentWarningView(.input)
             } else {
-
-                
                 let save = viewModel.setUpdateSave(planName: planName, finalName: "구매 X", planMoney: planMoney, finalMoney: "0", category: category, check: true)
-                
                 viewModel.updateSave(save: save)
-                viewModel.updateSelectedSave()
-                
-                self.navigationController?.popViewController(animated: true)
             }
         } else {
             if imaginView.nameTextField.text?.count == 0 || imaginView.moneyTextField.text?.count == 0 || imaginView.categoriTextField.text?.count == 0 || realView.nameTextField.text?.count == 0 || realView.moneyTextField.text?.count == 0 {
                 
                 presentWarningView(.input)
             } else {
-                
                 let save = viewModel.setUpdateSave(planName: planName, finalName: finalName, planMoney: planMoney, finalMoney: finalMoney, category: category, check: false)
-                
                 viewModel.updateSave(save: save)
-                viewModel.updateSelectedSave()
 
-                self.navigationController?.popViewController(animated: true)
             }
+        }
+        viewModel.updateSelectedSave()
+
+        self.navigationController?.popViewController(animated: true)
+        
+        if let updateBtnClosure = updateBtnClosure {
+            updateBtnClosure()
         }
     }
     

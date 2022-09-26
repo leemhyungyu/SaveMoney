@@ -237,11 +237,13 @@ extension CalendarViewController: UICollectionViewDataSource {
             cell.cancleButtonClosure = {
                 let alertViewController = self.presentAlertView(.delete)
                 
+                self.present(alertViewController, animated: true)
+
                 alertViewController.doneButtonClosure = {
+                    self.presentWarningView(.delete)
                     self.viewModel.deleteOfSelectedDay(save: save, index: indexPath.item)
                     self.reloadMainData()
                 }
-                self.present(alertViewController, animated: true)
             }
             return cell
         }

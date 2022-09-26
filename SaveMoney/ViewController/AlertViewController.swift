@@ -34,7 +34,6 @@ class AlertViewCotroller: UIViewController {
     }
     
     @objc func doneButtonClicked() {
-        print("doneButtonClicked() - called")
         if let doneButtonClosure = doneButtonClosure {
             doneButtonClosure()
             self.dismiss(animated: true)

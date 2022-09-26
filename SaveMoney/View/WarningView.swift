@@ -12,16 +12,6 @@ class WarningView: UIView {
     
     // MARK: - Properties
 
-    var subView: UIView = {
-        let view = UIView()
-        
-        view.backgroundColor = .lightGray
-        
-        view.layer.cornerRadius = 25
-        
-        return view
-    }()
-    
     var warningLabel: UILabel = {
         let label = UILabel()
         
@@ -47,16 +37,12 @@ class WarningView: UIView {
 
 extension WarningView {
     func configureUI() {
-        addSubview(subView)
-        subView.addSubview(warningLabel)
+        
+        backgroundColor = .systemGray
+        layer.cornerRadius = 25
+        
+        addSubview(warningLabel)
 
-        subView.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(100)
-            $0.centerX.equalToSuperview()
-            $0.leading.equalToSuperview().inset(20)
-            $0.trailing.equalToSuperview().inset(20)
-            $0.height.equalTo(52)
-        }
 
         warningLabel.snp.makeConstraints {
             $0.centerX.centerY.equalToSuperview()

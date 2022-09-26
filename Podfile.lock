@@ -15,6 +15,7 @@ PODS:
   - SwiftMessages (9.0.6):
     - SwiftMessages/App (= 9.0.6)
   - SwiftMessages/App (9.0.6)
+  - Toast-Swift (5.0.1)
 
 DEPENDENCIES:
   - Charts
@@ -23,6 +24,7 @@ DEPENDENCIES:
   - RealmSwift
   - SnapKit
   - SwiftMessages
+  - Toast-Swift
 
 SPEC REPOS:
   trunk:
@@ -34,6 +36,7 @@ SPEC REPOS:
     - SnapKit
     - SwiftAlgorithms
     - SwiftMessages
+    - Toast-Swift
 
 SPEC CHECKSUMS:
   Charts: d959d6723c8eedfdd0735dfc28cb0a71762ac4d9
@@ -44,7 +47,8 @@ SPEC CHECKSUMS:
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
   SwiftAlgorithms: 38dda4731d19027fdeee1125f973111bf3386b53
   SwiftMessages: f0c7ef4705a570ad6c5e208b611f4333e660ed92
+  Toast-Swift: 9b6a70f28b3bf0b96c40d46c0c4b9d6639846711
 
-PODFILE CHECKSUM: 2bcd976189c0074724430a3dc4bf1fa0c097b6b7
+PODFILE CHECKSUM: 0e07b36bee671e40f9abda9db2ff88dad9b85c3f
 
 COCOAPODS: 1.11.3

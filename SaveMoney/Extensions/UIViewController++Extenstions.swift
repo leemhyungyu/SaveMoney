@@ -7,7 +7,7 @@
 
 import Foundation
 import UIKit
-import SwiftMessages
+import Toast_Swift
 
 extension UIViewController {
     func presentAlertView(_ Alert: Alert) -> AlertViewCotroller {
@@ -19,14 +19,17 @@ extension UIViewController {
     }
     
     func presentWarningView(_ Warning: Warning) {
-        let warningView = WarningView()
+        let warningViewWidth = UIScreen.main.bounds.width - 40
+        
+        let toastPointX = UIScreen.main.bounds.width / 2
+        
+        let toastPointY = UIScreen.main.bounds.height / 1.3
+        
+        let warningView = WarningView(frame: CGRect(x: 0, y: 0, width: warningViewWidth, height: 52))
         
         warningView.warningLabel.text = Warning.body
-        var config = SwiftMessages.Config()
-        config.duration = .seconds(seconds: 1)
-        config.keyboardTrackingView = KeyboardTrackingView()
-        config.presentationStyle = .center
-        SwiftMessages.show(config: config, view: warningView)
+        
+        self.view.showToast(warningView, duration: 1.5, point: CGPoint(x: toastPointX, y: toastPointY))
     }
     
     func setBackArrowNiavigationBar(_ title: String ) {
