@@ -60,7 +60,7 @@ func setCategoryImage(_ save: Save) -> UIImage {
     } else if save.category == "기타" {
         return UIImage(systemName: "wrench.and.screwdriver.fill")!
     } else if save.category == "의류" {
-        return UIImage(systemName: "tshrit.fill")!
+        return UIImage(systemName: "tshirt.fill")!
     } else if save.category == "교육" {
         return UIImage(systemName: "book.fill")!
     } else if save.category == "저축" {
