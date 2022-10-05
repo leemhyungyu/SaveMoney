@@ -57,6 +57,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="pig" width="792" height="624"/>
+        <image name="pig" width="512" height="512"/>
     </resources>
 </document>

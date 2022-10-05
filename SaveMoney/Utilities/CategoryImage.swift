@@ -60,7 +60,7 @@ enum Category: CaseIterable {
         case .save:
             return UIImage(systemName: "banknote.fill")!
         case .etc:
-            return UIImage(systemName: "car.fill")!
+            return UIImage(systemName: "wrench.and.screwdriver.fill")!
 
         }
     }

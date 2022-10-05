@@ -354,6 +354,7 @@ extension CalendarViewController {
         calendar.backgroundColor = .white
                 
         calendar.headerHeight = 50
+        calendar.locale = Locale(identifier: "ko_KR")
         calendar.appearance.headerMinimumDissolvedAlpha = 0.0
         calendar.appearance.headerDateFormat = "YYYY. M"
         calendar.appearance.headerTitleFont = UIFont(name: "NotoSansKR-Medium", size: 16)

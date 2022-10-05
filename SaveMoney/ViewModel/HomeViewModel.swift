@@ -163,14 +163,12 @@ class HomeViewModel {
     
     /// 일주일간의 날짜와 저축 금액을  저장하는 함수
     func setEachDayDate() {
-        
         EachDayDate = [String]()
         EachDayMoney = [Double]()
-        
-        let day = Array(eachDayAndMoney.keys).sorted(by: <)
-        
-        day.map { self.EachDayDate.append(getMonthAndDayForString(date: $0))
-            self.EachDayMoney.append(eachDayAndMoney[$0]!)
+                
+        eachDayAndMoney.sorted(by: { getMonthToString(date: $0.key) == getMonthToString(date: $1.key) ? $0.key < $1.key : $0.key > $1.key }).map {
+            EachDayDate.append(getMonthAndDayForString(date: $0.key))
+            EachDayMoney.append($0.value)
         }
     }
 
@@ -179,12 +177,9 @@ class HomeViewModel {
         EachWeekendDate = [String]()
         EachWeekendMoney = [Double]()
         
-        let eachWeekend = Array(eachWeekendDayAndMoney.keys).sorted(by: <)
-        
-        eachWeekend.map {
-            self.EachWeekendDate.append(getWaveMonthDayForString(date: getDateToString(text: $0)!))
-            
-            self.EachWeekendMoney.append(eachWeekendDayAndMoney[$0]!)
+        eachWeekendDayAndMoney.sorted(by: { getMonthToString(date: $0.key) == getMonthToString(date: $1.key) ? $0.key < $1.key : getMonthToString(date: $0.key) < getMonthToString(date: $1.key) ? getMonthToString(date: $0.key) < getMonthToString(date: $1.key) : $0.key > $1.key}).map {
+            EachWeekendDate.append(getWaveMonthDayForString(date: getDateToString(text: $0.key)!))
+            EachWeekendMoney.append($0.value)
         }
     }
 }
