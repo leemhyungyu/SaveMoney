@@ -217,6 +217,11 @@ extension CalendarViewController: UICollectionViewDelegate {
             return viewModel.numOfCell
         }
     }
+    
+    func maximumDate(for calendar: FSCalendar) -> Date {
+    
+        return Date()
+    }
 }
 
 // MARK: - UICollectionViewDataSource
@@ -367,7 +372,7 @@ extension CalendarViewController {
         calendar.appearance.selectionColor = .systemPink
         calendar.appearance.eventDefaultColor = .systemPink
         calendar.appearance.weekdayTextColor = .lightGray
-        calendar.appearance.todayColor = .systemGray4
+        calendar.appearance.todayColor = .systemGray
         calendar.appearance.calendar.sizeToFit()
         calendar.appearance.subtitleOffset = CGPoint(x: 0, y: 10)
         calendar.placeholderType = .none
