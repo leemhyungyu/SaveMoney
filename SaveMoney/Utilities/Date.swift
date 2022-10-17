@@ -23,6 +23,15 @@ func getMonthAndDayForString(date: Date) -> String {
     return dateFormatter.string(from: date)
 }
 
+func getTodayYear() -> Int {
+    
+    let dateFormatter = DateFormatter()
+    
+    dateFormatter.dateFormat = "Y"
+    
+    return Int(dateFormatter.string(from: Date()))!
+}
+
 func getDateToString(text: String) -> Date? {
     let dateFormatter = DateFormatter()
 
@@ -36,6 +45,13 @@ func getMonthToString(date: String) -> Int {
     let day = date.components(separatedBy: "/")
     
     return Int(day[1])!
+}
+
+func getMonthAndYearToString(date: String) -> (Int, Int) {
+
+    let day = date.components(separatedBy: "/")
+    
+    return (Int(day[0])!, Int(day[1])!)
 }
 
 func getMonthAndDayForString(date: String) -> String {

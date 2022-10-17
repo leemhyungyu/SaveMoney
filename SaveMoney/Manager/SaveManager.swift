@@ -217,9 +217,13 @@ class SaveManager {
         monthMoney = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
         for i in saves! {
-            let day = getMonthToString(date: i.day)
             
-            monthMoney[day - 1] += Double(Int(i.saveMoney)!)
+            let monthAndYear = getMonthAndYearToString(date: i.day)
+            
+            // saves의 날짜가 올해에 포함되면 저축 금액 저장
+            if monthAndYear.0 == getTodayYear() {
+                monthMoney[monthAndYear.1 - 1] += Double(Int(i.saveMoney)!)
+            }
         }
     }
     

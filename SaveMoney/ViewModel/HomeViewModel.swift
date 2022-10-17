@@ -182,5 +182,7 @@ class HomeViewModel {
             EachWeekendMoney.append($0.value)
         }
     }
+    
+    /// 월
 }
 
