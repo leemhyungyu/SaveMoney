@@ -165,8 +165,8 @@ class HomeViewModel {
     func setEachDayDate() {
         EachDayDate = [String]()
         EachDayMoney = [Double]()
-                
-        eachDayAndMoney.sorted(by: { getMonthToString(date: $0.key) == getMonthToString(date: $1.key) ? $0.key < $1.key : $0.key > $1.key }).map {
+        
+        eachDayAndMoney.sorted(by: { $0.key < $1.key }).map {
             EachDayDate.append(getMonthAndDayForString(date: $0.key))
             EachDayMoney.append($0.value)
         }
@@ -177,12 +177,18 @@ class HomeViewModel {
         EachWeekendDate = [String]()
         EachWeekendMoney = [Double]()
         
-        eachWeekendDayAndMoney.sorted(by: { getMonthToString(date: $0.key) == getMonthToString(date: $1.key) ? $0.key < $1.key : getMonthToString(date: $0.key) < getMonthToString(date: $1.key) ? getMonthToString(date: $0.key) < getMonthToString(date: $1.key) : $0.key > $1.key}).map {
+        eachWeekendDayAndMoney.sorted(by: {
+            if getMonthToString(date: $0.key) == getMonthToString(date: $1.key) {
+                return $0.key < $1.key
+            } else if getMonthToString(date: $0.key) < getMonthToString(date: $1.key) {
+                return getMonthToString(date: $0.key) < getMonthToString(date: $1.key)
+            } else {
+                return getMonthToString(date: $0.key) < getMonthToString(date: $1.key)
+            }
+        }).map {
             EachWeekendDate.append(getWaveMonthDayForString(date: getDateToString(text: $0.key)!))
             EachWeekendMoney.append($0.value)
         }
     }
-    
-    /// 월
 }
 
