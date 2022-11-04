@@ -258,11 +258,8 @@ extension CalendarViewController: UICollectionViewDataSource {
         
         viewModel.setSelectedSave(save: viewModel.saveOfDay[indexPath.row], index: indexPath.row)
         
-        let DetailVC = DetailViewController()
         
-        DetailVC.detailView.setView(save: viewModel.selectedSave)
-
-        self.navigationController?.pushViewController(DetailVC, animated: true)
+        presentDetailViewController(viewModel.selectedSave, false)
     }
 }
 

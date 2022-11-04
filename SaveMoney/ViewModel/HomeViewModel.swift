@@ -38,6 +38,10 @@ class HomeViewModel {
         return saveManager.EachWeekendDayAndMoney
     }
     
+    var selectedSave: Save {
+        return saveManager.selectedSave!
+    }
+    
     /// 총 저축 금액 중 가장 큰 Save객체
     var maxTotalSave: Save?
     /// 이번 달 저축 금액 중 가장 큰 Save 객체
@@ -94,6 +98,26 @@ class HomeViewModel {
         default:
             return "0원"
         }
+    }
+    
+    func detailInfo(_ section: Int) -> Save {
+        switch section {
+        case 0:
+            setSelectedSave(save: maxTotalSave!)
+            return maxTotalSave!
+        case 1:
+            setSelectedSave(save: maxThisMonthSave!)
+            return maxThisMonthSave!
+        case 2:
+            setSelectedSave(save: maxThisWeekendSave!)
+            return maxThisWeekendSave!
+        default:
+            return Save()
+        }
+    }
+    
+    func setSelectedSave(save: Save) {
+        saveManager.setSlectedSaveForHomeVC(save)
     }
     
     func retrieve() {

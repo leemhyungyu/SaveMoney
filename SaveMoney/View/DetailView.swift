@@ -178,4 +178,12 @@ extension DetailView {
         SaveMoneyLabelView.setLabelView(title: "절약한 금액", content: setStringForWon(save.saveMoney))
         
     }
+    
+    func setDiffrentView(_ check: Bool) {
+        
+        if check {
+            deleteButton.isHidden = true
+            changeButton.isHidden = true
+        }
+    }
 }

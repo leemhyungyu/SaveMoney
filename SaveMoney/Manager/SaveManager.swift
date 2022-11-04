@@ -101,6 +101,10 @@ class SaveManager {
         self.indexOfSelectedSave = index
         self.selectedSave = save
     }
+    
+    func setSlectedSaveForHomeVC(_ save: Save) {
+        self.selectedSave = save
+    }
 
     /// 달력에서 선택한 날짜를 저장하는 함수
     func setSelectedDate(_ date: Date) {

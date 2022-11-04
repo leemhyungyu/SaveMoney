@@ -303,14 +303,15 @@ extension HomeViewController: UITableViewDataSource {
         if indexPath.row == 0 {
             tableView.reloadData()
 
-            if viewModel.bool[indexPath.section] == false {
-                viewModel.bool[indexPath.section] = true
-                tableViewHeightConstraint.constant += 130
-
-            } else {
+            if viewModel.bool[indexPath.section] {
                 viewModel.bool[indexPath.section] = false
                 tableViewHeightConstraint.constant -= 130
+            } else {
+                viewModel.bool[indexPath.section] = true
+                tableViewHeightConstraint.constant += 130
             }
+        } else {
+            presentDetailViewController(viewModel.detailInfo(indexPath.section), true)
         }
     }
     

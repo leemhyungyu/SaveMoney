@@ -10,6 +10,14 @@ import UIKit
 import Toast_Swift
 
 extension UIViewController {
+    func presentDetailViewController(_ save: Save, _ check: Bool) {
+        let DetailVC = DetailViewController()
+        DetailVC.detailView.setView(save: save)
+        DetailVC.detailView.setDiffrentView(check)
+        
+        self.navigationController?.pushViewController(DetailVC, animated: true)
+    }
+    
     func presentAlertView(_ Alert: Alert) -> AlertViewCotroller {
         let alertViewController = AlertViewCotroller()
         alertViewController.alert = Alert
