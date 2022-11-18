@@ -49,7 +49,7 @@ func setInForCommaMinus(_ text: Int) -> String {
 func setCategoryImage(_ save: Save) -> UIImage {
     if save.category == "교통비" {
         return UIImage(systemName: "car.fill")!
-    } else if save.category == "음식" {
+    } else if save.category == "식비" {
         return UIImage(systemName: "fork.knife")!
     } else if save.category == "취미" {
         return UIImage(systemName: "gamecontroller.fill")!

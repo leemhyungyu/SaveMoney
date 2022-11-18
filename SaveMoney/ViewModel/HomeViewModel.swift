@@ -103,8 +103,13 @@ class HomeViewModel {
     func detailInfo(_ section: Int) -> Save {
         switch section {
         case 0:
-            setSelectedSave(save: maxTotalSave!)
-            return maxTotalSave!
+            if let maxTotalSave = maxTotalSave {
+                setSelectedSave(save: maxTotalSave)
+                return maxTotalSave
+            } else {
+                return Save()
+            }
+            
         case 1:
             setSelectedSave(save: maxThisMonthSave!)
             return maxThisMonthSave!

@@ -71,9 +71,7 @@ class InputViewController: UIViewController {
     lazy var label: UILabel = {
        
         let label = UILabel()
-        
-        label.text = "6월 22일"
-        
+                
         label.font = .systemFont(ofSize: 30)
         
         return label
