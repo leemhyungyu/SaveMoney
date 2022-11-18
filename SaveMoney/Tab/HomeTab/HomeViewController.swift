@@ -69,10 +69,19 @@ class HomeViewController: UIViewController {
     }()
     
     var monthBarChartView: CustomBarChartView = {
-        let barCharView = CustomBarChartView()
+        let customBarChartView = CustomBarChartView()
         
-        barCharView.isHidden = true
-        return barCharView
+        customBarChartView.isHidden = true
+        customBarChartView.barChartView.xAxis.labelCount = 6
+        
+        customBarChartView.barChartView.xAxis.axisMinimum = -0.5
+        customBarChartView.barChartView.xAxis.axisMaximum = 11.5
+
+        customBarChartView.barChartView.setVisibleXRangeMaximum(6)
+        customBarChartView.barChartView.xAxis.setLabelCount(6, force: false)
+        customBarChartView.barChartView.moveViewToX(12)
+        
+        return customBarChartView
     }()
     
     lazy var monthButton: UIButton = {

@@ -57,7 +57,7 @@ extension CustomBarChartView {
         barChartView.doubleTapToZoomEnabled = true
         barChartView.legend.enabled = false
         barChartView.xAxis.drawGridLinesEnabled = false
-        barChartView.dragEnabled = false
+        barChartView.dragEnabled = true
         barChartView.animate(xAxisDuration: 2.0, yAxisDuration: 2.0)
     }
     
