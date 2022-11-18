@@ -70,10 +70,19 @@ class HomeViewController: UIViewController {
     }()
     
     let weekBarChartView: CustomBarChartView = {
-        let barChartView = CustomBarChartView()
-        barChartView.xAxis.labelCount = 12
-        barChartView.isHidden = true
-        return barChartView
+        let customBarChartView = CustomBarChartView()
+        customBarChartView.xAxis.labelCount = 12
+        customBarChartView.isHidden = true
+        
+        customBarChartView.isHidden = false
+        
+        customBarChartView.barChartView.xAxis.axisMinimum = -0.5
+        customBarChartView.barChartView.xAxis.axisMaximum = 11.5
+
+        customBarChartView.barChartView.setVisibleXRangeMaximum(6)
+        customBarChartView.barChartView.xAxis.setLabelCount(6, force: false)
+        customBarChartView.barChartView.moveViewToX(11.5)
+        return customBarChartView
     }()
     
     var monthBarChartView: CustomBarChartView = {
@@ -87,7 +96,7 @@ class HomeViewController: UIViewController {
 
         customBarChartView.barChartView.setVisibleXRangeMaximum(6)
         customBarChartView.barChartView.xAxis.setLabelCount(6, force: false)
-        customBarChartView.barChartView.moveViewToX(12)
+        customBarChartView.barChartView.moveViewToX(11.5)
         
         return customBarChartView
     }()
@@ -435,7 +444,7 @@ extension HomeViewController {
         
         dayBarChartView.setChart(dataPoints: viewModel.dateOfEachDayForThreeMonth, values: viewModel.moneyOfEachDayForThreeMonth)
         
-        weekBarChartView.setChart(dataPoints: viewModel.EachWeekendDate, values: viewModel.EachWeekendMoney)
+        weekBarChartView.setChart(dataPoints: viewModel.dateOfEachWeekendForTwelfthWeek, values: viewModel.moneyOfEachWeekendForTwelfthWeek)
         
         monthBarChartView.setChart(dataPoints: viewModel.month, values: viewModel.monthMoney)
     }

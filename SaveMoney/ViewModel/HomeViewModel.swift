@@ -29,10 +29,10 @@ class HomeViewModel {
     var monthMoney: [Double] {
         return saveManager.monthMoney
     }
-    
-    var eachWeekendDayAndMoney: [String: Double] {
-        return saveManager.EachWeekendDayAndMoney
-    }
+//
+//    var eachWeekendDayAndMoney: [String: Double] {
+//        return saveManager.EachWeekendDayAndMoney
+//    }
     
     var selectedSave: Save {
         return saveManager.selectedSave!
@@ -67,6 +67,12 @@ class HomeViewModel {
     
     /// 오늘부터 90일전까지의 각 일마다의 날짜 정보
     var dateOfEachDayForThreeMonth: [String] = Array(repeating: "", count: 90)
+    
+    /// 오늘부터 12주전까지의 각 주차마다의 저축 금액
+    var moneyOfEachWeekendForTwelfthWeek: [Double] = Array(repeating: 0.0, count: 12)
+    
+    /// 오늘부터 12주전까지의 각 주차마다의 날짜 정보
+    var dateOfEachWeekendForTwelfthWeek: [String] = Array(repeating: "", count: 12)
     
     /// 일간, 주간, 월간 그래프를 표시하기 위한 Bool값
     var bool = [false, false, false]
@@ -168,7 +174,7 @@ class HomeViewModel {
     func setMoneyData() {
         
         setEachDayDate()
-        saveManager.setEachWeekendDate()
+        setWeekendDayDate()
         saveManager.setEachMonthDate()
         
         setThisMonthSaves()
@@ -176,7 +182,9 @@ class HomeViewModel {
         setMaxTotalMoney()
         
         self.thisMonthMoney = setIntForWon(Int((monthMoney[Int(getMonthToDate(date: Date()))! - 1])))
-        self.thisWeekendMoney = setIntForWon(Int(eachWeekendDayAndMoney[getStringToDate(date: getSatToDate(date: Date()))]!))
+        
+        self.thisWeekendMoney = setIntForWon(Int(moneyOfEachWeekendForTwelfthWeek.last!))
+        
         if save.count >= 1 {
             totalMoney = setIntForWon(saveManager.totalMoney)
         } else {
@@ -186,21 +194,30 @@ class HomeViewModel {
 
     /// 주간 날짜와 저축 금액을 저장하는 함수
     func setWeekendDayDate() {
-        EachWeekendDate = [String]()
-        EachWeekendMoney = [Double]()
+        let interval = getDateForInt(date: Date())
         
-        eachWeekendDayAndMoney.sorted(by: {
-            if getMonthToString(date: $0.key) == getMonthToString(date: $1.key) {
-                return $0.key < $1.key
-            } else if getMonthToString(date: $0.key) < getMonthToString(date: $1.key) {
-                return getMonthToString(date: $0.key) < getMonthToString(date: $1.key)
-            } else {
-                return getMonthToString(date: $0.key) < getMonthToString(date: $1.key)
+        // 오늘이 토요일이 아니면
+        if interval != 7 {
+            let sat = Date(timeIntervalSinceNow: Double(86400 * (7 - interval)))
+            
+            for i in (0...11).reversed() {
+                let pastSat = Date(timeInterval: -(Double((604800) * (11 - i))), since: sat)
+                
+                moneyOfEachWeekendForTwelfthWeek[i] = setWeekendMoney(date: pastSat)
+                dateOfEachWeekendForTwelfthWeek[i] = getWaveMonthDayForString(date: pastSat)
+                
             }
-        }).map {
-            EachWeekendDate.append(getWaveMonthDayForString(date: getDateToString(text: $0.key)!))
-            EachWeekendMoney.append($0.value)
+        } else {
+            for i in (0...11).reversed() {
+                let pastSat = Date(timeInterval: -(Double((604800) * (11 - i))), since: Date())
+                
+                moneyOfEachWeekendForTwelfthWeek[i] = setWeekendMoney(date: pastSat)
+                dateOfEachWeekendForTwelfthWeek[i] = getWaveMonthDayForString(date: pastSat)
+            }
         }
+        
+        print(moneyOfEachWeekendForTwelfthWeek)
+        print(dateOfEachWeekendForTwelfthWeek)
     }
     
     /// 오늘을 기점으로 90일 전까지의 날짜와 저축 금액을 저장하는 함수
@@ -214,6 +231,21 @@ class HomeViewModel {
             moneyOfEachDayForThreeMonth[i] = Double(saveManager.totalMoneyOfDate(date: date))
             
         }
+    }
+    
+    /// 입력받은 날짜를 기점으로 일주일전까지의 저축 금액을 더해서 리턴해주는 함수
+    func setWeekendMoney(date: Date) -> Double {
+        
+        let interval = getDateForInt(date: date)
+        
+        var result: Double = 0.0
+
+        for i in 0...interval - 1 {
+            let pastDate = Date(timeInterval: -(Double(86400 * i)), since: date)
+            result += Double(saveManager.totalMoneyOfDate(date: pastDate))
+        }
+        
+        return result
     }
 }
 

@@ -36,9 +36,6 @@ class SaveManager {
     var totalMoney: Int = 0
     /// 달 별 저축 금액
     var monthMoney: [Double] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-
-    /// 주간 날짜와 저축 금액 딕셔너리 객체
-    var EachWeekendDayAndMoney = [String: Double]()
     
     // MARK: - Function
 
@@ -219,44 +216,6 @@ class SaveManager {
                 monthMoney[monthAndYear.1 - 1] += Double(Int(i.saveMoney)!)
             }
         }
-    }
-    
-    /// 주별로 날짜와 저축 금액을 저장하는 함수
-    func setEachWeekendDate() {
-        
-        let interval = getDateForInt(date: Date())
-        
-        if interval != 7 {
-            let sat = Date(timeIntervalSinceNow: Double(86400 * (7 - interval)))
-            
-            for i in (0...6).reversed() {
-                let pastSat = Date(timeInterval: -(Double((604800) * i)), since: sat)
-                
-                EachWeekendDayAndMoney[getStringToDate(date: pastSat)] = setWeekendMoney(date: pastSat)
-            }
-            
-        } else {
-            for i in (0...6).reversed() {
-                let pastSat = Date(timeInterval: -(Double((604800) * i)), since: Date())
-                
-                EachWeekendDayAndMoney[getStringToDate(date: pastSat)] = setWeekendMoney(date: pastSat)
-            }
-        }
-    }
-    
-    /// 입력받은 날짜를 기점으로 일주일전까지의 저축 금액을 더해서 리턴해주는 함수
-    func setWeekendMoney(date: Date) -> Double {
-        
-        let interval = getDateForInt(date: date)
-        
-        var result: Double = 0.0
-
-        for i in 0...interval - 1 {
-            let pastDate = Date(timeInterval: -(Double(86400 * i)), since: date)
-            result += Double(totalMoneyOfDate(date: pastDate))
-        }
-        
-        return result
     }
     
     /// 입력받은 날짜의 저축 금액을 반환하는 함수
