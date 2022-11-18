@@ -6,6 +6,17 @@
 //
 import Foundation
 
+func getThreeMonthDayDate() -> [String] {
+    
+    var result = [String]()
+    
+    for i in (1...90).reversed() {
+        result.append(getMonthAndDayForString(date: Date(timeInterval: -(60*60*24*Double(i)), since: Date.now)))
+    }
+    
+    return result
+}
+
 func getStringToDate(date: Date) -> String {
     let dateFormatter = DateFormatter()
     

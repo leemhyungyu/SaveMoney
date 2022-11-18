@@ -54,11 +54,19 @@ class HomeViewController: UIViewController {
     }()
             
     let dayBarChartView: CustomBarChartView = {
-        let barChartView = CustomBarChartView()
+        let customBarChartView = CustomBarChartView()
         
-        barChartView.xAxis.labelCount = 7
-        barChartView.isHidden = false
-        return barChartView
+        customBarChartView.xAxis.labelCount = 7
+        customBarChartView.isHidden = false
+        
+        customBarChartView.barChartView.xAxis.axisMinimum = -0.5
+        customBarChartView.barChartView.xAxis.axisMaximum = 89.5
+
+        customBarChartView.barChartView.setVisibleXRangeMaximum(6)
+        customBarChartView.barChartView.xAxis.setLabelCount(6, force: false)
+        customBarChartView.barChartView.moveViewToX(89.5)
+        
+        return customBarChartView
     }()
     
     let weekBarChartView: CustomBarChartView = {
@@ -130,8 +138,6 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         setTabNavigationBar("홈")
-        viewModel.retrieve()
-        viewModel.setEachDayDate()
         viewModel.setWeekendDayDate()
         self.navigationController?.navigationBar.isHidden = true
         configureUI()
@@ -141,7 +147,6 @@ class HomeViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         viewModel.retrieve()
         viewModel.setMoneyData()
-        viewModel.setEachDayDate()
         viewModel.setWeekendDayDate()
         tableView.reloadData()
         configureChartView()
@@ -428,7 +433,7 @@ extension HomeViewController {
         
     func configureChartView() {
         
-        dayBarChartView.setChart(dataPoints: viewModel.EachDayDate, values: viewModel.EachDayMoney)
+        dayBarChartView.setChart(dataPoints: viewModel.dateOfEachDayForThreeMonth, values: viewModel.moneyOfEachDayForThreeMonth)
         
         weekBarChartView.setChart(dataPoints: viewModel.EachWeekendDate, values: viewModel.EachWeekendMoney)
         

@@ -36,8 +36,7 @@ class SaveManager {
     var totalMoney: Int = 0
     /// 달 별 저축 금액
     var monthMoney: [Double] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-    /// 일주일간의 날짜와 저축 금액 딕셔너리 객체
-    var eachDayAndMoney = [String: Double]()
+
     /// 주간 날짜와 저축 금액 딕셔너리 객체
     var EachWeekendDayAndMoney = [String: Double]()
     
@@ -206,15 +205,6 @@ class SaveManager {
     func addSelectedDay(save: Save) {
         saveOfDay.append(save)
     }
-    
-    /// 오늘을 기점으로 일주일 전까지의 날짜와 저축 금액을 저장하는 함수
-    func setEachDayDate() {
-        for i in (1...7).reversed() {
-            let date = Date(timeIntervalSinceNow: -Double((86400 * (i - 1))))
-            
-            eachDayAndMoney[getStringToDate(date: date)] = Double(totalMoneyOfDate(date: date))
-        }
-    }
 
     /// 달별로 저축 금액을 저장하는 함수
     func setEachMonthDate() {
@@ -289,7 +279,6 @@ class SaveManager {
         saveOfDay = [Save]()
         totalMoney = 0
         monthMoney = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-        eachDayAndMoney = [String: Double]()
         UserDefaults.standard.set(0, forKey: "totalMoney")
         
         do {

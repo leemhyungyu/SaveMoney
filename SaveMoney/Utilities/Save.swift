@@ -8,26 +8,6 @@
 import UIKit
 import RealmSwift
 
-//struct Save: Codable {
-//    var id: Int
-//    var day: String
-//    var planName: String
-//    var planMoney: String
-//    var finalName: String
-//    var finalMoney: String
-//    var saveMoney: String
-//    var category: String
-//
-//    mutating func update(day: String, planName: String, planMoney: String, finalName: String, finalMoney: String, category: String) {
-//        self.day = day
-//        self.planName = planName
-//        self.planMoney = planMoney
-//        self.finalName = finalName
-//        self.finalMoney = finalMoney
-//        self.category = category
-//    }
-//}
-
 class Save: Object {
 
     @Persisted(primaryKey: true) var id: Int

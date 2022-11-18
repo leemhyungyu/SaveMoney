@@ -30,10 +30,6 @@ class HomeViewModel {
         return saveManager.monthMoney
     }
     
-    var eachDayAndMoney: [String: Double] {
-        return saveManager.eachDayAndMoney
-    }
-    
     var eachWeekendDayAndMoney: [String: Double] {
         return saveManager.EachWeekendDayAndMoney
     }
@@ -61,24 +57,22 @@ class HomeViewModel {
     /// 이번 주 저축 금액 (원 단위)
     var thisWeekendMoney: String?
     
-    /// 일주일 간의 날짜를 순서대로 저장하는 객체
-    /// eachDayAndMoney는 순서가 랜덤임
-    var EachDayDate = [String]()
-    /// 일주일 간의 저축 금액을 순서대로 저장하는 객체
-    /// eachDayAndMoney는 순서가 랜덤임
-    var EachDayMoney = [Double]()
-    
     /// 주간 날짜를 순서대로 저장하는 객체
     var EachWeekendDate = [String]()
     /// 주간 저축 금액을 순서대로 저장하는 객체
     var EachWeekendMoney = [Double]()
+    
+    /// 오늘부터 90일전까지의 각 일마다의 저축 금액
+    var moneyOfEachDayForThreeMonth: [Double] = Array(repeating: 0.0, count: 90)
+    
+    /// 오늘부터 90일전까지의 각 일마다의 날짜 정보
+    var dateOfEachDayForThreeMonth: [String] = Array(repeating: "", count: 90)
     
     /// 일간, 주간, 월간 그래프를 표시하기 위한 Bool값
     var bool = [false, false, false]
     
     let month = ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"]
         
-    
     // MARK: - Functions
     
     /// TableView의 Cell에 표시될 title을 리턴해주는 함수
@@ -173,7 +167,7 @@ class HomeViewModel {
     
     func setMoneyData() {
         
-        saveManager.setEachDayDate()
+        setEachDayDate()
         saveManager.setEachWeekendDate()
         saveManager.setEachMonthDate()
         
@@ -187,17 +181,6 @@ class HomeViewModel {
             totalMoney = setIntForWon(saveManager.totalMoney)
         } else {
             totalMoney = "0원"
-        }
-    }
-    
-    /// 일주일간의 날짜와 저축 금액을  저장하는 함수
-    func setEachDayDate() {
-        EachDayDate = [String]()
-        EachDayMoney = [Double]()
-        
-        eachDayAndMoney.sorted(by: { $0.key < $1.key }).map {
-            EachDayDate.append(getMonthAndDayForString(date: $0.key))
-            EachDayMoney.append($0.value)
         }
     }
 
@@ -217,6 +200,19 @@ class HomeViewModel {
         }).map {
             EachWeekendDate.append(getWaveMonthDayForString(date: getDateToString(text: $0.key)!))
             EachWeekendMoney.append($0.value)
+        }
+    }
+    
+    /// 오늘을 기점으로 90일 전까지의 날짜와 저축 금액을 저장하는 함수
+    func setEachDayDate() {
+                
+        for i in (0...89) {
+            let date = Date(timeInterval: -(60*60*24*Double(89 - i)), since: Date.now)
+            
+            dateOfEachDayForThreeMonth[i] = getMonthAndDayForString(date: date)
+                        
+            moneyOfEachDayForThreeMonth[i] = Double(saveManager.totalMoneyOfDate(date: date))
+            
         }
     }
 }
