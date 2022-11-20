@@ -237,7 +237,6 @@ class SaveManager {
         eventDay = [Date]()
         saveOfDay = [Save]()
         totalMoney = 0
-        monthMoney = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         UserDefaults.standard.set(0, forKey: "totalMoney")
         
         do {

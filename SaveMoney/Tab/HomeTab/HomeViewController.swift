@@ -446,7 +446,7 @@ extension HomeViewController {
         
         weekBarChartView.setChart(dataPoints: viewModel.dateOfEachWeekendForTwelfthWeek, values: viewModel.moneyOfEachWeekendForTwelfthWeek)
         
-        monthBarChartView.setChart(dataPoints: viewModel.month, values: viewModel.monthMoney)
+        monthBarChartView.setChart(dataPoints: viewModel.dateOfEachMonthForTwelfthMonth, values: viewModel.moneyOfEachMonthForTwelfthMonth)
     }
     
     func setChart(barchartView: BarChartView, dataPoints: [String], values: [Double]) {

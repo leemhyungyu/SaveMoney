@@ -26,9 +26,6 @@ class HomeViewModel {
         return saveManager.saveOfDay
     }
     
-    var monthMoney: [Double] {
-        return saveManager.monthMoney
-    }
 //
 //    var eachWeekendDayAndMoney: [String: Double] {
 //        return saveManager.EachWeekendDayAndMoney
@@ -77,8 +74,13 @@ class HomeViewModel {
     /// 일간, 주간, 월간 그래프를 표시하기 위한 Bool값
     var bool = [false, false, false]
     
-    let month = ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"]
-        
+    /// 오늘부터 12개월전까지의 각 월마다의 날짜 정보
+    var dateOfEachMonthForTwelfthMonth: [String] = Array(repeating: "", count: 12)
+    
+    /// 오늘부터 12개월전까지의 각 월마다 저축 금액
+    var moneyOfEachMonthForTwelfthMonth: [Double] = Array(repeating: 0.0, count: 12)
+    
+         
     // MARK: - Functions
     
     /// TableView의 Cell에 표시될 title을 리턴해주는 함수
@@ -175,15 +177,17 @@ class HomeViewModel {
         
         setEachDayDate()
         setWeekendDayDate()
+        setMonthDateAndMoney()
+        
         saveManager.setEachMonthDate()
         
         setThisMonthSaves()
         setThisWeekendSaves()
         setMaxTotalMoney()
         
-        self.thisMonthMoney = setIntForWon(Int((monthMoney[Int(getMonthToDate(date: Date()))! - 1])))
-        
         self.thisWeekendMoney = setIntForWon(Int(moneyOfEachWeekendForTwelfthWeek.last!))
+        
+        self.thisMonthMoney = setIntForWon(Int(moneyOfEachWeekendForTwelfthWeek.last!))
         
         if save.count >= 1 {
             totalMoney = setIntForWon(saveManager.totalMoney)
@@ -215,21 +219,52 @@ class HomeViewModel {
                 dateOfEachWeekendForTwelfthWeek[i] = getWaveMonthDayForString(date: pastSat)
             }
         }
-        
-        print(moneyOfEachWeekendForTwelfthWeek)
-        print(dateOfEachWeekendForTwelfthWeek)
     }
     
     /// 오늘을 기점으로 90일 전까지의 날짜와 저축 금액을 저장하는 함수
     func setEachDayDate() {
                 
         for i in (0...89) {
-            let date = Date(timeInterval: -(60*60*24*Double(89 - i)), since: Date.now)
+            let date = Date(timeInterval: -(86400*Double(89 - i)), since: Date.now)
             
             dateOfEachDayForThreeMonth[i] = getMonthAndDayForString(date: date)
                         
             moneyOfEachDayForThreeMonth[i] = Double(saveManager.totalMoneyOfDate(date: date))
             
+        }
+    }
+    
+    /// 오늘을 기점으로 12개월 전까지의 날짜와 저축 금액을 저장하는 함수
+    func setMonthDateAndMoney() {
+        
+        
+        let todayMonth = Int(getMonthToDate(date: Date.now))!
+        
+        for i in 1...12 {
+        
+            let temp = 12 - i - todayMonth
+            var month: Int
+            
+            if temp < 0 {
+                month = abs(temp)
+            } else if temp == 0 {
+                month = 12
+            } else {
+                month = 12 - temp
+            }
+            
+            dateOfEachMonthForTwelfthMonth[i - 1] =
+            "\(month)월"
+            
+            let monthSave: [Save] = save.filter { getMonthToString(date: $0.day) == month }
+            
+            var monthMoney = 0.0
+            
+            monthSave.forEach {
+                monthMoney += Double($0.saveMoney)!
+            }
+            
+            moneyOfEachMonthForTwelfthMonth[i - 1] = monthMoney
         }
     }
     
