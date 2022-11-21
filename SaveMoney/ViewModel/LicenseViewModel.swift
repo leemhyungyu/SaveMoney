@@ -12,7 +12,7 @@ class LicenseViewModel {
     
     // MARK: - Properties
 
-    let Licenses: [License] = [.SnapKit, .FSCalender, .SwiftMessages, .Charts, .ExpyTableView]
+    let Licenses: [License] = License.allCases
     
     var numOfCell: Int {
         return Licenses.count

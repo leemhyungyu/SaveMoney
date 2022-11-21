@@ -155,11 +155,13 @@ extension MainCell {
             finalNameLabel.isHidden = true
 
         } else {
+            arrowLabel.isHidden = false
+            finalNameLabel.isHidden = false
             finalNameLabel.text = save.finalName
         }
         
         planNameLabel.text = save.planName
         categoryimage.image = setCategoryImage(save)
-        saveMoneyLabel.text = setStringForWon(save.saveMoney)
+        saveMoneyLabel.text = setStringForWon(save.saveMoney) + " 절약"
     }
 }
