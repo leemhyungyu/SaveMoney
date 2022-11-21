@@ -50,6 +50,7 @@ extension SettingCell {
     func configureUI() {
         addSubview(label)
         addSubview(separatorView)
+        self.selectionStyle = .none
         self.backgroundColor = .clear
         label.snp.makeConstraints {
             $0.centerY.equalToSuperview()

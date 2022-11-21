@@ -137,13 +137,19 @@ class HomeViewModel {
     
     /// 총 저축 금액 중 가장 큰 금액의 Save를 가져오는 함수
     func setMaxTotalMoney() {
+        
+        print("homeViewModel - setMaxTotalMoney called")
         let save = save.sorted(by: {Int($0.saveMoney)! > Int($1.saveMoney)!})
+        
+        print(save)
         
         if save.count >= 1{
             maxTotalSave = save[0]
         } else {
             maxTotalSave = nil
         }
+        
+        print(maxTotalSave)
     }
     
     /// 이번 달 저축 금액 중 가장 큰 금액의 Save를 가져오는 함수
@@ -187,7 +193,7 @@ class HomeViewModel {
         
         self.thisWeekendMoney = setIntForWon(Int(moneyOfEachWeekendForTwelfthWeek.last!))
         
-        self.thisMonthMoney = setIntForWon(Int(moneyOfEachWeekendForTwelfthWeek.last!))
+        self.thisMonthMoney = setIntForWon(Int(moneyOfEachMonthForTwelfthMonth.last!))
         
         if save.count >= 1 {
             totalMoney = setIntForWon(saveManager.totalMoney)
