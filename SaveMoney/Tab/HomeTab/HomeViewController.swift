@@ -323,6 +323,8 @@ extension HomeViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
+        guard let selectedCell = tableView.cellForRow(at: indexPath)?.reuseIdentifier else { return }
+        
         if indexPath.row == 0 {
             tableView.reloadData()
 
@@ -334,7 +336,9 @@ extension HomeViewController: UITableViewDataSource {
                 tableViewHeightConstraint.constant += 130
             }
         } else {
-            presentDetailViewController(viewModel.detailInfo(indexPath.section), true)
+            if selectedCell == MaxSaveCell.identifier {
+                presentDetailViewController(viewModel.detailInfo(indexPath.section), true)
+            }
         }
     }
     

@@ -256,10 +256,12 @@ extension CalendarViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        viewModel.setSelectedSave(save: viewModel.saveOfDay[indexPath.row], index: indexPath.row)
+        guard let selectedCell = collectionView.cellForItem(at: indexPath)?.reuseIdentifier else { return }
         
-        
-        presentDetailViewController(viewModel.selectedSave, false)
+        if selectedCell == MainCell.identifier {
+            viewModel.setSelectedSave(save: viewModel.saveOfDay[indexPath.row], index: indexPath.row)
+            presentDetailViewController(viewModel.selectedSave, false)
+        }
     }
 }
 
