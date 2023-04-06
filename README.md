@@ -27,8 +27,7 @@
 ## 핵심 기능
 
 1. **홈 화면**
-
-![1](https://user-images.githubusercontent.com/48830320/230302917-10ec3152-d930-4535-b9a4-b76acb971a33.png)
+![11](https://user-images.githubusercontent.com/48830320/230305186-a10950e3-2a01-4313-a338-9a3ca6ce7dab.png)
 
 - 일간, 주간, 월간 그래프로 절약 금액이 표시됩니다.
 - 각각 최근 90일, 12주, 12개월까지의 데이터가 표시됩니다.
